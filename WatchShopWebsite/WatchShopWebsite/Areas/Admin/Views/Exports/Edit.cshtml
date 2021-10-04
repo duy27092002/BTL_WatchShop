@@ -1,0 +1,56 @@
+﻿@model WatchShopWebsite.Models.EF.HoaDonXuat
+
+@{
+    ViewBag.Title = "Sửa Hóa Đơn Xuất";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "Exports", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="shadow container mt-3 py-3">
+        <div class="form-horizontal">
+            <h2 class="text-center">Chỉnh Sửa Hóa Đơn Xuất</h2>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MaHDX)
+
+            <div class="form-group">
+                <label class="form-label fw-bold">Thời Gian Xuất</label>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.ThoiGianXuat, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ThoiGianXuat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label class="form-label fw-bold">Mã Khách Hàng</label>
+                <div class="col-md-12">
+                    @Html.DropDownList("MaKH", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MaKH, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label class="form-label fw-bold">Mã Nhân Viên</label>
+                <div class="col-md-12">
+                    @Html.DropDownList("MaNV", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label class="form-label fw-bold">Tổng Giá</label>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.TongGia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TongGia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group text-center mt-3">
+                <input type="submit" value="Cập Nhật" class="btn btn-sm btn-warning" />
+                <a class="btn btn-sm btn-secondary" onclick="window.history.go(-1); return false;">Quay Lại</a>
+            </div>
+        </div>
+    </div>
+}

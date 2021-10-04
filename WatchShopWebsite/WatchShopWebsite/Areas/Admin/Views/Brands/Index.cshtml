@@ -1,0 +1,60 @@
+﻿@model PagedList.IPagedList<WatchShopWebsite.Models.EF.ThuongHieu>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Danh Sách Thương Hiệu";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-3">Danh Sách Thương Hiệu</h2>
+<div class="row mb-3">
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <p><a class="btn btn-sm btn-success" href="/Admin/Brands/Create"><i class="fas fa-plus"></i>&nbsp;Thêm Mới</a></p>
+    </div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4"></div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        @using (Html.BeginForm("Index", "Brands", FormMethod.Get))
+        {
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Nhập tên thương hiệu" id="SearchString" name="SearchString" value="@ViewBag.CurrentFilter" />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+        }
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-sm table-bordered table-hover table-striped text-center">
+        <tr>
+            <th>
+                @Html.ActionLink("Tên Thương Hiệu", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>Trạng Thái</th>
+            <th>Thao Tác</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenTH)
+                </td>
+                <td>
+                    @{
+                        var getStatus = item.TrangThai == 0 ? "Ẩn" : "Hiển thị";
+                    }
+                    @getStatus
+                </td>
+                <td class="text-nowrap" style="width:1px">
+                    <a class="btn btn-sm btn-warning" href="/Admin/Brands/Edit/@item.MaTH"><i class="fas fa-pencil-alt"></i>&nbsp;Sửa</a>
+                    <a class="btn btn-sm btn-primary" href="/Admin/Brands/Details/@item.MaTH"><i class="fas fa-eye"></i>&nbsp;Chi Tiết</a>
+                    <a class="btn btn-sm btn-danger" href="/Admin/Brands/Delete/@item.MaTH"><i class="fas fa-trash-alt"></i>&nbsp;Xóa</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

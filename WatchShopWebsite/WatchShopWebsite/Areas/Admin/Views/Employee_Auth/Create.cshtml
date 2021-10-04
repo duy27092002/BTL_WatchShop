@@ -1,0 +1,51 @@
+﻿@model WatchShopWebsite.Models.EF.NhanVien_VaiTro
+
+@{
+    ViewBag.Title = "Phân Quyền";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Employee_Auth", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    <div class="shadow container mt-3 py-3">
+        <div class="form-horizontal">
+            <h2 class="text-center">Thêm Mới Phân Quyền</h2>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Tên Vai Trò</label>
+                    <div class="col-md-12">
+                        @Html.DropDownList("MaVaiTro", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MaVaiTro, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Mã Nhân Viên</label>
+                    <div class="col-md-12">
+                        @Html.DropDownList("MaNV", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label class="form-label fw-bold">Trạng Thái</label>
+                <div class="col-md-12">
+                    <select class="form-control" id="TrangThai" name="TrangThai">
+                        <option value="1">Hiển thị</option>
+                        <option value="0">Ẩn</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group text-center mt-3">
+                <input type="submit" value="Tạo" class="btn btn-sm btn-success" />
+                <a class="btn btn-sm btn-secondary" onclick="window.history.go(-1); return false;">Quay Lại</a>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,110 @@
+﻿@model WatchShopWebsite.Models.EF.NhanVien
+
+@{
+    ViewBag.Title = "Xóa Nhân Viên";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="shadow container mt-3 py-3">
+        <div class="form-horizontal">
+            <h2>Bạn có thực sự muốn xóa không?</h2>
+            <hr />
+            @Html.HiddenFor(model => model.MaNV)
+
+            <p class="text-center">
+                @{
+                    if (Model.Avatar != null)
+                    {
+                        var getUrlImg = Model.Avatar.ToString().Replace("~", "../../..");
+                        <img src="@getUrlImg" class="img-fluid rounded-circle" style="width:200px" />
+                    }
+                    else
+                    {
+                        <img src="../../../Content/images/avatars/add.jpg" class="img-fluid rounded-circle" style="width:200px" />
+                    }
+                }
+            </p>
+            <h6 class="text-center fw-bold">(@Model.TenDangNhap)</h6>
+
+            <div class="row mt-3">
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Họ Và Tên</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control bg-white" id="HoTen" name="HoTen" readonly value="@Model.HoTen" />
+                    </div>
+                </div>
+
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Giới Tính</label>
+                    <div class="col-md-12">
+                        @{
+                            var getGender = "";
+                            if (Model.GioiTinh == 0)
+                            {
+                                getGender = "Nam";
+                            }
+                            else if (Model.GioiTinh == 1)
+                            {
+                                getGender = "Nữ";
+                            }
+                            else
+                            {
+                                getGender = "Khác";
+                            }
+                        }
+                        <input type="text" class="form-control bg-white" id="GioiTinh" name="GioiTinh" readonly value="@getGender" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Ngày Sinh</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control bg-white" id="NgaySinh" name="NgaySinh" readonly value="@Model.NgaySinh.Value.ToString("dd/MM/yyyy")" />
+                    </div>
+                </div>
+
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Địa Chỉ</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control bg-white" id="DiaChi" name="DiaChi" readonly value="@Model.DiaChi" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Email</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control bg-white" id="Email" name="Email" readonly value="@Model.Email" />
+                    </div>
+                </div>
+
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Số Điện Thoại</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control bg-white" id="SDT" name="SDT" readonly value="@Model.SDT" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label class="form-label fw-bold">Trạng Thái</label>
+                <div class="col-md-12">
+                    @{
+                        var getStatus = Model.TrangThai == 0 ? "Đã nghỉ việc" : "Đang làm việc";
+                    }
+                    <input type="text" class="form-control bg-white" id="TrangThai" name="TrangThai" readonly value="@getStatus" />
+                </div>
+            </div>
+
+            <div class="form-group text-center mt-3">
+                <input type="submit" value="Xóa" class="btn btn-sm btn-danger" />
+                @Html.ActionLink("Quay Lại", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-secondary" })
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,54 @@
+﻿@model WatchShopWebsite.Models.EF.HoaDonXuat
+
+@{
+    ViewBag.Title = "Xóa Hóa Đơn Xuất";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="shadow container mt-3 py-3">
+        <div class="form-horizontal">
+            <h2>Bạn có thực sự muốn xóa không?</h2>
+            <hr />
+            @Html.HiddenFor(model => model.MaHDX)
+
+            <div class="form-group">
+                <label class="form-label fw-bold">Thời Gian Xuất</label>
+                <div class="col-md-12">
+                    @{ 
+                        var getTime = Model.ThoiGianXuat.ToString("dd/MM/yyyy");
+                    }
+                    <input type="text" class="form-control bg-white" id="ThoiGianXuat" name="ThoiGianXuat" readonly value="@getTime" />
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label class="form-label fw-bold">Nhân Viên Xuất</label>
+                <div class="col-md-12">
+                    <input type="text" class="form-control bg-white" id="TenNV" name="TenNV" readonly value="@Model.NhanVien.HoTen" />
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label class="form-label fw-bold">Khách Hàng</label>
+                <div class="col-md-12">
+                    <input type="text" class="form-control bg-white" id="TenKH" name="TenKH" readonly value="@Model.KhachHang.HoTen" />
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label class="form-label fw-bold">Tổng Giá</label>
+                <div class="col-md-12">
+                    <input type="text" class="form-control bg-white" id="TongGia" name="TongGia" readonly value="@Model.TongGia" />
+                </div>
+            </div>
+
+            <div class="form-group text-center mt-3">
+                <input type="submit" value="Xóa" class="btn btn-sm btn-danger" />
+                @Html.ActionLink("Quay Lại", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-secondary" })
+            </div>
+        </div>
+    </div>
+}

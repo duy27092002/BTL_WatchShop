@@ -1,0 +1,144 @@
+﻿@model PagedList.IPagedList<WatchShopWebsite.Models.EF.NhanVien>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Danh Sách Nhân Viên";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+
+}
+
+<h2 class="text-center my-3">Danh Sách Tất Cả Nhân Viên</h2>
+
+<div class="row mb-3">
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <p><a class="btn btn-sm btn-success" href="/Admin/Employees/Create"><i class="fas fa-plus"></i>&nbsp;Thêm Mới</a></p>
+    </div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4"></div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        @using (Html.BeginForm("Index", "Employees", FormMethod.Get))
+        {
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Nhập tên nhân viên" id="SearchString" name="SearchString" value="@ViewBag.CurrentFilter" />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-sm table-bordered table-hover table-striped text-center">
+        <tr>
+            <th>Avatar</th>
+            <th>
+                @Html.ActionLink("Họ Tên", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>Tên Đăng Nhập</th>
+            <th>Giới Tính</th>
+            <th>
+                @Html.ActionLink("Ngày Sinh", "Index", new { sortOrder = ViewBag.BirthdaySortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>Địa Chỉ</th>
+            <th>EMail</th>
+            <th>Số Điện Thoại</th>
+            <th>Trạng Thái</th>
+            <th>Thao Tác</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @{
+                    if (item.Avatar != null)
+                    {
+                        var getUrlImg = item.Avatar.ToString().Replace("~", "../../..");
+                        <img src="@getUrlImg" class="img-fluid rounded-circle" style="width:50px" />
+                    }
+                    else
+                    {
+                        <img src="../../Content/images/avatars/add.jpg" class="img-fluid rounded-circle" style="width:50px" />
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenDangNhap)
+            </td>
+            <td>
+                @{
+                    var getGender = "";
+                    if (item.GioiTinh == 0)
+                    {
+                        getGender = "Nam";
+                    }
+                    else if (item.GioiTinh == 1)
+                    {
+                        getGender = "Nữ";
+                    }
+                    else
+                    {
+                        getGender = "Khác";
+                    }
+                }
+                @getGender
+            </td>
+            <td>
+                @{
+                    var getBirthday = item.NgaySinh.Value.ToString("dd/MM/yyyy");
+                }
+                @getBirthday
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChi)
+            </td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SDT)
+                    </td>
+                    <td>
+                        @{
+                            if (item.TrangThai == 0)
+                            {
+                                <a href="/Admin/Employees/ActiveEmployee/@item.MaNV" class="text-danger" style="font-size:25px"><span class="fa fa-eye-slash"></span></a>
+                            }
+                            else
+                            {
+                                <a href="/Admin/Employees/UnactiveEmployee/@item.MaNV" class="text-success" style="font-size:25px"><span class="fa fa-eye"></span></a>
+                            }
+                        }
+                    </td>
+                    <td class="text-nowrap" style="width:1px">
+                        <a class="btn btn-sm btn-danger" href="/Admin/Employees/Delete/@item.MaNV"><i class="fas fa-trash-alt"></i>&nbsp;Xóa</a>
+                    </td>
+                }
+                else
+                {
+                    <td>Thông tin bảo mật</td>
+                    <td>Thông tin bảo mật</td>
+                    <td>
+                        @{
+                            var getStatus = item.TrangThai == 0 ? "Đã nghỉ việc" : "Đang làm việc";
+                        }
+                        @getStatus
+                    </td>
+                    <td></td>
+                }
+            }
+        </tr>
+        }
+    </table>
+</div>
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

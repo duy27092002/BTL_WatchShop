@@ -1,0 +1,138 @@
+﻿@model WatchShopWebsite.Models.EF.SanPham
+
+@{
+    ViewBag.Title = "Sửa Thông Tin Đồng Hồ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="shadow mt-3 py-3 container">
+        <div class="form-horizontal">
+            <h2 class="text-center">Chỉnh Sửa Thông Tin Đồng Hồ</h2>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MaSP)
+
+            <div class="form-group">
+                <label class="form-label fw-bold">Tên</label>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row my-3">
+                <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4">
+                    <label class="form-label fw-bold">Thương Hiệu</label>
+                    <div class="col-md-12">
+                        @Html.DropDownList("MaTH", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MaTH, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4">
+                    <label class="form-label fw-bold">Danh Mục</label>
+                    <div class="col-md-12">
+                        @Html.DropDownList("MaDM", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MaDM, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4">
+                    <label class="form-label fw-bold">Nhà Sản Xuất</label>
+                    <div class="col-md-12">
+                        @Html.DropDownList("MaNSX", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MaNSX, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Giá Tiền</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control", @min = 0 } })
+                        @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Số Lượng</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control", @min = 0 } })
+                        @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group mb-3 col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Hình Ảnh</label>
+                    <div class="col-md-12">
+                        <img src="@Url.Content(Model.HinhAnh)" class="img-fluid w-25" id="previewImg" />
+                        @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+                    </div>
+                    <input type="file" class="mt-2" name="ImageUpload" onchange="ShowImagePreview(this, document.getElementById('previewImg'))" />
+                </div>
+
+                <div class="form-group mb-3 col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Mô Tả</label>
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Loại Đồng Hồ</label>
+                    <div class="col-md-12">
+                        <select class="form-control" id="LoaiSP" name="LoaiSP">
+                            @{
+                                if (Model.LoaiSP == 0)
+                                {
+                                    <option value="0" selected>Loại thường</option>
+                                    <option value="1">Loại đặc biệt</option>
+                                }
+                                else
+                                {
+                                    <option value="0">Loại thường</option>
+                                    <option value="1" selected>Loại đặc biệt</option>
+                                }
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.LoaiSP, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Trạng Thái</label>
+                    <div class="col-md-12">
+                        <select class="form-control" id="TrangThai" name="TrangThai">
+                            @{
+                                if (Model.TrangThai == 0)
+                                {
+                                    <option value="0" selected>Ẩn</option>
+                                    <option value="1">Hiển thị</option>
+                                }
+                                else
+                                {
+                                    <option value="0">Ẩn</option>
+                                    <option value="1" selected>Hiển thị</option>
+                                }
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group text-center mt-3">
+                <input type="submit" value="Cập Nhật" class="btn btn-sm btn-warning" />
+                <a class="btn btn-sm btn-secondary" onclick="window.history.go(-1); return false;">Quay Lại</a>
+            </div>
+        </div>
+    </div>
+}

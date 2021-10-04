@@ -1,0 +1,90 @@
+﻿@model WatchShopWebsite.Models.EF.KhachHang
+
+@{
+    ViewBag.Title = "Đăng Ký";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+    <!-- ============================ COMPONENT REGISTER   ================================= -->
+    <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+        <article class="card-body">
+            @using (Html.BeginForm("Signup", "Customer", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <header class="mb-4"><h4 class="card-title text-center">Đăng Ký</h4></header>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-row">
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label>Họ và tên</label>
+                        <input type="text" class="form-control" placeholder="" id="HoTen" name="HoTen">
+                        @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                    </div> <!-- form-row end.// -->
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label>Tên đăng nhập</label>
+                        <input type="text" class="form-control" placeholder="" id="TenDangNhap" name="TenDangNhap">
+                        @Html.ValidationMessageFor(model => model.TenDangNhap, "", new { @class = "text-danger" })
+                    </div> <!-- form-row end.// -->
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label>Email</label>
+                        <input type="email" class="form-control" placeholder="" id="Email" name="Email">
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        <small class="form-text text-muted">Chúng tôi sẽ không bao giờ chia sẻ email của bạn với bất kỳ ai khác.</small>
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label>Số điện thoại</label>
+                        <input type="tel" class="form-control" placeholder="" id="SDT" name="SDT">
+                        @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="mr-3">Giới tính:</label>
+                    <label class="custom-control custom-radio custom-control-inline">
+                        <input class="custom-control-input" checked="" type="radio" name="GioiTinh" value="0">
+                        <span class="custom-control-label"> Nam </span>
+                    </label>
+                    <label class="custom-control custom-radio custom-control-inline">
+                        <input class="custom-control-input" type="radio" name="GioiTinh" value="1">
+                        <span class="custom-control-label"> Nữ </span>
+                    </label>
+                    <label class="custom-control custom-radio custom-control-inline">
+                        <input class="custom-control-input" type="radio" name="GioiTinh" value="2">
+                        <span class="custom-control-label"> Khác </span>
+                    </label>
+                </div> <!-- form-group end.// -->
+                <div class="form-row">
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label>Ngày sinh</label>
+                        <input type="date" class="form-control" id="NgaySinh" name="NgaySinh">
+                        @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                        <label>Địa chỉ</label>
+                        <textarea id="DiaChi" name="DiaChi" rows="1" class="form-control"></textarea>
+                    </div> <!-- form-group end.// -->
+                </div> <!-- form-row.// -->
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input class="form-control" type="password" id="MatKhau" name="MatKhau">
+                    @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-block" value=" Đăng ký ">
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" checked="">
+                        <div class="custom-control-label"> Tôi đồng ý với <a href="#">các điều khoản và điều kiện</a>  </div>
+                    </label>
+                </div> <!-- form-group end.// -->
+            }
+        </article><!-- card-body.// -->
+    </div> <!-- card .// -->
+    <p class="text-center mt-4">Bạn đã có tài khoản? <a href="/Customer/Login">Đăng nhập</a></p>
+    <br><br>
+    <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->

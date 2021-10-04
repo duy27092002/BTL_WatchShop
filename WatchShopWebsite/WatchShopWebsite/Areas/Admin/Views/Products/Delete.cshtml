@@ -1,0 +1,110 @@
+﻿@model WatchShopWebsite.Models.EF.SanPham
+
+@{
+    ViewBag.Title = "Xóa Đồng Hồ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="shadow container mt-3 py-3">
+        <div class="form-horizontal">
+            <h2>Bạn có thực sự muốn xóa không?</h2>
+            <hr />
+            @Html.HiddenFor(model => model.MaSP)
+
+            <p class="text-center">
+                @{
+                    if (Model.HinhAnh != null)
+                    {
+                        var getUrlImg = Model.HinhAnh.ToString().Replace("~", "../../..");
+                        <img src="@getUrlImg" class="img-fluid rounded-circle" style="width:200px" />
+                    }
+                    else
+                    {
+                        <img src="../../../Content/images/items/add-product.png" class="img-fluid rounded-circle" style="width:200px" />
+                    }
+                }
+            </p>
+
+            <div class="form-group">
+                <label class="form-label fw-bold">Tên</label>
+                <div class="col-md-12">
+                    <input type="text" class="form-control bg-white" id="TenSP" name="TenSP" readonly value="@Model.TenSP" />
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="form-group mb-3 col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Thương Hiệu</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control bg-white" id="TenTH" name="TenTH" readonly value="@Model.ThuongHieu.TenTH" />
+                    </div>
+                </div>
+
+                <div class="form-group mb-3 col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Danh Mục</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control bg-white" id="TenDM" name="TenDM" readonly value="@Model.DanhMuc.TenDM" />
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label fw-bold">Nhà Sản Xuất</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control bg-white" id="TenNSX" name="TenNSX" readonly value="@Model.NhaSanXuat.TenNSX" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group mb-3 col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Giá</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control bg-white" id="Gia" name="Gia" readonly value="@String.Format("{0:0,0}", Model.Gia)" />
+                    </div>
+                </div>
+
+                <div class="form-group mb-3 col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Số Lượng</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control bg-white" id="SoLuong" name="SoLuong" readonly value="@String.Format("{0:0,0}", Model.SoLuong)" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label fw-bold">Mô Tả</label>
+                <div class="col-md-12">
+                    <textarea rows="5" class="form-control bg-white" id="MoTa" name="MoTa" readonly>@Model.MoTa</textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Loại Đồng Hồ</label>
+                    <div class="col-md-12">
+                        @{
+                            var getType = Model.LoaiSP == 0 ? "Loại thường" : "Loại đặc biệt";
+                        }
+                        <input type="text" class="form-control bg-white" id="TrangThai" name="TrangThai" readonly value="@getType" />
+                    </div>
+                </div>
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="form-label fw-bold">Trạng Thái</label>
+                    <div class="col-md-12">
+                        @{
+                            var getStatus = Model.TrangThai == 0 ? "Ẩn" : "Hiển thị";
+                        }
+                        <input type="text" class="form-control bg-white" id="TrangThai" name="TrangThai" readonly value="@getStatus" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group text-center mt-3">
+                <input type="submit" value="Xóa" class="btn btn-sm btn-danger" />
+                @Html.ActionLink("Quay Lại", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-secondary" })
+            </div>
+        </div>
+    </div>
+}

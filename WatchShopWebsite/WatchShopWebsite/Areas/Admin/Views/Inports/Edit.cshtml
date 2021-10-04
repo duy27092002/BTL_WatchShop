@@ -1,0 +1,146 @@
+﻿@model WatchShopWebsite.Models.EF.HoaDonNhap
+
+@{
+    ViewBag.Title = "Sửa Hóa Đơn Nhập";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@*@using (Html.BeginForm("Edit", "Inports", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()*@
+<div class="shadow container mt-3 py-3">
+    <div class="form-horizontal">
+        <h2 class="text-center">Chỉnh Sửa Hóa Đơn Nhập</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MaHDN)
+
+        <div class="form-group">
+            <label class="form-label fw-bold">Thời Gian Nhập</label>
+            <div class="col-md-12">
+                <input type="text" id="ThoiGianNhap" name="ThoiGianNhap" class="form-control" value="@Model.ThoiGianNhap.ToString("dd/MM/yyyy")" />
+                @Html.ValidationMessageFor(model => model.ThoiGianNhap, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group mt-3">
+            <label class="form-label fw-bold">Nhân Viên Nhập</label>
+            <div class="col-md-12">
+                @Html.DropDownList("MaNV", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group mt-3">
+            <label class="form-label fw-bold">Nhà Cung Cấp</label>
+            <div class="col-md-12">
+                @Html.DropDownList("MaNCC", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MaNCC, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!--Thêm sản phẩm mới hoặc thay đổi số lượng, thay đổi đơn giá -->
+        <div class="form-group mt-3">
+            <h4 class="text-center mb-3">Danh Mục Sản Phẩm</h4>
+            <div class="table-responsive">
+                <table id="tb-items" class="table table-bordered table-sm table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>Mã Đồng Hồ</th>
+                            <th>Tên</th>
+                            <th>Danh Mục</th>
+                            <th>Nhà Sản Xuất</th>
+                            <th>Số Lượng</th> <!-- Có thể edit-->
+                            <th>Đơn Giá</th>  <!-- Có thể edit -->
+                            <th>Tổng</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var ctHoaDonNhaps = ViewBag.CT_HoaDonNhap as List<WatchShopWebsite.Models.EF.CTHDNhap>;
+
+                            if (ctHoaDonNhaps.Count > 0)
+                            {
+                                foreach (var item in ctHoaDonNhaps)
+                                {
+                                    <tr>
+                                        <td>@item.SanPham.MaSP</td>
+                                        <td>@item.SanPham.TenSP</td>
+                                        <td>@item.SanPham.DanhMuc.TenDM</td>
+                                        <td>@item.SanPham.NhaSanXuat.TenNSX</td>
+                                        <td>
+                                            <input class="form-control num text-center" value="@String.Format("{0:0,0}", item.SoLuong)" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control num text-center" value="@String.Format("{0:0,0}", item.Gia)" />
+                                        </td>
+                                        <td>@String.Format("{0:0,0}", item.SoLuong * item.Gia)</td>
+                                        <td style="width:1px;">
+                                            <button class="btn btn-sm btn-danger btn-delete">Xóa</button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="9"><label class="text-danger">Không có mặt hàng nào trong hóa đơn!</label></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th id="total" colspan="9" style="text-align:right;">Tổng Tiền: @String.Format("{0:0,0}", Model.TongGia)</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <button id="btn-add-items" class="btn btn-sm btn-success"><i class="fas fa-plus"></i>&nbsp;Thêm Sản Phẩm</button>
+        </div>
+
+        <div class="form-group text-center mt-3">
+            <button id="btn-update" class="btn btn-sm btn-warning">Cập Nhật</button>
+            <a class="btn btn-sm btn-secondary" onclick="window.history.go(-1); return false;">Quay Lại</a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal hiển thị form nhập đồng hồ-->
+<div class="modal fade" id="modal-data">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Danh Sách Sản Phẩm</h4>
+            </div>
+            <div class="modal-body overflow-auto">
+                <div class="form-group">
+                    <label class="fw-bold">Danh Mục Đồng Hồ</label>
+                    @Html.DropDownList("select-category", ViewBag.DanhMuc as SelectList, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="table-responsive">
+                    <table id="tb-add-items" class="table table-sm table-hover table-striped table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>Mã Đồng Hồ</th>
+                                <th>Tên</th>
+                                <th>Nhà Sản Xuất</th>
+                                <th>Thao Tác</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-success" data-dismiss="modal" id="btn-modal-accept">Thêm</button>
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" id="btn-close">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*}*@
+@section scripts{
+    <script src="~/Scripts/admin/Inport/add.js"></script>
+}

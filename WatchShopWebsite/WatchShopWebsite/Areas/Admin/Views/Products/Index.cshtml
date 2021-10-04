@@ -1,0 +1,94 @@
+﻿@model PagedList.IPagedList<WatchShopWebsite.Models.EF.SanPham>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Danh Sách Đồng Hồ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-3">Danh Sách Đồng Hồ</h2>
+
+<div class="row mb-3">
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <p><a class="btn btn-sm btn-success" href="/Admin/Products/Create"><i class="fas fa-plus"></i>&nbsp;Thêm Mới</a></p>
+    </div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4"></div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        @using (Html.BeginForm("Index", "Products", FormMethod.Get))
+        {
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Nhập tên đồng hồ" id="SearchString" name="SearchString" value="@ViewBag.CurrentFilter" />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+        }
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-sm table-bordered table-hover table-striped">
+        <tr class="text-center">
+            <th>Hình Ảnh</th>
+            <th>
+                @Html.ActionLink("Tên", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Giá Tiền", "Index", new { sortOrder = ViewBag.PriceSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>Số Lượng</th>
+            <th>Trạng Thái</th>
+            <th>Thao Tác</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="text-center">
+                <td class="text-nowrap" style="width:100px">
+                    @{
+                        if (item.HinhAnh != null)
+                        {
+                            var getUrlImg = item.HinhAnh.ToString().Replace("~", "../../..");
+                            <img src="@getUrlImg" class="img-fluid rounded-circle" style="width:50px" />
+                        }
+                        else
+                        {
+                            <img src="../../Content/images/items/add-product.png" class="img-fluid rounded-circle" style="width:50px" />
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenSP)
+                </td>
+                <td style="text-align:right;">
+                    @{
+                        var getPrice = String.Format("{0:0,0}", item.Gia);
+                    }
+                    @getPrice
+                </td>
+                <td style="text-align:right;">
+                    @{
+                        var getAmount = String.Format("{0:0,0}", item.SoLuong);
+                    }
+                    @getAmount
+                </td>
+                <td>
+                    @{
+                        var getStatus = item.TrangThai == 0 ? "Ẩn" : "Hiển thị";
+                    }
+                    @getStatus
+                </td>
+                <td class="text-nowrap" style="width:1px">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-sm btn-warning" href="/Admin/Products/Edit/@item.MaSP"><i class="fas fa-pencil-alt"></i>&nbsp;Sửa</a>
+                        <a class="btn btn-sm btn-primary" href="/Admin/Products/Details/@item.MaSP"><i class="fas fa-eye"></i>&nbsp;Chi Tiết</a>
+                        <a class="btn btn-sm btn-danger" href="/Admin/Products/Delete/@item.MaSP"><i class="fas fa-trash-alt"></i>&nbsp;Xóa</a>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

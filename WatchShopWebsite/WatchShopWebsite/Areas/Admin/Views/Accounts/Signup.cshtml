@@ -1,0 +1,98 @@
+﻿@model WatchShopWebsite.Models.EF.NhanVien
+
+@{
+    ViewBag.Title = "Đăng Ký";
+    Layout = "~/Areas/Admin/Views/Shared/_SettingLayout.cshtml";
+}
+
+<div class="col-lg-7">
+    <div class="card shadow-lg border-0 rounded-lg mt-5">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-header"><h3 class="text-center fw-light my-4">Đăng Ký</h3></div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="form-group form-floating col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                            <input class="form-control" id="HoTen" name="HoTen" type="text" placeholder="Họ Và Tên" />
+                            <label for="HoTen">Họ Và Tên</label>
+                            @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-floating col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                            <input class="form-control" id="DiaChi" name="DiaChi" placeholder="Địa Chỉ" />
+                            <label for="DiaChi">Địa Chỉ</label>
+                            @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                            <label class="form-label fw-light">Giới Tính</label>
+                            <div class="col-md-12">
+                                <label class="mr-3">
+                                    <input class="custom-control-input" checked="" type="radio" name="GioiTinh" value="0">
+                                    <span class="custom-control-label"> Nam </span>
+                                </label>
+                                <label class="mr-3">
+                                    <input class="custom-control-input" type="radio" name="GioiTinh" value="1">
+                                    <span class="custom-control-label"> Nữ </span>
+                                </label>
+                                <label>
+                                    <input class="custom-control-input" type="radio" name="GioiTinh" value="2">
+                                    <span class="custom-control-label"> Khác </span>
+                                </label>
+                                @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                            <label class="form-label fw-light">Ngày Sinh</label>
+                            <div class="col-md-12">
+                                <input type="date" class="form-control" id="NgaySinh" name="NgaySinh" />
+                                @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group form-floating col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                            <input class="form-control" id="Email" name="Email" type="email" placeholder="Email" />
+                            <label for="Email">Email</label>
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group form-floating col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                            <input class="form-control" id="SDT" name="SDT" type="text" placeholder="Số Điện Thoại" />
+                            <label for="SDT">Số Điện Thoại</label>
+                            @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group form-floating col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                            <input class="form-control" id="TenDangNhap" name="TenDangNhap" type="text" placeholder="Tên Đăng Nhập" />
+                            <label for="TenDangNhap">Tên Đăng Nhập</label>
+                            @Html.ValidationMessageFor(model => model.TenDangNhap, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group form-floating col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+                            <input class="form-control" id="MatKhau" name="MatKhau" type="password" placeholder="Mật Khẩu" />
+                            <label for="MatKhau">Mật Khẩu</label>
+                            @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center mt-3">
+                        <input type="submit" value="Đăng Ký" class="btn btn-sm btn-success" />
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center py-3">
+                <div class="small"><a href="/Admin/Accounts/Login">Bạn đã có tài khoản? Đăng nhập</a></div>
+            </div>
+        }
+        </div>
+</div>

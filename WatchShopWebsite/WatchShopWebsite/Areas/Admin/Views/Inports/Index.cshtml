@@ -1,0 +1,73 @@
+﻿@model PagedList.IPagedList<WatchShopWebsite.Models.EF.HoaDonNhap>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Danh Sách Hóa Đơn Nhập";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-3">Danh Sách Hóa Đơn Nhập</h2>
+<div class="row mb-3">
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <p><a class="btn btn-sm btn-success" href="/Admin/Inports/Create"><i class="fas fa-plus"></i>&nbsp;Thêm Mới</a></p>
+    </div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4"></div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        @using (Html.BeginForm("Index", "Inports", FormMethod.Get))
+        {
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Nhập tên nhân viên nhập hoặc nhà cung cấp" id="SearchString" name="SearchString" value="@ViewBag.CurrentFilter" />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+        }
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-sm table-bordered table-hover table-striped text-center">
+        <tr>
+            <th>
+                @Html.ActionLink("Thời Gian Nhập", "Index", new { sortOrder = ViewBag.TimeSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>Nhân Viên Nhập</th>
+            <th>Nhà Cung Cấp</th>
+            <th>
+                @Html.ActionLink("Tổng Giá", "Index", new { sortOrder = ViewBag.TotalPriceSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>Thao Tác</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @{
+                        var getTime = item.ThoiGianNhap.ToString("dd/MM/yyyy");
+                    }
+                    @getTime
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NhanVien.HoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NhaCungCap.TenNCC)
+                </td>
+                <td style="text-align:right;">
+                    @{
+                        var getTotalPrice = String.Format("{0:0,0}", item.TongGia);
+                    }
+                    @getTotalPrice
+                </td>
+                <td class="text-nowrap" style="width:1px">
+                    <a class="btn btn-sm btn-warning" href="/Admin/Inports/Edit/@item.MaHDN"><i class="fas fa-pencil-alt"></i>&nbsp;Sửa</a>
+                    <a class="btn btn-sm btn-primary" href="/Admin/Inports/Details/@item.MaHDN"><i class="fas fa-eye"></i>&nbsp;Chi Tiết</a>
+                    <a class="btn btn-sm btn-danger" href="/Admin/Inports/Delete/@item.MaHDN"><i class="fas fa-trash-alt"></i>&nbsp;Xóa</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

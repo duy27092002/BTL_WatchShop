@@ -1,0 +1,88 @@
+﻿@model WatchShopWebsite.Models.EF.HoaDonNhap
+
+@{
+    ViewBag.Title = "Xóa Hóa Đơn Nhập";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="shadow container mt-3 py-3">
+        <div class="form-horizontal">
+            <h2>Bạn có thực sự muốn xóa không?</h2>
+            <hr />
+            @Html.HiddenFor(model => model.MaHDN)
+
+            <div class="form-group">
+                <label class="form-label fw-bold">Thời Gian Nhập</label>
+                <div class="col-md-12">
+                    @{
+                        var getTime = Model.ThoiGianNhap.ToString("dd/MM/yyyy");
+                    }
+                    <input type="text" class="form-control bg-white" id="ThoiGianNhap" name="ThoiGianNhap" readonly value="@getTime" />
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label class="form-label fw-bold">Nhân Viên Nhập</label>
+                <div class="col-md-12">
+                    <input type="text" class="form-control bg-white" id="TenNV" name="TenNV" readonly value="@Model.NhanVien.HoTen" />
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label class="form-label fw-bold">Nhà Cung Cấp</label>
+                <div class="col-md-12">
+                    <input type="text" class="form-control bg-white" id="TenNCC" name="TenNCC" readonly value="@Model.NhaCungCap.TenNCC" />
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <h4 class="text-center mb-3">Sản Phẩm Nhập Vào</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead class="text-center">
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã Đồng Hồ</th>
+                                <th>Tên</th>
+                                <th>Số Lượng Nhập</th>
+                                <th>Đơn Giá</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            @{
+                                var ctHoaDonNhaps = ViewBag.CT_HoaDonNhap as List<WatchShopWebsite.Models.EF.CTHDNhap>;
+
+                                int i = 0;
+
+                                foreach (var item in ctHoaDonNhaps)
+                                {
+                                    <tr>
+                                        <td>
+                                            @{ if (item != null) { i++; }}
+                                            @i
+                                        </td>
+                                        <td>@item.SanPham.MaSP</td>
+                                        <td>@item.SanPham.TenSP</td>
+                                        <td>@String.Format("{0:0,0}", item.SoLuong)</td>
+                                        <td>@String.Format("{0:0,0}", item.Gia)</td>
+                                    </tr>
+                                }
+                            }
+                            <tr>
+                                <th colspan="5" style="text-align:right;">Tổng Tiền (VNĐ): @String.Format("{0:0,0}", Model.TongGia)</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group text-center mt-3">
+                <input type="submit" value="Xóa" class="btn btn-sm btn-danger" />
+                @Html.ActionLink("Quay Lại", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-secondary" })
+            </div>
+        </div>
+    </div>
+}
