@@ -59,7 +59,6 @@
                                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
                                             <div class="icon-area">
                                                 <i class="fa fa-user"></i>
-                                                <span class="notify">3</span>
                                             </div>
                                             @if (Session["IdCustomer"] != null)
                                             {
@@ -73,7 +72,7 @@
                                         <div class="dropdown-menu">
                                             @if (Session["IdCustomer"] != null)
                                             {
-                                                <a class="dropdown-item" href="#">Hồ sơ</a>
+                                                <a class="dropdown-item" href="/Customer/CustomerProfile/@Session["IdCustomer"]">Hồ sơ</a>
                                                 <a class="dropdown-item" href="/Customer/Logout">Đăng xuất</a>
                                             }
                                             else
@@ -88,10 +87,9 @@
                             <div class="widget-header col-3">
                                 <a href="#" class="widget-view">
                                     <div class="icon-area">
-                                        <i class="fa fa-comment-dots"></i>
-                                        <span class="notify">1</span>
+                                        <i class="fas fa-bell"></i>
                                     </div>
-                                    <small class="text"> Tin nhắn </small>
+                                    <small class="text"> Thông báo </small>
                                 </a>
                             </div>
                             <div class="widget-header col-3">
@@ -239,7 +237,7 @@
             </section>	<!-- footer-top.// -->
             <section class="footer-bottom text-center">
                 <p class="text-white">Chính sách bảo mật - Điều khoản sử dụng - Thông tin người dùng Hướng dẫn hỏi đáp pháp lý</p>
-                <p class="text-muted"> &copy 2021 Alistyle, Mọi quyền được bảo lưu </p>
+                <p class="text-muted"> &copy @DateTime.Now.Year Alistyle, Mọi quyền được bảo lưu </p>
                 <br>
             </section>
         </div><!-- //container -->

@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = ViewBag.GetCateName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+    <div class="container">
+
+        <header class="mb-3">
+            <div class="form-inline">
+                <strong class="mr-md-auto">Tổng số sản phẩm: @ViewBag.GetCountByCateID </strong>
+                <select class="mr-2 form-control">
+                    <option>Sản phẩm mới nhất</option>
+                    <option>Sản phẩm phổ biến</option>
+                </select>
+                <div class="btn-group">
+                    <a href="" class="btn btn-light active" data-toggle="tooltip" title="Dạng danh sách">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                    <a href="" class="btn btn-light" data-toggle="tooltip" title="Dạng lưới">
+                        <i class="fa fa-th"></i>
+                    </a>
+                </div>
+            </div>
+        </header><!-- sect-heading -->
+
+        <div class="row">
+            @foreach (var item in ViewBag.GetProductsByCate)
+            {
+                <div class="col-md-3">
+                    <figure class="card card-product-grid">
+                        <div class="img-wrap">
+                            <a href="/Product/Details/@item.MaSP">
+                                @if (item.HinhAnh != null)
+                                {
+                                    var getUrlImg = item.HinhAnh.ToString().Replace("~", "../../..");
+                                    <img src="@getUrlImg" class="img-fluid" alt="@item.TenSP" />
+                                }
+                            </a>
+                        </div> <!-- img-wrap.// -->
+                        <figcaption class="info-wrap">
+                            <a href="/Product/Details/@item.MaSP" class="title mb-2">@item.TenSP</a>
+                            <div class="price-wrap">
+                                <span class="price">@String.Format("{0:0,0}", item.Gia) VNĐ</span>
+                                <small class="text-muted">/1 chiếc</small>
+                            </div> <!-- price-wrap.// -->
+
+                            <p class="text-muted ">@item.NhaSanXuat.TenNSX</p>
+
+                            <hr>
+
+                            <p class="mb-3">
+                                <span class="tag"> <i class="fa fa-check"></i> Đã kiểm định</span>
+                                <span class="tag"> Bảo hành 6 tháng </span>
+                                <span class="tag"> @item.LuotXem lượt xem </span>
+                                <span class="tag"> Việt Nam </span>
+                            </p>
+
+                            <label class="custom-control mb-3 custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <div class="custom-control-label">
+                                    So sánh
+                                </div>
+                            </label>
+
+                            <a href="#" class="btn btn-outline-primary"> <i class="fa fa-envelope"></i> Liên hệ nhà cung cấp </a>
+
+                        </figcaption>
+                    </figure>
+                </div>
+            }
+        </div> <!-- row end.// -->
+
+        <nav class="mb-4" aria-label="Page navigation sample">
+            <ul class="pagination">
+                @{
+                    if (ViewBag.CurrentPage > 3)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/Category/Index/@ViewBag.GetCateID?pageNumber=1">Trang đầu</a>
+                        </li>
+                    }
+                    else if (ViewBag.CurrentPage > 1)
+                    {
+                        int prevPage = ViewBag.CurrentPage - 1;
+                        <li class="page-item">
+                            <a class="page-link" href="/Category/Index/@ViewBag.GetCateID?pageNumber=@prevPage">
+                                <i class="fa fa-angle-double-left"></i>
+                            </a>
+                        </li>
+                    }
+
+                    for (var i = 1; i <= ViewBag.PageCount; i++)
+                    {
+                        if (i != ViewBag.CurrentPage)
+                        {
+                            if (i > ViewBag.CurrentPage - 3 && i < ViewBag.CurrentPage + 3)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="/Category/Index/@ViewBag.GetCateID?pageNumber=@i">@i</a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="active page-item">
+                                <a class="page-link" href="/Category/Index/@ViewBag.GetCateID?pageNumber=@i">@i</a>
+                            </li>
+                        }
+                    }
+
+                    if (ViewBag.CurrentPage <= ViewBag.PageCount - 1)
+                    {
+                        int nextPage = ViewBag.CurrentPage + 1;
+                        <li class="page-item">
+                            <a class="page-link" href="/Category/Index/@ViewBag.GetCateID?pageNumber=@nextPage">
+                                <i class="fa fa-angle-double-right"></i>
+                            </a>
+                        </li>
+                    }
+                    else if (ViewBag.CurrentPage < ViewBag.PageCount - 3)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/Category/Index/@ViewBag.GetCateID?pageNumber=@ViewBag.PageCount">Trang cuối</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+
+        <div class="box text-center">
+            <p>Bạn có tìm thấy sản phẩm mong muốn không？</p>
+            <a href="" class="btn btn-light">Có</a>
+            <a href="" class="btn btn-light">Không</a>
+        </div>
+
+    </div> <!-- container .//  -->
+</section>

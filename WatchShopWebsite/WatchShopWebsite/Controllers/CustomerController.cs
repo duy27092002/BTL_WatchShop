@@ -61,5 +61,10 @@ namespace WatchShopWebsite.Controllers
             Session.Clear();
             return RedirectToAction("Login");
         }
+
+        public ActionResult CustomerProfile()
+        {
+            return View();
+        }
     }
 }

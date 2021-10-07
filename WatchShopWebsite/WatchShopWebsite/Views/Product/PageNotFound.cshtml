@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Lỗi 404";
+    Layout = "~/Views/Shared/Error.cshtml";
+}
+
+<div id="layoutError">
+    <div id="layoutError_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="text-center mt-4">
+                            <img class="mb-4 img-error" src="~/Scripts/admin/assets/img/error-404-monochrome.svg" />
+                            <p class="lead">Không tìm thấy trang nào theo yêu cầu.</p>
+                            <a href="/Home">
+                                <i class="fas fa-arrow-left me-1"></i>
+                                Quay về trang chủ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div id="layoutError_footer">
+        <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Alistyle &copy; Website Đồng Hồ @DateTime.Now.Year</div>
+                    <div>
+                        <a href="#">Chính sách bảo mật</a>
+                        &middot;
+                        <a href="#">Điều khoản &amp; Điều kiện</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>

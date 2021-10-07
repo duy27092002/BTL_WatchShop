@@ -636,15 +636,17 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Customer\Login.cshtml" />
     <Content Include="Views\Customer\Signup.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Product\PageNotFound.cshtml" />
+    <Content Include="Views\Customer\CustomerProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\DAO\" />
     <Folder Include="Scripts\admin\Export\" />
     <Folder Include="Views\Cart\" />
-    <Folder Include="Views\Category\" />
     <Folder Include="Views\Order\" />
-    <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

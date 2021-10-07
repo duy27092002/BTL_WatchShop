@@ -1,0 +1,180 @@
+﻿@model WatchShopWebsite.Models.EF.SanPham
+
+@{
+    ViewBag.Title = "Chi Tiết Sản Phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content bg-white padding-y">
+    <div class="container">
+        <!-- ============================ ITEM DETAIL ======================== -->
+        <div class="row">
+            @Html.HiddenFor(model => model.MaSP)
+            <aside class="col-md-6">
+                <div class="card">
+                    <article class="gallery-wrap">
+                        <div class="img-big-wrap">
+                            <div>
+                                <a href="#">
+                                    @if (Model.HinhAnh != null)
+                                    {
+                                        var getUrlImg = Model.HinhAnh.ToString().Replace("~", "../../..");
+                                        <img src="@getUrlImg" class="img-fluid" alt="@Model.TenSP" />
+                                    }
+                                </a>
+                            </div>
+                        </div> <!-- slider-product.// -->
+                    </article> <!-- gallery-wrap .end// -->
+                </div> <!-- card.// -->
+            </aside>
+            <main class="col-md-6">
+                <article class="product-info-aside">
+                    <h2 class="title mt-3">@Model.TenSP </h2>
+                    <div class="rating-wrap my-3">
+                        <ul class="rating-stars">
+                            <li style="width:80%" class="stars-active">
+                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </li>
+                            <li>
+                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </li>
+                        </ul>
+                        <small class="label-rating text-muted">132 đánh giá</small>
+                        <small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> 154 đơn đặt hàng </small>
+                    </div> <!-- rating-wrap.// -->
+                    <div class="mb-3">
+                        <var class="price h4">@String.Format("{0:0,0}", Model.Gia) VNĐ</var>
+                    </div> <!-- price-detail-wrap .// -->
+                    <p>@Model.MoTa</p>
+                    <dl class="row">
+                        <dt class="col-sm-3">Nhà sản xuất</dt>
+                        <dd class="col-sm-9"><a href="#">@Model.NhaSanXuat.TenNSX.</a></dd>
+                        <dt class="col-sm-3">Số bài viết</dt>
+                        <dd class="col-sm-9">596 065</dd>
+                        <dt class="col-sm-3">Bảo hành</dt>
+                        <dd class="col-sm-9">2 năm</dd>
+                        <dt class="col-sm-3">Thời gian giao hàng</dt>
+                        <dd class="col-sm-9">3-4 ngày</dd>
+                    </dl>
+                    <div class="form-row  mt-4">
+                        <div class="form-group col-md flex-grow-0">
+                            <div class="input-group mb-3 input-spinner">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-light" type="button" id="button-plus"> + </button>
+                                </div>
+                                <input type="text" class="form-control" value="1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-light" type="button" id="button-minus"> &minus; </button>
+                                </div>
+                            </div>
+                        </div> <!-- col.// -->
+                        <div class="form-group col-md">
+                            <a href="#" class="btn  btn-primary">
+                                <i class="fas fa-shopping-cart"></i> <span class="text">Thêm vào giỏ hàng</span>
+                            </a>
+                            <a href="#" class="btn btn-light">
+                                <i class="fas fa-envelope"></i> <span class="text">Liên hệ nhà cung cấp</span>
+                            </a>
+                        </div> <!-- col.// -->
+                    </div> <!-- row.// -->
+
+                </article> <!-- product-info-aside .// -->
+            </main> <!-- col.// -->
+        </div> <!-- row.// -->
+        <!-- ================ ITEM DETAIL END .// ================= -->
+    </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+<!-- ========================= SECTION  ========================= -->
+<section class="section-name padding-y bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h5 class="title-description">Mô tả</h5>
+                <p>
+                    Lava stone grill, suitable for natural gas, with cast-iron cooking grid, piezo ignition, stainless steel burners, water tank, and thermocouple. Thermostatic adjustable per zone. Comes complete with lava rocks. Adjustable legs. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat.
+                </p>
+                <ul class="list-check">
+                    <li>Chất liệu: Thép không gỉ</li>
+                    <li>Cân nặng: 1kg</li>
+                </ul>
+                <h5 class="title-description">Thông số kỹ thuật</h5>
+                <table class="table table-bordered">
+                    <tr> <th colspan="2">Cơ bản</th> </tr>
+                    <tr> <td>Type of energy</td><td>Lava stone</td> </tr>
+                    <tr> <td>Number of zones</td><td>2</td> </tr>
+                    <tr> <td>Automatic connection	</td> <td> <i class="fa fa-check text-success"></i> Yes </td></tr>
+                    <tr> <th colspan="2">Kích thước</th> </tr>
+                    <tr> <td>Width</td><td>500mm</td> </tr>
+                    <tr> <td>Depth</td><td>400mm</td> </tr>
+                    <tr> <td>Height	</td><td>700mm</td> </tr>
+                    <tr> <th colspan="2">Chất liệu</th> </tr>
+                    <tr> <td>Exterior</td><td>Stainless steel</td> </tr>
+                    <tr> <td>Interior</td><td>Iron</td> </tr>
+                    <tr> <th colspan="2">Kết nối</th> </tr>
+                    <tr> <td>Heating Type</td><td>Gas</td> </tr>
+                    <tr> <td>Connected load gas</td><td>15 Kw</td> </tr>
+                </table>
+            </div> <!-- col.// -->
+            <aside class="col-md-4">
+                <div class="box">
+                    <h5 class="title-description mb-3">Sản phẩm cùng loại</h5>
+                    @foreach (var smp in ViewBag.SimilarPros)
+                    {
+                        <article class="media mb-3">
+                            <a href="/Product/Details/@smp.MaSP">
+                                @if (smp.HinhAnh != null)
+                                {
+                                    var getUrlImg = smp.HinhAnh.ToString().Replace("~", "../../..");
+                                    <img src="@getUrlImg" class="img-fluid img-sm mr-3" alt="@smp.TenSP" />
+                                }
+                            </a>
+                            <div class="media-body">
+                                <h6 class="mt-0"><a href="/Product/Details/@smp.MaSP">@smp.TenSP</a></h6>
+                                <p>@String.Format("{0:0,0}", smp.Gia) VNĐ</p>
+                            </div>
+                        </article>
+                    }
+
+
+                </div> <!-- box.// -->
+            </aside> <!-- col.// -->
+        </div> <!-- row.// -->
+    </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+<!-- ========================= SECTION  ========================= -->
+<section class="padding-bottom-sm">
+    <header class="section-heading heading-line">
+        <h4 class="title-section text-uppercase">Các sản phẩm đã xem</h4>
+    </header>
+    <div class="row row-sm">
+        @foreach (var viewedPro in ViewBag.ViewedProducts)
+        {
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                <div class="card card-sm card-product-grid">
+                    <a href="/Product/Details/@viewedPro.MaSP" class="img-wrap">
+                        @if (viewedPro.HinhAnh != null)
+                        {
+                            var getUrlImg = viewedPro.HinhAnh.ToString().Replace("~", "../../..");
+                            <img src="@getUrlImg" class="img-fluid" alt="@viewedPro.TenSP" />
+                        }
+                    </a>
+                    <figcaption class="info-wrap">
+                        <a href="/Product/Details/@viewedPro.MaSP" class="title">@viewedPro.TenSP</a>
+                        <div class="price mt-1">@String.Format("{0:0,0}", viewedPro.Gia) VNĐ</div> <!-- price-wrap.// -->
+                    </figcaption>
+                </div>
+            </div> <!-- col.// -->
+        }
+    </div> <!-- row.// -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->

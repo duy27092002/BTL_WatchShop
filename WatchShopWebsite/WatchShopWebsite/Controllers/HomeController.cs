@@ -12,8 +12,26 @@ namespace WatchShopWebsite.Controllers
         private DB_WatchShopEntities db = new DB_WatchShopEntities();
         public ActionResult Index()
         {
-            ViewBag.Categories = db.DanhMucs.Where(t => t.TrangThai == 1).ToList();
-            ViewBag.Products = db.SanPhams.Where(t => t.TrangThai == 1).Take(6).ToList();
+            // lấy danh mục
+            ViewBag.Categories = db.DanhMucs.Where(t => t.TrangThai == 1);
+
+            // lấy 3 sản phẩm phổ biến (có nhiều lượt xem)
+            ViewBag.Take3PopularPros = db.SanPhams.Where(t => t.TrangThai == 1)
+                .OrderByDescending(t => t.LuotXem).Take(3);
+
+            // lấy 6 sản phẩm có ưu đãi
+            ViewBag.DiscountPros = db.SanPhams.Where(t => t.TrangThai == 1 && t.LoaiSP == 2).Take(6);
+
+            // lấy 8 sản phẩm đặc biệt
+            ViewBag.SpecialPros = db.SanPhams.Where(t => t.LoaiSP == 1 && t.TrangThai == 1).Take(8);
+
+            // lấy 8 sản phẩm phổ biến (có nhiều lượt xem)
+            ViewBag.Take8PopularPros = db.SanPhams.Where(t => t.TrangThai == 1)
+                .OrderByDescending(t => t.LuotXem).Take(8);
+
+            // lấy 12 sản phẩm loại thường (cho sp đề xuất)
+            ViewBag.RegularPros = db.SanPhams.Where(t => t.TrangThai == 1 && t.LoaiSP == 0).Take(12);
+
             return View();
         }
 
