@@ -1,0 +1,130 @@
+﻿@model WatchShopWebsite.Models.EF.KhachHang
+
+@{
+    ViewBag.Title = "Chỉnh Sửa Hồ Sơ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="section-pagetop bg-gray">
+    <div class="container">
+        <h2 class="title-page">Hồ sơ của tôi</h2>
+    </div> <!-- container //  -->
+</section>
+
+@using (Html.BeginForm("EditCustomer", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <main>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-9 mb-5">
+                        <div class="form-row">
+                            @Html.HiddenFor(model => model.MaKH)
+                            <div class="col form-group">
+                                <label>Họ tên</label>
+                                @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col form-group">
+                                <label>Email</label>
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="mr-4">Giới tính:</label>
+                                @if (Model.GioiTinh == 0)
+                                {
+                                    <label class="mr-4">
+                                        <input class="custom-control-input" checked="" type="radio" name="GioiTinh" value="0">
+                                        <span class="custom-control-label"> Nam </span>
+                                    </label>
+                                    <label class="mr-4">
+                                        <input class="custom-control-input" type="radio" name="GioiTinh" value="1">
+                                        <span class="custom-control-label"> Nữ </span>
+                                    </label>
+                                    <label>
+                                        <input class="custom-control-input" type="radio" name="GioiTinh" value="2">
+                                        <span class="custom-control-label"> Khác </span>
+                                    </label>
+                                }
+                                else if (Model.GioiTinh == 1)
+                                {
+                                    <label class="mr-4">
+                                        <input class="custom-control-input" checked="" type="radio" name="GioiTinh" value="0">
+                                        <span class="custom-control-label"> Nam </span>
+                                    </label>
+                                    <label class="mr-4">
+                                        <input class="custom-control-input" checked="" type="radio" name="GioiTinh" value="1">
+                                        <span class="custom-control-label"> Nữ </span>
+                                    </label>
+                                    <label>
+                                        <input class="custom-control-input" type="radio" name="GioiTinh" value="2">
+                                        <span class="custom-control-label"> Khác </span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="mr-4">
+                                        <input class="custom-control-input" checked="" type="radio" name="GioiTinh" value="0">
+                                        <span class="custom-control-label"> Nam </span>
+                                    </label>
+                                    <label class="mr-4">
+                                        <input class="custom-control-input" type="radio" name="GioiTinh" value="1">
+                                        <span class="custom-control-label"> Nữ </span>
+                                    </label>
+                                    <label>
+                                        <input class="custom-control-input" checked="" type="radio" name="GioiTinh" value="2">
+                                        <span class="custom-control-label"> Khác </span>
+                                    </label>
+                                }
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Ngày sinh</label>
+                                <input type="text" class="form-control" id="NgaySinh" name="NgaySinh" value="@Model.NgaySinh.ToString("dd/MM/yyy")" />
+                                @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Số điện thoại</label>
+                                <input type="text" class="form-control" placeholder="" id="SDT" name="SDT" value="@Model.SDT">
+                                @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Địa chỉ</label>
+                                <textarea id="DiaChi" name="DiaChi" rows="1" class="form-control">@Model.DiaChi</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-row mb-3">
+                            <div class="col form-group">
+                                <label>Tên đăng nhập</label>
+                                @Html.EditorFor(model => model.TenDangNhap, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.TenDangNhap, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col form-group">
+                                <label>Mật khẩu</label>
+                                <input type="password" id="MatKhau" name="MatKhau" class="form-control" value="@Model.MatKhau" />
+                                @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <input type="submit" value="Lưu" class="btn btn-warning" />
+                        <button class="btn btn-light" onclick="window.history.go(-1); return false;">Quay Lại</button>
+                    </div> 
+                    <div class="col-md-3">
+                        <img src="@Url.Content(Model.Avatar)" class="img-fluid img-md rounded-circle border" id="previewImg" />
+                        @Html.ValidationMessageFor(model => model.Avatar, "", new { @class = "text-danger" })
+                        <input type="file" class="mt-2" name="ImageUpload" onchange="ShowImagePreview(this, document.getElementById('previewImg'))" />
+                    </div>  
+                </div>
+            </div> 
+        </div> 
+    </main>
+}

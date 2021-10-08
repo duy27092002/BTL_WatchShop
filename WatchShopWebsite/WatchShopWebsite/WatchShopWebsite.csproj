@@ -152,6 +152,7 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -638,8 +639,9 @@
     <Content Include="Views\Customer\Signup.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
-    <Content Include="Views\Product\PageNotFound.cshtml" />
     <Content Include="Views\Customer\CustomerProfile.cshtml" />
+    <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\Customer\EditCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

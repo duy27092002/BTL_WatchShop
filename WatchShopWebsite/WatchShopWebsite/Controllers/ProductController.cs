@@ -14,16 +14,11 @@ namespace WatchShopWebsite.Controllers
         // GET: Product
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             SanPham sanPham = db.SanPhams.Find(id);
 
-            if (sanPham == null)
+            if (sanPham == null || id == null)
             {
-                return RedirectToAction("PageNotFound");
+                return RedirectToAction("PageNotFound", "Error");
             }
 
             // lấy 6 sản phẩm cùng danh mục
@@ -59,11 +54,6 @@ namespace WatchShopWebsite.Controllers
             ViewBag.ViewedProducts = db.SanPhams.Where(t => keys.Contains(t.MaSP));
 
             return View(sanPham);
-        }
-
-        public ActionResult PageNotFound()
-        {
-            return View();
         }
     }
 }

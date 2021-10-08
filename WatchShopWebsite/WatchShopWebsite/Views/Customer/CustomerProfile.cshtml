@@ -1,27 +1,24 @@
-﻿
-@{
-    ViewBag.Title = "CustomerProfile";
+﻿@{
+    ViewBag.Title = "Hồ Sơ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <main>
-
     <article class="card mb-3">
         <div class="card-body">
-
             <figure class="icontext">
                 <div class="icon">
-                    <img class="rounded-circle img-sm border" src="images/avatars/avatar3.jpg">
+                    <img class="rounded-circle img-sm border" src="@ViewBag.GetAvatar">
                 </div>
                 <div class="text">
                     <strong> @Session["Username"] </strong> <br>
-                    <p class="mb-2"> email  </p>
-                    <a href="#" class="btn btn-light btn-sm">Chỉnh sửa</a>
+                    <p class="mb-2"> @ViewBag.GetEmail  </p>
+                    <a href="/Customer/EditCustomer/@Session["IdCustomer"]" class="btn btn-light btn-sm">Chỉnh sửa</a>
                 </div>
             </figure>
             <hr>
             <p>
-                <i class="fa fa-map-marker text-muted"></i> &nbsp; Địa chỉ của tôi:
+                <i class="fa fa-map-marker text-muted"></i> &nbsp; Địa chỉ giao hàng của tôi:
                 <br>
                 Hà Nội
                 <a href="#" class="btn-link"> Chỉnh sửa</a>
@@ -54,10 +51,8 @@
                 </figure>
             </article>
 
-
         </div> <!-- card-body .// -->
     </article> <!-- card.// -->
-
     <article class="card  mb-3">
         <div class="card-body">
             <h5 class="card-title mb-4">Đơn hàng gần đây </h5>
@@ -98,5 +93,4 @@
             <a href="#" class="btn btn-outline-primary btn-block"> Tất cả đơn hàng <i class="fa fa-chevron-down"></i>  </a>
         </div> <!-- card-body .// -->
     </article> <!-- card.// -->
-
 </main>

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -11,6 +14,7 @@ namespace WatchShopWebsite.Controllers
     public class CustomerController : Controller
     {
         private DB_WatchShopEntities db = new DB_WatchShopEntities();
+
         // GET: Customer
         public ActionResult Login()
         {
@@ -62,9 +66,65 @@ namespace WatchShopWebsite.Controllers
             return RedirectToAction("Login");
         }
 
-        public ActionResult CustomerProfile()
+        public ActionResult CustomerProfile(int? id)
         {
+            KhachHang khachHang = db.KhachHangs.Find(id);
+
+            if (khachHang == null || id == null || Session["IdCustomer"] == null)
+            {
+                return RedirectToAction("PageNotFound", "Error");
+            }
+
+            // lấy avatar khách hàng
+            var getUrlImg = khachHang.Avatar.ToString().Replace("~", "../../..");
+            ViewBag.GetAvatar = getUrlImg;
+
+            // lấy email khách hàng
+            ViewBag.GetEmail = khachHang.Email;
+
             return View();
+        }
+
+        public ActionResult EditCustomer(int? id)
+        {
+            KhachHang khachHang = db.KhachHangs.Find(id);
+
+            if (khachHang == null || id == null || Session["IdCustomer"] == null)
+            {
+                return RedirectToAction("PageNotFound", "Error");
+            }
+
+            return View(khachHang);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCustomer(KhachHang khachHang)
+        {
+            if (ModelState.IsValid)
+            {
+                if (khachHang.ImageUpload != null)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(khachHang.ImageUpload.FileName);
+                    string extention = Path.GetExtension(khachHang.ImageUpload.FileName);
+                    fileName += extention;
+                    khachHang.Avatar = "~/Content/images/avatars/" + fileName;
+                    khachHang.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/avatars/"), fileName));
+
+                    db.Entry(khachHang).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    khachHang.Avatar = db.KhachHangs.Where(t => t.MaKH == khachHang.MaKH).Select(t => t.Avatar).FirstOrDefault();
+
+                    db.Entry(khachHang).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return View(khachHang);
         }
     }
 }
