@@ -5,12 +5,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script type="text/javascript">
+    $(function () {
+        $("#addtocart").click(function () {
+            var model = {};
+            //lấy id sản phẩm
+            model.Id = @Model.MaSP;
+            // lấy số lượng đặt hàng
+            model.Quantity = $("#quantity").val();
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AddToCart", "Cart")',
+                data:  JSON.stringify(model) ,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    alert("Thêm giỏ hàng thành công!")
+                    $('#CartCount').text(@Session["count"] + 1);
+                },
+                error: function () {
+                    alert("Lỗi trong khi thêm vào giỏ hàng!");
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
 <!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content bg-white padding-y">
     <div class="container">
         <!-- ============================ ITEM DETAIL ======================== -->
         <div class="row">
             @Html.HiddenFor(model => model.MaSP)
+            @Html.HiddenFor(model => model.SoLuong)
             <aside class="col-md-6">
                 <div class="card">
                     <article class="gallery-wrap">
@@ -67,14 +96,14 @@
                                 <div class="input-group-prepend">
                                     <button class="btn btn-light" type="button" id="button-plus"> + </button>
                                 </div>
-                                <input type="text" class="form-control" value="1">
+                                <input type="text" id="quantity" name="quantity" class="form-control bg-white" value="1" readonly>
                                 <div class="input-group-append">
                                     <button class="btn btn-light" type="button" id="button-minus"> &minus; </button>
                                 </div>
                             </div>
                         </div> <!-- col.// -->
                         <div class="form-group col-md">
-                            <a href="#" class="btn  btn-primary">
+                            <a href="#" class="btn btn-primary" id="addtocart">
                                 <i class="fas fa-shopping-cart"></i> <span class="text">Thêm vào giỏ hàng</span>
                             </a>
                             <a href="#" class="btn btn-light">

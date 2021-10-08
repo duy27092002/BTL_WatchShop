@@ -159,6 +159,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DAO\CartDAO.cs" />
     <Compile Include="Models\EF\CTDonHang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -617,6 +618,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\addtocart.js" />
     <Content Include="Scripts\js\bootstrap.bundle.min.js" />
     <Content Include="Scripts\js\jquery-2.0.0.min.js" />
     <Content Include="Scripts\js\script.js" />
@@ -642,12 +644,11 @@
     <Content Include="Views\Customer\CustomerProfile.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\Customer\EditCustomer.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\DAO\" />
     <Folder Include="Scripts\admin\Export\" />
-    <Folder Include="Views\Cart\" />
     <Folder Include="Views\Order\" />
   </ItemGroup>
   <ItemGroup>

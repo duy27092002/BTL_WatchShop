@@ -22,6 +22,8 @@
     <!-- custom javascript -->
     <script src="~/Scripts/js/script.js" type="text/javascript"></script>
     <script src="~/Scripts/admin/js/uploadImg.js"></script>
+    <script src="~/Scripts/js/addtocart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <b class="screen-overlay"></b>
@@ -81,6 +83,8 @@
                                                 <a class="dropdown-item" href="/Customer/Signup">Đăng ký</a>
                                                 <a class="dropdown-item" href="/Customer/Login">Đăng nhập</a>
                                             }
+
+
                                         </div>
                                     </li>
                                 </ul>
@@ -102,9 +106,17 @@
                                 </a>
                             </div>
                             <div class="widget-header col-3">
-                                <a href="#" class="widget-view">
+                                <a href="/Cart" class="widget-view">
                                     <div class="icon-area">
                                         <i class="fa fa-shopping-cart"></i>
+                                        @if (Session["count"] == null)
+                                        {
+                                            <span class="notify" id="CartCount">0</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="notify" id="CartCount">@Session["count"]</span>
+                                        }
                                     </div>
                                     <small class="text"> Giỏ hàng </small>
                                 </a>

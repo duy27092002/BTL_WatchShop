@@ -1,0 +1,135 @@
+﻿@model IEnumerable<WatchShopWebsite.Models.DAO.CartDAO>
+
+@{
+    ViewBag.Title = "Giỏ Hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#removecart").click(function () {
+            var model = {};
+            //lấy id sản phẩm
+            model.Id = $("#productid").val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Remove", "Cart")',
+                data:  JSON.stringify(model) ,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    $('#CartCount').text(@Session["count"] - 1);
+                    $("#product-" + model.Id).remove();
+                },
+                error: function () {
+                    alert("Lỗi trong khi xóa sản phẩm trong giỏ hàng!");
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+<section class="section-content padding-y">
+    <div class="container">
+        <div class="row">
+            <main class="col-md-9">
+                <div class="card">
+
+                    <table class="table table-borderless table-shopping-cart">
+                        <thead class="text-muted">
+                            <tr class="small text-uppercase">
+                                <th scope="col">Sản phẩm</th>
+                                <th scope="col" width="120">Số lượng</th>
+                                <th scope="col" width="120">Giá (VNĐ)</th>
+                                <th scope="col" class="text-right" width="200"> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr id="product-@item.SanPham.MaSP">
+                                        <td>
+                                            <figure class="itemside">
+                                                <div class="aside">
+                                                    @{
+                                                        var getUrlImg = item.SanPham.HinhAnh.ToString().Replace("~", "../../..");
+                                                        <img src="@getUrlImg" class="img-fluid img-sm" alt="@item.SanPham.TenSP" />
+                                                    }
+                                                    <input type="hidden" value="@item.SanPham.MaSP" id="productid" />
+                                                </div>
+                                                <figcaption class="info">
+                                                    <a href="#" class="title text-dark">@item.SanPham.TenSP</a>
+                                                    <p class="text-muted small">
+                                                        Danh mục: @item.SanPham.DanhMuc.TenDM, <br> Thương hiệu: @item.SanPham.ThuongHieu.TenTH
+                                                    </p>
+                                                </figcaption>
+                                            </figure>
+                                        </td>
+                                        <td>@item.Quantity</td>
+                                        <td>
+                                            <div class="price-wrap">
+                                                <var class="price">@String.Format("{0:0,0}", item.Quantity * item.SanPham.Gia)</var>
+                                                <small class="text-muted"> @String.Format("{0:0,0}", item.SanPham.Gia)/ chiếc </small>
+                                            </div> <!-- price-wrap .// -->
+                                        </td>
+                                        <td class="text-right">
+                                            <a data-original-title="Lưu vào danh sách yêu thích" title="" href="" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
+                                            <a href="" class="btn btn-light" id="removecart"> Xóa</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="4" class="text-center">Không có sản phẩm trong giỏ hàng</td></tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="card-body border-top">
+                        <a href="#" class="btn btn-primary float-md-right"> Mua hàng <i class="fa fa-chevron-right"></i> </a>
+                        <a href="/Home" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Tiếp tục mua sắm </a>
+                    </div>
+                </div> <!-- card.// -->
+
+                <div class="alert alert-success mt-3">
+                    <p class="icontext"><i class="icon text-success fa fa-truck"></i> Giao hàng miễn phí trong vòng 1 đến 2 tuần</p>
+                </div>
+            </main> <!-- col.// -->
+
+            <aside class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label>Bạn có phiếu giảm giá?</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="" placeholder="Mã giảm giá">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-primary">Áp dụng</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div> <!-- card-body.// -->
+                </div>  <!-- card .// -->
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dlist-align">
+                            <dt>Tổng tiền:</dt>
+                            <dd class="text-right">Giá VNĐ</dd>
+                        </dl>
+                        <hr>
+                        <p class="text-center mb-3">
+                            <img src="~/Content/images/misc/payments.png" height="26">
+                        </p>
+
+                    </div> <!-- card-body.// -->
+                </div>  <!-- card .// -->
+            </aside> <!-- col.// -->
+        </div>
+    </div> <!-- container .//  -->
+</section>
