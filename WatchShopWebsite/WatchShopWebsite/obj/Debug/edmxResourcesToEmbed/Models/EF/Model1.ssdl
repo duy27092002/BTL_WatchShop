@@ -44,23 +44,11 @@
       <PropertyRef Name="MaDonHang" />
     </Key>
     <Property Name="MaDonHang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="MaSP" Type="int" Nullable="false" />
+    <Property Name="MaVC" Type="int" Nullable="false" />
     <Property Name="MaKH" Type="int" Nullable="false" />
     <Property Name="TongGia" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="ThoiGianMuaHang" Type="datetime" Nullable="false" />
     <Property Name="TrangThaiDH" Type="tinyint" Nullable="false" />
-  </EntityType>
-  <EntityType Name="GioHang">
-    <Key>
-      <PropertyRef Name="MaGioHang" />
-    </Key>
-    <Property Name="MaGioHang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="MaKH" Type="int" Nullable="false" />
-    <Property Name="Session" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="MaSP" Type="int" Nullable="false" />
-    <Property Name="SoLuongMua" Type="int" Nullable="false" />
-    <Property Name="Gia" Type="int" Nullable="false" />
-    <Property Name="HinhAnh" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="HoaDonNhap">
     <Key>
@@ -172,6 +160,16 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
+  <EntityType Name="ThongTinVanChuyen">
+    <Key>
+      <PropertyRef Name="MaVC" />
+    </Key>
+    <Property Name="MaVC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenNguoiNhan" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CTDiaChi" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="SDT" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="GhiChu" Type="nvarchar" MaxLength="1000" />
+  </EntityType>
   <EntityType Name="ThuongHieu">
     <Key>
       <PropertyRef Name="MaTH" />
@@ -280,31 +278,19 @@
         <PropertyRef Name="MaSP" />
       </Principal>
       <Dependent Role="DonHang">
-        <PropertyRef Name="MaSP" />
+        <PropertyRef Name="MaVC" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_GioHang_KhachHang">
-    <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="1" />
-    <End Role="GioHang" Type="Self.GioHang" Multiplicity="*" />
+  <Association Name="FK_DonHang_ThongTinVanChuyen">
+    <End Role="ThongTinVanChuyen" Type="Self.ThongTinVanChuyen" Multiplicity="1" />
+    <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="KhachHang">
-        <PropertyRef Name="MaKH" />
+      <Principal Role="ThongTinVanChuyen">
+        <PropertyRef Name="MaVC" />
       </Principal>
-      <Dependent Role="GioHang">
-        <PropertyRef Name="MaKH" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_GioHang_SanPham">
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
-    <End Role="GioHang" Type="Self.GioHang" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SanPham">
-        <PropertyRef Name="MaSP" />
-      </Principal>
-      <Dependent Role="GioHang">
-        <PropertyRef Name="MaSP" />
+      <Dependent Role="DonHang">
+        <PropertyRef Name="MaVC" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -422,7 +408,6 @@
     <EntitySet Name="CTHDXuat" EntityType="Self.CTHDXuat" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DonHang" EntityType="Self.DonHang" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="GioHang" EntityType="Self.GioHang" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HoaDonNhap" EntityType="Self.HoaDonNhap" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HoaDonXuat" EntityType="Self.HoaDonXuat" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="KhachHang" EntityType="Self.KhachHang" Schema="dbo" store:Type="Tables" />
@@ -432,6 +417,7 @@
     <EntitySet Name="NhaSanXuat" EntityType="Self.NhaSanXuat" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThongTinVanChuyen" EntityType="Self.ThongTinVanChuyen" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ThuongHieu" EntityType="Self.ThuongHieu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="VaiTro" EntityType="Self.VaiTro" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_CTDonHang_DonHang" Association="Self.FK_CTDonHang_DonHang">
@@ -466,13 +452,9 @@
       <End Role="SanPham" EntitySet="SanPham" />
       <End Role="DonHang" EntitySet="DonHang" />
     </AssociationSet>
-    <AssociationSet Name="FK_GioHang_KhachHang" Association="Self.FK_GioHang_KhachHang">
-      <End Role="KhachHang" EntitySet="KhachHang" />
-      <End Role="GioHang" EntitySet="GioHang" />
-    </AssociationSet>
-    <AssociationSet Name="FK_GioHang_SanPham" Association="Self.FK_GioHang_SanPham">
-      <End Role="SanPham" EntitySet="SanPham" />
-      <End Role="GioHang" EntitySet="GioHang" />
+    <AssociationSet Name="FK_DonHang_ThongTinVanChuyen" Association="Self.FK_DonHang_ThongTinVanChuyen">
+      <End Role="ThongTinVanChuyen" EntitySet="ThongTinVanChuyen" />
+      <End Role="DonHang" EntitySet="DonHang" />
     </AssociationSet>
     <AssociationSet Name="FK_HoaDonNhap_NhaCungCap" Association="Self.FK_HoaDonNhap_NhaCungCap">
       <End Role="NhaCungCap" EntitySet="NhaCungCap" />

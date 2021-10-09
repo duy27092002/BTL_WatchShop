@@ -13,10 +13,10 @@ namespace WatchShopWebsite.Models.EF
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DB_WatchShopEntities : DbContext
+    public partial class DB_WatchShopEntities1 : DbContext
     {
-        public DB_WatchShopEntities()
-            : base("name=DB_WatchShopEntities")
+        public DB_WatchShopEntities1()
+            : base("name=DB_WatchShopEntities1")
         {
         }
     
@@ -30,7 +30,6 @@ namespace WatchShopWebsite.Models.EF
         public virtual DbSet<CTHDXuat> CTHDXuats { get; set; }
         public virtual DbSet<DanhMuc> DanhMucs { get; set; }
         public virtual DbSet<DonHang> DonHangs { get; set; }
-        public virtual DbSet<GioHang> GioHangs { get; set; }
         public virtual DbSet<HoaDonNhap> HoaDonNhaps { get; set; }
         public virtual DbSet<HoaDonXuat> HoaDonXuats { get; set; }
         public virtual DbSet<KhachHang> KhachHangs { get; set; }
@@ -40,6 +39,7 @@ namespace WatchShopWebsite.Models.EF
         public virtual DbSet<NhaSanXuat> NhaSanXuats { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<ThongTinVanChuyen> ThongTinVanChuyens { get; set; }
         public virtual DbSet<ThuongHieu> ThuongHieux { get; set; }
         public virtual DbSet<VaiTro> VaiTroes { get; set; }
     }

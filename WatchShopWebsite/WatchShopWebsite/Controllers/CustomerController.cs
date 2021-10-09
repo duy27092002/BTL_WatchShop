@@ -13,7 +13,7 @@ namespace WatchShopWebsite.Controllers
 {
     public class CustomerController : Controller
     {
-        private DB_WatchShopEntities db = new DB_WatchShopEntities();
+        private DB_WatchShopEntities1 db = new DB_WatchShopEntities1();
 
         // GET: Customer
         public ActionResult Login()

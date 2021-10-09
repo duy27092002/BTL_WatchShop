@@ -24,12 +24,11 @@ namespace WatchShopWebsite.Models.EF
             this.CTHDNhaps = new HashSet<CTHDNhap>();
             this.CTHDXuats = new HashSet<CTHDXuat>();
             this.DonHangs = new HashSet<DonHang>();
-            this.GioHangs = new HashSet<GioHang>();
 
             HinhAnh = "~/Content/images/items/add-product.png";
             LuotXem = 0;
         }
-    
+
         public int MaSP { get; set; }
 
         [Required(ErrorMessage = "Không được để trống tên sản phẩm")]
@@ -50,7 +49,7 @@ namespace WatchShopWebsite.Models.EF
         public byte TrangThai { get; set; }
         public byte LoaiSP { get; set; }
         public Nullable<int> LuotXem { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CTDonHang> CTDonHangs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -60,8 +59,6 @@ namespace WatchShopWebsite.Models.EF
         public virtual DanhMuc DanhMuc { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHang> DonHangs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GioHang> GioHangs { get; set; }
         public virtual NhaSanXuat NhaSanXuat { get; set; }
         public virtual ThuongHieu ThuongHieu { get; set; }
 

@@ -14,7 +14,7 @@ namespace WatchShopWebsite.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class AuthenticationController : Controller
     {
-        private DB_WatchShopEntities db = new DB_WatchShopEntities();
+        private DB_WatchShopEntities1 db = new DB_WatchShopEntities1();
 
         // GET: Admin/Authentication
         public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)

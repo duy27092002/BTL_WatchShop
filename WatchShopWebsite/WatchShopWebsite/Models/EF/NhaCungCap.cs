@@ -20,7 +20,7 @@ namespace WatchShopWebsite.Models.EF
         {
             this.HoaDonNhaps = new HashSet<HoaDonNhap>();
         }
-    
+
         public int MaNCC { get; set; }
 
         [Required(ErrorMessage = "Không được để trống tên")]
@@ -40,7 +40,7 @@ namespace WatchShopWebsite.Models.EF
         [RegularExpression(@"^0[9|3]\d{8}$", ErrorMessage = "Sai định dạng số điện thoại")]
         public string SDT { get; set; }
         public byte TrangThai { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HoaDonNhap> HoaDonNhaps { get; set; }
     }

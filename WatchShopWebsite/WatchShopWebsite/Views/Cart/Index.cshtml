@@ -126,11 +126,27 @@
                             {
                                 <tr><td colspan="4" class="text-center">Không có sản phẩm trong giỏ hàng</td></tr>
                             }
+
+
                         </tbody>
                     </table>
 
                     <div class="card-body border-top">
-                        <a href="#" class="btn btn-primary float-md-right"> Mua hàng <i class="fa fa-chevron-right"></i> </a>
+                        @if (Session["IdCustomer"] != null)
+                        {
+                            if (Session["cart"] != null)
+                            {
+                                <a href="/Order" class="btn btn-primary float-md-right"> Mua hàng <i class="fa fa-chevron-right"></i> </a>
+                            }
+                            else
+                            {
+                                <a href="#" class="btn btn-primary float-md-right"> Mua hàng <i class="fa fa-chevron-right"></i> </a>
+                            }
+                        }
+                        else
+                        {
+                            <a href="/Customer/Login" class="btn btn-primary float-md-right"> Mua hàng <i class="fa fa-chevron-right"></i> </a>
+                        }
                         <a href="/Home" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Tiếp tục mua sắm </a>
                     </div>
                 </div> <!-- card.// -->
@@ -166,7 +182,6 @@
                         <p class="text-center mb-3">
                             <img src="~/Content/images/misc/payments.png" height="26">
                         </p>
-
                     </div> <!-- card-body.// -->
                 </div>  <!-- card .// -->
             </aside> <!-- col.// -->

@@ -11,7 +11,7 @@ namespace WatchShopWebsite.Areas.Admin.Controllers
 {
     public class AccountsController : Controller
     {
-        private DB_WatchShopEntities db = new DB_WatchShopEntities();
+        private DB_WatchShopEntities1 db = new DB_WatchShopEntities1();
 
         // GET: Admin/Account/Login
         public ActionResult Login()

@@ -10,7 +10,7 @@ namespace WatchShopWebsite.Controllers
 {
     public class CartController : Controller
     {
-        private DB_WatchShopEntities db = new DB_WatchShopEntities();
+        private DB_WatchShopEntities1 db = new DB_WatchShopEntities1();
 
         // GET: Cart
         public ActionResult Index()

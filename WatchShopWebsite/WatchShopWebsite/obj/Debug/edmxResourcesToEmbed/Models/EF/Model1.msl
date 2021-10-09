@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="DB_WatchShopModelStoreContainer" CdmEntityContainer="DB_WatchShopEntities">
+  <EntityContainerMapping StorageEntityContainer="DB_WatchShopModelStoreContainer" CdmEntityContainer="DB_WatchShopEntities1">
     <EntitySetMapping Name="CTDonHangs">
       <EntityTypeMapping TypeName="DB_WatchShopModel.CTDonHang">
         <MappingFragment StoreEntitySet="CTDonHang">
@@ -45,24 +45,11 @@
       <EntityTypeMapping TypeName="DB_WatchShopModel.DonHang">
         <MappingFragment StoreEntitySet="DonHang">
           <ScalarProperty Name="MaDonHang" ColumnName="MaDonHang" />
-          <ScalarProperty Name="MaSP" ColumnName="MaSP" />
+          <ScalarProperty Name="MaVC" ColumnName="MaVC" />
           <ScalarProperty Name="MaKH" ColumnName="MaKH" />
           <ScalarProperty Name="TongGia" ColumnName="TongGia" />
           <ScalarProperty Name="ThoiGianMuaHang" ColumnName="ThoiGianMuaHang" />
           <ScalarProperty Name="TrangThaiDH" ColumnName="TrangThaiDH" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GioHangs">
-      <EntityTypeMapping TypeName="DB_WatchShopModel.GioHang">
-        <MappingFragment StoreEntitySet="GioHang">
-          <ScalarProperty Name="MaGioHang" ColumnName="MaGioHang" />
-          <ScalarProperty Name="MaKH" ColumnName="MaKH" />
-          <ScalarProperty Name="Session" ColumnName="Session" />
-          <ScalarProperty Name="MaSP" ColumnName="MaSP" />
-          <ScalarProperty Name="SoLuongMua" ColumnName="SoLuongMua" />
-          <ScalarProperty Name="Gia" ColumnName="Gia" />
-          <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -159,17 +146,17 @@
     <EntitySetMapping Name="SanPhams">
       <EntityTypeMapping TypeName="DB_WatchShopModel.SanPham">
         <MappingFragment StoreEntitySet="SanPham">
-          <ScalarProperty Name="LuotXem" ColumnName="LuotXem" />
-          <ScalarProperty Name="LoaiSP" ColumnName="LoaiSP" />
           <ScalarProperty Name="MaSP" ColumnName="MaSP" />
           <ScalarProperty Name="TenSP" ColumnName="TenSP" />
           <ScalarProperty Name="MaTH" ColumnName="MaTH" />
           <ScalarProperty Name="MaDM" ColumnName="MaDM" />
           <ScalarProperty Name="Gia" ColumnName="Gia" />
           <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+          <ScalarProperty Name="LoaiSP" ColumnName="LoaiSP" />
           <ScalarProperty Name="MaNSX" ColumnName="MaNSX" />
           <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
           <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+          <ScalarProperty Name="LuotXem" ColumnName="LuotXem" />
           <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -185,6 +172,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ThongTinVanChuyens">
+      <EntityTypeMapping TypeName="DB_WatchShopModel.ThongTinVanChuyen">
+        <MappingFragment StoreEntitySet="ThongTinVanChuyen">
+          <ScalarProperty Name="MaVC" ColumnName="MaVC" />
+          <ScalarProperty Name="TenNguoiNhan" ColumnName="TenNguoiNhan" />
+          <ScalarProperty Name="CTDiaChi" ColumnName="CTDiaChi" />
+          <ScalarProperty Name="SDT" ColumnName="SDT" />
+          <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ThuongHieux">
       <EntityTypeMapping TypeName="DB_WatchShopModel.ThuongHieu">
         <MappingFragment StoreEntitySet="ThuongHieu">
@@ -197,9 +195,9 @@
     <EntitySetMapping Name="VaiTroes">
       <EntityTypeMapping TypeName="DB_WatchShopModel.VaiTro">
         <MappingFragment StoreEntitySet="VaiTro">
-          <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
           <ScalarProperty Name="MaVaiTro" ColumnName="MaVaiTro" />
           <ScalarProperty Name="TenVaiTro" ColumnName="TenVaiTro" />
+          <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -27,7 +27,7 @@ namespace WatchShopWebsite.Models.EF
             Avatar = "~/Content/images/avatars/add.jpg";
             TrangThai = 1;
         }
-    
+
         public int MaNV { get; set; }
         public string Avatar { get; set; }
 
@@ -58,7 +58,7 @@ namespace WatchShopWebsite.Models.EF
         [RegularExpression(@"^0[9|3]\d{8}$", ErrorMessage = "Sai định dạng số điện thoại")]
         public string SDT { get; set; }
         public byte TrangThai { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HoaDonNhap> HoaDonNhaps { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -21,7 +21,6 @@ namespace WatchShopWebsite.Models.EF
         public KhachHang()
         {
             this.DonHangs = new HashSet<DonHang>();
-            this.GioHangs = new HashSet<GioHang>();
             this.HoaDonXuats = new HashSet<HoaDonXuat>();
 
             Avatar = "~/Content/images/avatars/add.jpg";
@@ -36,6 +35,7 @@ namespace WatchShopWebsite.Models.EF
 
         [Required(ErrorMessage = "Không được để trống tên đăng nhập")]
         public string TenDangNhap { get; set; }
+
 
         [Required(ErrorMessage = "Không được để trống mật khẩu")]
         [MinLength(8, ErrorMessage = "Mật khẩu ít nhất phải 8 ký tự")]
@@ -58,11 +58,9 @@ namespace WatchShopWebsite.Models.EF
         [RegularExpression(@"^0[9|3]\d{8}$", ErrorMessage = "Sai định dạng số điện thoại")]
         public string SDT { get; set; }
         public byte TrangThai { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHang> DonHangs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GioHang> GioHangs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HoaDonXuat> HoaDonXuats { get; set; }
 

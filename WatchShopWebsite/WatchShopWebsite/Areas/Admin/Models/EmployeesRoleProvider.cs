@@ -9,7 +9,7 @@ namespace WatchShopWebsite.Areas.Admin.Models
 {
     public class EmployeesRoleProvider : RoleProvider
     {
-        private DB_WatchShopEntities db = new DB_WatchShopEntities();
+        private DB_WatchShopEntities1 db = new DB_WatchShopEntities1();
 
         public override string ApplicationName
         {

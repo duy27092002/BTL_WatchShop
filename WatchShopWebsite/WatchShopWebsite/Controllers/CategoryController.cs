@@ -10,7 +10,7 @@ namespace WatchShopWebsite.Controllers
 {
     public class CategoryController : Controller
     {
-        private DB_WatchShopEntities db = new DB_WatchShopEntities();
+        private DB_WatchShopEntities1 db = new DB_WatchShopEntities1();
 
         // GET: Category
         public ActionResult Index(int? id, int pageSize = 8, int pageNumber = 1)

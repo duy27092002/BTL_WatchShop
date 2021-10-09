@@ -13,35 +13,29 @@ namespace WatchShopWebsite.Models.EF
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class NhaSanXuat
+    public partial class ThongTinVanChuyen
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public NhaSanXuat()
+        public ThongTinVanChuyen()
         {
-            this.SanPhams = new HashSet<SanPham>();
+            this.DonHangs = new HashSet<DonHang>();
         }
+    
+        public int MaVC { get; set; }
 
-        public int MaNSX { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống tên")]
-        public string TenNSX { get; set; }
+        [Required(ErrorMessage = "Không được để trống tên người nhận")]
+        public string TenNguoiNhan { get; set; }
 
         [Required(ErrorMessage = "Không được để trống địa chỉ")]
-        public string DiaChi { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống email")]
-        [DataType(DataType.EmailAddress)]
-        [MaxLength(50)]
-        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Sai định dạng email")]
-        public string Email { get; set; }
+        public string CTDiaChi { get; set; }
 
         [Required(ErrorMessage = "Không được để trống số điện thoại")]
         [MaxLength(15, ErrorMessage = "Số điện thoại không được quá 15 ký tự")]
         [RegularExpression(@"^0[9|3]\d{8}$", ErrorMessage = "Sai định dạng số điện thoại")]
         public string SDT { get; set; }
-        public byte TrangThai { get; set; }
-
+        public string GhiChu { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SanPham> SanPhams { get; set; }
+        public virtual ICollection<DonHang> DonHangs { get; set; }
     }
 }

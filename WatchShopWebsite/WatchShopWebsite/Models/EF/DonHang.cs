@@ -21,7 +21,7 @@ namespace WatchShopWebsite.Models.EF
         }
     
         public int MaDonHang { get; set; }
-        public int MaSP { get; set; }
+        public int MaVC { get; set; }
         public int MaKH { get; set; }
         public decimal TongGia { get; set; }
         public System.DateTime ThoiGianMuaHang { get; set; }
@@ -31,5 +31,6 @@ namespace WatchShopWebsite.Models.EF
         public virtual ICollection<CTDonHang> CTDonHangs { get; set; }
         public virtual KhachHang KhachHang { get; set; }
         public virtual SanPham SanPham { get; set; }
+        public virtual ThongTinVanChuyen ThongTinVanChuyen { get; set; }
     }
 }
