@@ -9,33 +9,38 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <form class="col-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                     <h3 class="text-center mb-3">Thông tin vận chuyển</h3>
-                    <div class="form-group mb-3">
-                        <label>Tên người nhận hàng</label>
-                        @Html.EditorFor(model => model.TenNguoiNhan, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.TenNguoiNhan, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group mb-3">
-                        <label>Số điện thoại</label>
-                        @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group mb-3">
-                        <label>Địa chỉ chi tiết</label>
-                        <textarea class="form-control" id="CTDiaChi" name="CTDiaChi" rows="2"></textarea>
-                        @Html.ValidationMessageFor(model => model.CTDiaChi, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group mb-3">
-                        <label>Ghi chú</label>
-                        <textarea class="form-control" id="GhiChu" name="GhiChu" rows="5"></textarea>
-                        @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group mb-3 text-center">
-                        <input type="submit" value="Đặt hàng" class="btn btn-warning" />
-                        <button class="btn btn-light" onclick="window.history.go(-1); return false;">Quay Lại</button>
-                    </div>
-                </form>
+                    @using (Html.BeginForm("Index", "Order", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group mb-3">
+                            <label>Tên người nhận hàng</label>
+                            @Html.EditorFor(model => model.TenNguoiNhan, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TenNguoiNhan, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Số điện thoại</label>
+                            @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Địa chỉ chi tiết</label>
+                            <textarea class="form-control" id="CTDiaChi" name="CTDiaChi" rows="2"></textarea>
+                            @Html.ValidationMessageFor(model => model.CTDiaChi, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Ghi chú</label>
+                            <textarea class="form-control" id="GhiChu" name="GhiChu" rows="5"></textarea>
+                            @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3 text-center">
+                            <input type="submit" value="Đặt hàng" class="btn btn-warning" />
+                            <button class="btn btn-light" onclick="window.history.go(-1); return false;">Quay Lại</button>
+                        </div>
+                    }
+                </div>
                 <div class="col-12 col-sm-12 col-md-8 col-lg-8">
                     <h3 class="text-center mb-3">Đơn hàng</h3>
                     <div class="card table-responsive mb-3">
@@ -50,6 +55,8 @@
                             <tbody>
                                 @foreach (var item in ViewBag.GetCart)
                                 {
+                                    var getTotalMoney = item.Quantity * item.SanPham.Gia;
+                                    getTotalMoney += item.Quantity * item.SanPham.Gia;
                                     <tr>
                                         <td>
                                             <figure class="itemside">
@@ -76,19 +83,12 @@
                                     </tr>
                                 }
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th id="total-money" colspan="3" style="text-align:right;"></th>
+                                </tr>
+                            </tfoot>
                         </table>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <dl class="dlist-align">
-                                <dt>Tổng tiền:</dt>
-                                <dd class="text-right price" id="total-order"></dd>
-                            </dl>
-                            <hr>
-                            <p class="text-center mb-3">
-                                <img src="~/Content/images/misc/payments.png" height="26">
-                            </p>
-                        </div> <!-- card-body.// -->
                     </div>
                 </div>
             </div>
@@ -122,6 +122,6 @@
         var tds = $(e).find('td');
         var val = $(tds[tds.length - 1]).children(0).text();
         total += parseInt(formatString(val));
-        $('#total-order').text(formatNumber(total) + " VNĐ");
+        $('#total-money').text("Tổng Tiền: " + formatNumber(total) + " VNĐ");
     });
 </script>

@@ -20,13 +20,24 @@ namespace WatchShopWebsite.Controllers
 
         public ActionResult AddToCart(int id, int quantity)
         {
+            var getProductInfo = db.SanPhams.Find(id);
+
+            decimal totalMoney = 0;
+            totalMoney += getProductInfo.Gia * quantity;
+
             // nếu chưa có sản phẩm nào trong giỏ hàng thì tạo session mới
             if (Session["cart"] == null)
             {
                 List<CartDAO> cart = new List<CartDAO>();
-                cart.Add(new CartDAO { SanPham = db.SanPhams.Find(id), Quantity = quantity });
+
+                cart.Add(new CartDAO { 
+                    SanPham = getProductInfo,
+                    Quantity = quantity
+                });
+
                 Session["cart"] = cart;
                 Session["count"] = 1;
+                Session["totalMoney"] = totalMoney;
             }
             else
             {
@@ -44,12 +55,16 @@ namespace WatchShopWebsite.Controllers
                 else
                 {
                     //nếu không tồn tại thì thêm sản phẩm vào giỏ hàng
-                    cart.Add(new CartDAO { SanPham = db.SanPhams.Find(id), Quantity = quantity });
+                    cart.Add(new CartDAO { 
+                        SanPham = getProductInfo, 
+                        Quantity = quantity
+                    });
 
                     //Tính lại số sản phẩm trong giỏ hàng
                     Session["count"] = Convert.ToInt32(Session["count"]) + 1;
                 }
                 Session["cart"] = cart;
+                Session["totalMoney"] = totalMoney;
             }
             return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
         }
