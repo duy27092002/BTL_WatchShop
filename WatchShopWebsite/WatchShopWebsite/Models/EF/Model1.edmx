@@ -275,18 +275,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DonHang_SanPham">
-          <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
-          <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SanPham">
-              <PropertyRef Name="MaSP" />
-            </Principal>
-            <Dependent Role="DonHang">
-              <PropertyRef Name="MaVC" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DonHang_ThongTinVanChuyen">
           <End Role="ThongTinVanChuyen" Type="Self.ThongTinVanChuyen" Multiplicity="1" />
           <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
@@ -453,10 +441,6 @@
             <End Role="KhachHang" EntitySet="KhachHang" />
             <End Role="DonHang" EntitySet="DonHang" />
           </AssociationSet>
-          <AssociationSet Name="FK_DonHang_SanPham" Association="Self.FK_DonHang_SanPham">
-            <End Role="SanPham" EntitySet="SanPham" />
-            <End Role="DonHang" EntitySet="DonHang" />
-          </AssociationSet>
           <AssociationSet Name="FK_DonHang_ThongTinVanChuyen" Association="Self.FK_DonHang_ThongTinVanChuyen">
             <End Role="ThongTinVanChuyen" EntitySet="ThongTinVanChuyen" />
             <End Role="DonHang" EntitySet="DonHang" />
@@ -561,7 +545,6 @@
           <Property Name="TrangThaiDH" Type="Byte" Nullable="false" />
           <NavigationProperty Name="CTDonHangs" Relationship="Self.FK_CTDonHang_DonHang" FromRole="DonHang" ToRole="CTDonHang" />
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_DonHang_KhachHang" FromRole="DonHang" ToRole="KhachHang" />
-          <NavigationProperty Name="SanPham" Relationship="Self.FK_DonHang_SanPham" FromRole="DonHang" ToRole="SanPham" />
           <NavigationProperty Name="ThongTinVanChuyen" Relationship="Self.FK_DonHang_ThongTinVanChuyen" FromRole="DonHang" ToRole="ThongTinVanChuyen" />
         </EntityType>
         <EntityType Name="HoaDonNhap">
@@ -682,7 +665,6 @@
           <NavigationProperty Name="CTHDNhaps" Relationship="Self.FK_CTHDNhap_SanPham" FromRole="SanPham" ToRole="CTHDNhap" />
           <NavigationProperty Name="CTHDXuats" Relationship="Self.FK_CTHDXuat_SanPham" FromRole="SanPham" ToRole="CTHDXuat" />
           <NavigationProperty Name="DanhMuc" Relationship="Self.FK_SanPham_DanhMuc" FromRole="SanPham" ToRole="DanhMuc" />
-          <NavigationProperty Name="DonHangs" Relationship="Self.FK_DonHang_SanPham" FromRole="SanPham" ToRole="DonHang" />
           <NavigationProperty Name="NhaSanXuat" Relationship="Self.FK_SanPham_NhaSanXuat" FromRole="SanPham" ToRole="NhaSanXuat" />
           <NavigationProperty Name="ThuongHieu" Relationship="Self.FK_SanPham_ThuongHieu" FromRole="SanPham" ToRole="ThuongHieu" />
         </EntityType>
@@ -821,18 +803,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DonHang_SanPham">
-          <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
-          <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SanPham">
-              <PropertyRef Name="MaSP" />
-            </Principal>
-            <Dependent Role="DonHang">
-              <PropertyRef Name="MaVC" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DonHang_ThongTinVanChuyen">
           <End Role="ThongTinVanChuyen" Type="Self.ThongTinVanChuyen" Multiplicity="1" />
           <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
@@ -941,7 +911,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DB_WatchShopEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DB_WatchShopEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CTDonHangs" EntityType="Self.CTDonHang" />
           <EntitySet Name="CTHDNhaps" EntityType="Self.CTHDNhap" />
           <EntitySet Name="CTHDXuats" EntityType="Self.CTHDXuat" />
@@ -991,10 +961,6 @@
             <End Role="KhachHang" EntitySet="KhachHangs" />
             <End Role="DonHang" EntitySet="DonHangs" />
           </AssociationSet>
-          <AssociationSet Name="FK_DonHang_SanPham" Association="Self.FK_DonHang_SanPham">
-            <End Role="SanPham" EntitySet="SanPhams" />
-            <End Role="DonHang" EntitySet="DonHangs" />
-          </AssociationSet>
           <AssociationSet Name="FK_DonHang_ThongTinVanChuyen" Association="Self.FK_DonHang_ThongTinVanChuyen">
             <End Role="ThongTinVanChuyen" EntitySet="ThongTinVanChuyens" />
             <End Role="DonHang" EntitySet="DonHangs" />
@@ -1037,7 +1003,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DB_WatchShopModelStoreContainer" CdmEntityContainer="DB_WatchShopEntities1">
+        <EntityContainerMapping StorageEntityContainer="DB_WatchShopModelStoreContainer" CdmEntityContainer="DB_WatchShopEntities">
           <EntitySetMapping Name="CTDonHangs">
             <EntityTypeMapping TypeName="DB_WatchShopModel.CTDonHang">
               <MappingFragment StoreEntitySet="CTDonHang">

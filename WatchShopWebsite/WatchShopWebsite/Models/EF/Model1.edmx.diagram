@@ -4,24 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="29531ff3512a41bcb1c97feaef772fa2" Name="Diagram1">
-        <EntityTypeShape EntityType="DB_WatchShopModel.CTDonHang" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.CTHDNhap" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.CTHDXuat" Width="1.5" PointX="5.25" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.DanhMuc" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.DonHang" Width="1.5" PointX="8.25" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.HoaDonNhap" Width="1.5" PointX="3" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.HoaDonXuat" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.KhachHang" Width="1.5" PointX="6" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.NhaCungCap" Width="1.5" PointX="0.75" PointY="13.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.NhanVien" Width="1.5" PointX="0.75" PointY="16.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.NhanVien_VaiTro" Width="1.5" PointX="3" PointY="19.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.NhaSanXuat" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.SanPham" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.sysdiagram" Width="1.5" PointX="7.75" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.ThongTinVanChuyen" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.ThuongHieu" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_WatchShopModel.VaiTro" Width="1.5" PointX="0.75" PointY="21.375" IsExpanded="true" />
+      <Diagram DiagramId="00dfdac2628b4c1faecb40cf11b50b83" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_WatchShopModel.CTDonHang" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.CTHDNhap" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.CTHDXuat" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.DanhMuc" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.DonHang" Width="1.5" PointX="3" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.HoaDonNhap" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.HoaDonXuat" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.KhachHang" Width="1.5" PointX="0.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.NhaCungCap" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.NhanVien" Width="1.5" PointX="0.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.NhanVien_VaiTro" Width="1.5" PointX="3" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.NhaSanXuat" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.SanPham" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.sysdiagram" Width="1.5" PointX="7.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.ThongTinVanChuyen" Width="1.5" PointX="0.75" PointY="24.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.ThuongHieu" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.VaiTro" Width="1.5" PointX="0.75" PointY="27.375" IsExpanded="true" />
         <AssociationConnector Association="DB_WatchShopModel.FK_CTDonHang_DonHang" ManuallyRouted="false" />
         <AssociationConnector Association="DB_WatchShopModel.FK_CTDonHang_SanPham" ManuallyRouted="false" />
         <AssociationConnector Association="DB_WatchShopModel.FK_CTHDNhap_HoaDonNhap" ManuallyRouted="false" />
@@ -30,7 +30,6 @@
         <AssociationConnector Association="DB_WatchShopModel.FK_CTHDXuat_SanPham" ManuallyRouted="false" />
         <AssociationConnector Association="DB_WatchShopModel.FK_SanPham_DanhMuc" ManuallyRouted="false" />
         <AssociationConnector Association="DB_WatchShopModel.FK_DonHang_KhachHang" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_WatchShopModel.FK_DonHang_SanPham" ManuallyRouted="false" />
         <AssociationConnector Association="DB_WatchShopModel.FK_DonHang_ThongTinVanChuyen" ManuallyRouted="false" />
         <AssociationConnector Association="DB_WatchShopModel.FK_HoaDonNhap_NhaCungCap" ManuallyRouted="false" />
         <AssociationConnector Association="DB_WatchShopModel.FK_HoaDonNhap_NhanVien" ManuallyRouted="false" />

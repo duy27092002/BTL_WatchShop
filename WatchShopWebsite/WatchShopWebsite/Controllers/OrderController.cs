@@ -10,7 +10,7 @@ namespace WatchShopWebsite.Controllers
 {
     public class OrderController : Controller
     {
-        private DB_WatchShopEntities1 db = new DB_WatchShopEntities1();
+        private DB_WatchShopEntities db = new DB_WatchShopEntities();
 
         // view đăng ký thông tin vận chuyển
         // GET: Order
@@ -19,7 +19,11 @@ namespace WatchShopWebsite.Controllers
             if (Session["cart"] != null && Session["IdCustomer"] != null)
             {
                 // lấy danh sách sản phẩm trong giỏ hàng
-                ViewBag.GetCart = (List<CartDAO>)Session["cart"];
+                var listCart = (List<CartDAO>)Session["cart"];
+                ViewBag.GetCart = listCart;
+
+                // lấy tổng tiền trong giỏ hàng khi đã sẵn sàng mua hàng
+                Session["TotalMoney"] = listCart.Sum(t => t.SanPham.Gia * t.Quantity);
             } else
             {
                 return RedirectToAction("Index", "Home");
@@ -56,7 +60,7 @@ namespace WatchShopWebsite.Controllers
                 DonHang donHang = new DonHang();
                 donHang.MaKH = int.Parse(Session["IdCustomer"].ToString());
                 donHang.MaVC = getShippingId;
-                donHang.TongGia = (decimal)Session["totalMoney"]; // chưa nghĩ ra cách lấy
+                donHang.TongGia = listCart.Sum(t => t.SanPham.Gia * t.Quantity);
                 donHang.ThoiGianMuaHang = DateTime.Now;
                 donHang.TrangThaiDH = 0; // đặt mặc định trạng thái đơn hàng  = 0, tức là đang xử lý
 
@@ -93,6 +97,9 @@ namespace WatchShopWebsite.Controllers
         // giao diện khi khách hàng đăng ký thông tin vận chuyển và mua hàng thành công
         public ActionResult SuccessfulPurchase()
         {
+            Session.Remove("cart");
+            Session.Remove("count");
+            Session.Remove("TotalMoney");
             return View();
         }
     }

@@ -270,18 +270,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_DonHang_SanPham">
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
-    <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SanPham">
-        <PropertyRef Name="MaSP" />
-      </Principal>
-      <Dependent Role="DonHang">
-        <PropertyRef Name="MaVC" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_DonHang_ThongTinVanChuyen">
     <End Role="ThongTinVanChuyen" Type="Self.ThongTinVanChuyen" Multiplicity="1" />
     <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
@@ -446,10 +434,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_DonHang_KhachHang" Association="Self.FK_DonHang_KhachHang">
       <End Role="KhachHang" EntitySet="KhachHang" />
-      <End Role="DonHang" EntitySet="DonHang" />
-    </AssociationSet>
-    <AssociationSet Name="FK_DonHang_SanPham" Association="Self.FK_DonHang_SanPham">
-      <End Role="SanPham" EntitySet="SanPham" />
       <End Role="DonHang" EntitySet="DonHang" />
     </AssociationSet>
     <AssociationSet Name="FK_DonHang_ThongTinVanChuyen" Association="Self.FK_DonHang_ThongTinVanChuyen">

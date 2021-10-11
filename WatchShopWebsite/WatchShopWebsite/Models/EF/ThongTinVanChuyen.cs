@@ -20,7 +20,7 @@ namespace WatchShopWebsite.Models.EF
         {
             this.DonHangs = new HashSet<DonHang>();
         }
-    
+
         public int MaVC { get; set; }
 
         [Required(ErrorMessage = "Không được để trống tên người nhận")]
@@ -34,7 +34,7 @@ namespace WatchShopWebsite.Models.EF
         [RegularExpression(@"^0[9|3]\d{8}$", ErrorMessage = "Sai định dạng số điện thoại")]
         public string SDT { get; set; }
         public string GhiChu { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHang> DonHangs { get; set; }
     }

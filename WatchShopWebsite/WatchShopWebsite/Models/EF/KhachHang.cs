@@ -26,7 +26,7 @@ namespace WatchShopWebsite.Models.EF
             Avatar = "~/Content/images/avatars/add.jpg";
             TrangThai = 1;
         }
-    
+
         public int MaKH { get; set; }
         public string Avatar { get; set; }
 

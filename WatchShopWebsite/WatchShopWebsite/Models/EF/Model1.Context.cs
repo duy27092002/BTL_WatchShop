@@ -13,10 +13,10 @@ namespace WatchShopWebsite.Models.EF
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DB_WatchShopEntities1 : DbContext
+    public partial class DB_WatchShopEntities : DbContext
     {
-        public DB_WatchShopEntities1()
-            : base("name=DB_WatchShopEntities1")
+        public DB_WatchShopEntities()
+            : base("name=DB_WatchShopEntities")
         {
         }
     

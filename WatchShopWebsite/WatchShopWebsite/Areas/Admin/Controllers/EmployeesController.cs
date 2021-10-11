@@ -15,7 +15,7 @@ namespace WatchShopWebsite.Areas.Admin.Controllers
     [Authorize]
     public class EmployeesController : Controller
     {
-        private DB_WatchShopEntities1 db = new DB_WatchShopEntities1();
+        private DB_WatchShopEntities db = new DB_WatchShopEntities();
 
         // GET: Admin/Employees
         // danh sách tất cả nhân viên

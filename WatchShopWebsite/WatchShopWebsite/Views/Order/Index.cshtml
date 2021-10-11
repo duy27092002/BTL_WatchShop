@@ -55,8 +55,6 @@
                             <tbody>
                                 @foreach (var item in ViewBag.GetCart)
                                 {
-                                    var getTotalMoney = item.Quantity * item.SanPham.Gia;
-                                    getTotalMoney += item.Quantity * item.SanPham.Gia;
                                     <tr>
                                         <td>
                                             <figure class="itemside">
@@ -85,7 +83,9 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th id="total-money" colspan="3" style="text-align:right;"></th>
+                                    <th id="total-money" colspan="3" style="text-align:right;">
+                                        @String.Format("{0:0,0}", Session["TotalMoney"])
+                                    </th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -95,33 +95,3 @@
         </div>
     </div>
 </main>
-
-<script>
-    function formatNumber(nStr) {
-        var groupSeperate = ',';
-        var x = formatString(nStr);
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(x)) {
-            x = x.replace(rgx, '$1' + groupSeperate + '$2');
-        }
-        return x;
-    }
-
-    function formatString(money) {
-        var x = '';
-        var arr = money.toString().split(',');
-        arr.forEach((str) => {
-            x += str;
-        });
-        return x;
-    }
-
-    var trs = $('#tb-cart-order tbody').find('tr');
-    var total = 0;
-    $.each(trs, function (i, e) {
-        var tds = $(e).find('td');
-        var val = $(tds[tds.length - 1]).children(0).text();
-        total += parseInt(formatString(val));
-        $('#total-money').text("Tổng Tiền: " + formatNumber(total) + " VNĐ");
-    });
-</script>

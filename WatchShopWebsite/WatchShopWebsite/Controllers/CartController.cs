@@ -10,7 +10,7 @@ namespace WatchShopWebsite.Controllers
 {
     public class CartController : Controller
     {
-        private DB_WatchShopEntities1 db = new DB_WatchShopEntities1();
+        private DB_WatchShopEntities db = new DB_WatchShopEntities();
 
         // GET: Cart
         public ActionResult Index()
@@ -21,9 +21,6 @@ namespace WatchShopWebsite.Controllers
         public ActionResult AddToCart(int id, int quantity)
         {
             var getProductInfo = db.SanPhams.Find(id);
-
-            decimal totalMoney = 0;
-            totalMoney += getProductInfo.Gia * quantity;
 
             // nếu chưa có sản phẩm nào trong giỏ hàng thì tạo session mới
             if (Session["cart"] == null)
@@ -37,7 +34,6 @@ namespace WatchShopWebsite.Controllers
 
                 Session["cart"] = cart;
                 Session["count"] = 1;
-                Session["totalMoney"] = totalMoney;
             }
             else
             {
@@ -64,7 +60,6 @@ namespace WatchShopWebsite.Controllers
                     Session["count"] = Convert.ToInt32(Session["count"]) + 1;
                 }
                 Session["cart"] = cart;
-                Session["totalMoney"] = totalMoney;
             }
             return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
         }
