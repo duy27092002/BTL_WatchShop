@@ -160,6 +160,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DAO\CartDAO.cs" />
+    <Compile Include="Models\DAO\OrdersDAO.cs" />
     <Compile Include="Models\EF\CTDonHang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -645,8 +646,9 @@
     <Content Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\Customer\EditCustomer.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
-    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\Checkout.cshtml" />
     <Content Include="Views\Order\SuccessfulPurchase.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

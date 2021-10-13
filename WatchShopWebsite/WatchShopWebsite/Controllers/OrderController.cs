@@ -12,9 +12,43 @@ namespace WatchShopWebsite.Controllers
     {
         private DB_WatchShopEntities db = new DB_WatchShopEntities();
 
-        // view đăng ký thông tin vận chuyển
+        // view danh sách đơn hàng của khách hàng (lấy dựa vào id khách hàng)
+        public ActionResult Index(int? id)
+        {
+            KhachHang khachHang = db.KhachHangs.Find(id);
+
+            if (khachHang == null || id == null || Session["IdCustomer"] == null)
+            {
+                return RedirectToAction("PageNotFound", "Error");
+            }
+
+            var getOrders =  from info in db.ThongTinVanChuyens
+                             join o in db.DonHangs on info.MaVC equals o.MaVC
+                             join d in db.CTDonHangs on o.MaDonHang equals d.MaDonHang
+                             where o.MaKH == id
+                             select new OrdersDAO
+                             {
+                                 // thông tin vận chuyển
+                                 Name = info.TenNguoiNhan,
+                                 Address = info.CTDiaChi,
+                                 PhoneNumber = info.SDT,
+
+                                 // thông tin đơn hàng
+                                 OrderID = o.MaDonHang,
+                                 OrderDate = o.ThoiGianMuaHang,
+                                 Total = o.TongGia,
+                                 OrderStatus = o.TrangThaiDH,
+
+                                 // thông tin chi tiết đơn hàng
+                                 OrderDetails = d
+                             };
+
+            return View(getOrders);
+        }
+
+        // view thanh toán đơn hàng + đăng ký thông tin vận chuyển
         // GET: Order
-        public ActionResult Index()
+        public ActionResult Checkout()
         {
             if (Session["cart"] != null && Session["IdCustomer"] != null)
             {
@@ -35,7 +69,7 @@ namespace WatchShopWebsite.Controllers
         // thực hiện đăng ký thông tin vận chuyển
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(ThongTinVanChuyen request)
+        public ActionResult Checkout(ThongTinVanChuyen request)
         {
             if (ModelState.IsValid)
             {

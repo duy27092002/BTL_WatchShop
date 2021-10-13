@@ -76,6 +76,8 @@
                                             @if (Session["IdCustomer"] != null)
                                             {
                                                 <a class="dropdown-item" href="/Customer/CustomerProfile/@Session["IdCustomer"]">Hồ sơ</a>
+                                                <a class="dropdown-item" href="/Order/Index/@Session["IdCustomer"]">Đơn hàng</a>
+                                                <a class="dropdown-item" href="">Sản phẩm yêu thích</a>
                                                 <a class="dropdown-item" href="/Customer/Logout">Đăng xuất</a>
                                             }
                                             else
@@ -83,8 +85,6 @@
                                                 <a class="dropdown-item" href="/Customer/Signup">Đăng ký</a>
                                                 <a class="dropdown-item" href="/Customer/Login">Đăng nhập</a>
                                             }
-
-
                                         </div>
                                     </li>
                                 </ul>
@@ -95,14 +95,6 @@
                                         <i class="fas fa-bell"></i>
                                     </div>
                                     <small class="text"> Thông báo </small>
-                                </a>
-                            </div>
-                            <div class="widget-header col-3">
-                                <a href="#" class="widget-view">
-                                    <div class="icon-area">
-                                        <i class="fa fa-store"></i>
-                                    </div>
-                                    <small class="text"> Đặt hàng </small>
                                 </a>
                             </div>
                             <div class="widget-header col-3">
@@ -121,6 +113,14 @@
                                     <small class="text"> Giỏ hàng </small>
                                 </a>
                             </div>
+                            <div class="widget-header col-3">
+                                <a href="#" class="widget-view">
+                                    <div class="icon-area">
+                                        <i class="fa fa-question-circle"></i>
+                                    </div>
+                                    <small class="text"> Hỗ trợ </small>
+                                </a>
+                            </div>
                         </div> <!-- widgets-wrap.// -->
                     </div> <!-- col.// -->
                 </div> <!-- row.// -->
@@ -133,18 +133,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="main_nav">
                     <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-bars text-muted mr-2"></i> Trang </a>
-                            <div class="dropdown-menu dropdown-large">
-                                <nav class="row">
-                                    <div class="col-12">
-                                        <a href="/Home">Trang chủ</a>
-                                        <a href="/Order">Đơn hàng của tôi</a>
-                                        <a href="">Sản phẩm yêu thích</a>
-                                        <a href="">Cài đặt thông tin vận chuyển</a>
-                                    </div>
-                                </nav> <!--  row end .// -->
-                            </div> <!--  dropdown-menu dropdown-large end.// -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home"> <i class="fa fa-home mr-2"></i> Trang chủ </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/Home/About">Về chúng tôi</a>

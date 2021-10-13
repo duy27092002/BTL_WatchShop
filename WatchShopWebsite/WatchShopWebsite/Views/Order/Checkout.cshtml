@@ -1,0 +1,97 @@
+﻿@model WatchShopWebsite.Models.EF.ThongTinVanChuyen
+
+@{
+    ViewBag.Title = "Thanh Toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                    <h3 class="text-center mb-3">Thông tin vận chuyển</h3>
+                    @using (Html.BeginForm("Checkout", "Order", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group mb-3">
+                            <label>Tên người nhận hàng</label>
+                            @Html.EditorFor(model => model.TenNguoiNhan, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TenNguoiNhan, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Số điện thoại</label>
+                            @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Địa chỉ chi tiết</label>
+                            <textarea class="form-control" id="CTDiaChi" name="CTDiaChi" rows="2"></textarea>
+                            @Html.ValidationMessageFor(model => model.CTDiaChi, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Ghi chú</label>
+                            <textarea class="form-control" id="GhiChu" name="GhiChu" rows="5"></textarea>
+                            @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3 text-center">
+                            <input type="submit" value="Đặt hàng" class="btn btn-warning" />
+                            <button class="btn btn-light" onclick="window.history.go(-1); return false;">Quay Lại</button>
+                        </div>
+                    }
+                </div>
+                <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                    <h3 class="text-center mb-3">Đơn hàng</h3>
+                    <div class="card table-responsive mb-3">
+                        <table class="table table-borderless table-shopping-cart" id="tb-cart-order">
+                            <thead class="text-muted">
+                                <tr class="small text-uppercase">
+                                    <th scope="col">Sản phẩm</th>
+                                    <th scope="col" width="120">Số lượng</th>
+                                    <th scope="col" width="120">Giá (VNĐ)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.GetCart)
+                                {
+                                    <tr>
+                                        <td>
+                                            <figure class="itemside">
+                                                <div class="aside">
+                                                    @{
+                                                        var getUrlImg = item.SanPham.HinhAnh.ToString().Replace("~", "../../..");
+                                                        <img src="@getUrlImg" class="img-fluid img-sm" alt="@item.SanPham.TenSP" />
+                                                    }
+                                                </div>
+                                                <figcaption class="info">
+                                                    <a href="#" class="title text-dark">@item.SanPham.TenSP</a>
+                                                    <p class="text-muted small">
+                                                        Danh mục: @item.SanPham.DanhMuc.TenDM, <br> Thương hiệu: @item.SanPham.ThuongHieu.TenTH
+                                                    </p>
+                                                </figcaption>
+                                            </figure>
+                                        </td>
+                                        <td>@item.Quantity</td>
+                                        <td>
+                                            <div class="price-wrap">
+                                                <var class="price">@String.Format("{0:0,0}", item.Quantity * item.SanPham.Gia)</var>
+                                            </div> <!-- price-wrap .// -->
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th id="total-money" colspan="3" style="text-align:right;">
+                                        @String.Format("{0:0,0}", Session["TotalMoney"]) VNĐ
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

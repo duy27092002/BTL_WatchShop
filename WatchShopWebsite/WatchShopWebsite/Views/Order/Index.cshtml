@@ -1,97 +1,96 @@
-﻿@model WatchShopWebsite.Models.EF.ThongTinVanChuyen
+﻿@model IEnumerable<WatchShopWebsite.Models.DAO.OrdersDAO>
 
 @{
-    ViewBag.Title = "Đăng Ký Thông Tin Vận Chuyển";
+    ViewBag.Title = "Danh Sách Đơn Hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+
 }
 
 <main>
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                    <h3 class="text-center mb-3">Thông tin vận chuyển</h3>
-                    @using (Html.BeginForm("Index", "Order", FormMethod.Post))
-                    {
-                        @Html.AntiForgeryToken()
-
-                        <div class="form-group mb-3">
-                            <label>Tên người nhận hàng</label>
-                            @Html.EditorFor(model => model.TenNguoiNhan, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.TenNguoiNhan, "", new { @class = "text-danger" })
+    @if (Model == null)
+    {
+        <p class="text-center">Bạn chưa có đơn hàng nào!</p>
+        <a href="/Home" class="btn btn-light text-center"> Mua sắm </a>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <article class="card my-4">
+                <header class="card-header">
+                    <a href="#" class="float-right"> <i class="fa fa-print"></i> In</a>
+                    <strong class="d-inline-block mr-3">Mã đơn hàng: @item.OrderID</strong>
+                    <span>
+                        Thời gian đặt hàng:
+                        @{
+                            var getTime = item.OrderDate.ToString("dd/MM/yyyy");
+                        }
+                        @getTime
+                    </span>
+                </header>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h6 class="text-muted">Chuyển tới</h6>
+                            <p>
+                                Người nhận:  @item.Name<br>
+                                Số điện thoại:  @item.PhoneNumber<br>
+                                Địa chỉ: @item.Address
+                            </p>
                         </div>
-                        <div class="form-group mb-3">
-                            <label>Số điện thoại</label>
-                            @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                        <div class="col-md-4">
+                            <h6 class="text-muted">Thanh toán</h6>
+                            <span class="text-success">
+                                Hình thức thanh toán: Tiền mặt
+                            </span>
+                            <p>
+                                <span class="b">Tổng tiền: @String.Format("{0:0,0}", item.Total)  VNĐ </span>
+                            </p>
                         </div>
-                        <div class="form-group mb-3">
-                            <label>Địa chỉ chi tiết</label>
-                            <textarea class="form-control" id="CTDiaChi" name="CTDiaChi" rows="2"></textarea>
-                            @Html.ValidationMessageFor(model => model.CTDiaChi, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group mb-3">
-                            <label>Ghi chú</label>
-                            <textarea class="form-control" id="GhiChu" name="GhiChu" rows="5"></textarea>
-                            @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group mb-3 text-center">
-                            <input type="submit" value="Đặt hàng" class="btn btn-warning" />
-                            <button class="btn btn-light" onclick="window.history.go(-1); return false;">Quay Lại</button>
-                        </div>
-                    }
-                </div>
-                <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                    <h3 class="text-center mb-3">Đơn hàng</h3>
-                    <div class="card table-responsive mb-3">
-                        <table class="table table-borderless table-shopping-cart" id="tb-cart-order">
-                            <thead class="text-muted">
-                                <tr class="small text-uppercase">
-                                    <th scope="col">Sản phẩm</th>
-                                    <th scope="col" width="120">Số lượng</th>
-                                    <th scope="col" width="120">Giá (VNĐ)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in ViewBag.GetCart)
-                                {
-                                    <tr>
-                                        <td>
-                                            <figure class="itemside">
-                                                <div class="aside">
-                                                    @{
-                                                        var getUrlImg = item.SanPham.HinhAnh.ToString().Replace("~", "../../..");
-                                                        <img src="@getUrlImg" class="img-fluid img-sm" alt="@item.SanPham.TenSP" />
-                                                    }
-                                                </div>
-                                                <figcaption class="info">
-                                                    <a href="#" class="title text-dark">@item.SanPham.TenSP</a>
-                                                    <p class="text-muted small">
-                                                        Danh mục: @item.SanPham.DanhMuc.TenDM, <br> Thương hiệu: @item.SanPham.ThuongHieu.TenTH
-                                                    </p>
-                                                </figcaption>
-                                            </figure>
-                                        </td>
-                                        <td>@item.Quantity</td>
-                                        <td>
-                                            <div class="price-wrap">
-                                                <var class="price">@String.Format("{0:0,0}", item.Quantity * item.SanPham.Gia)</var>
-                                            </div> <!-- price-wrap .// -->
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                            <tfoot>
+                    </div> <!-- row.// -->
+                </div> <!-- card-body .// -->
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tbody>
+                            @foreach (var od in item.OrderDetails.DonHang.CTDonHangs.Where(t => t.MaDonHang == item.OrderID))
+                            {
                                 <tr>
-                                    <th id="total-money" colspan="3" style="text-align:right;">
-                                        @String.Format("{0:0,0}", Session["TotalMoney"])
-                                    </th>
+                                    <td width="65">
+                                        @{
+                                            var getUrlImg = od.HinhAnh.ToString().Replace("~", "../../..");
+                                            <img src="@getUrlImg" class="img-xs border img-fluid" alt="@od.SanPham.TenSP" />
+                                        }
+                                    </td>
+                                    <td>
+                                        <p class="title mb-0">@od.SanPham.TenSP</p>
+                                        <var class="price text-muted">
+                                            @String.Format("{0:0,0}", od.Gia * od.SoLuongMua) VNĐ
+                                        </var>
+                                    </td>
+                                    <td width="250">
+                                        <h6>
+                                            @{
+                                                var getOStatus = item.OrderStatus == 0 ? "Đang chờ xử lý"
+                                                    : item.OrderStatus == 1 ? "Đang giao hàng"
+                                                    : "Đã giao hàng";
+                                            }
+                                            @getOStatus
+                                        </h6>
+                                        <div class="dropdown d-inline-block">
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-outline-secondary">Thao tác</a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a href="#" class="dropdown-item">Hoàn trả</a>
+                                                <a href="#" class="dropdown-item">Hủy đơn hàng</a>
+                                            </div>
+                                        </div> <!-- dropdown.// -->
+                                    </td>
                                 </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                            }
+                        </tbody>
+                    </table>
+                </div> <!-- table-responsive .end// -->
+            </article>
+        }
+    }
 </main>
