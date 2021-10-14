@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WatchShopWebsite.Models.DAO;
@@ -13,7 +15,7 @@ namespace WatchShopWebsite.Controllers
         private DB_WatchShopEntities db = new DB_WatchShopEntities();
 
         // view danh sách đơn hàng của khách hàng (lấy dựa vào id khách hàng)
-        public ActionResult Index(int? id)
+        public async Task<ActionResult> Index(int? id)
         {
             KhachHang khachHang = db.KhachHangs.Find(id);
 
@@ -42,6 +44,8 @@ namespace WatchShopWebsite.Controllers
                                  // thông tin chi tiết đơn hàng
                                  OrderDetails = d
                              };
+
+            //ViewData["CTDonHang"] = await db.CTDonHangs.Where(t => t.MaDonHang == id).ToListAsync();
 
             return View(getOrders);
         }

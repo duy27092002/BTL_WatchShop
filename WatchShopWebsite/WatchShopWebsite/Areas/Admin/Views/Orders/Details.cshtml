@@ -1,0 +1,85 @@
+﻿@model WatchShopWebsite.Models.EF.DonHang
+
+@{
+    ViewBag.Title = "Thông Tin Chi Tiết Đơn Hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="shadow container mt-3 py-3">
+    <div class="form-horizontal">
+        <h3 class="text-center mb-3">Khách Hàng</h3>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-striped text-center">
+                <tr>
+                    <th>Tên Khách Hàng</th>
+                    <th>Email</th>
+                    <th>Số Điện Thoại</th>
+                </tr>
+                <tr>
+                    <td>@Model.KhachHang.HoTen</td>
+                    <td>@Model.KhachHang.Email</td>
+                    <td>@Model.KhachHang.SDT</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="shadow container mt-4 py-3">
+    <div class="form-horizontal">
+        <h3 class="text-center mb-3">Thông Tin Vận Chuyển</h3>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-striped text-center">
+                <tr>
+                    <th>Tên Người Nhận</th>
+                    <th>Địa Chỉ Chi Tiết</th>
+                    <th>Số Điện Thoại</th>
+                    <th>Ghi Chú</th>
+                </tr>
+                <tr>
+                    <td>@Model.ThongTinVanChuyen.TenNguoiNhan</td>
+                    <td>@Model.ThongTinVanChuyen.CTDiaChi</td>
+                    <td>@Model.ThongTinVanChuyen.SDT</td>
+                    <td>@Model.ThongTinVanChuyen.GhiChu</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="shadow container mt-4 py-3">
+    <div class="form-horizontal">
+        <h3 class="text-center mb-3">Chi Tiết Đơn Hàng</h3>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-striped text-center">
+                <tr>
+                    <th>Hình Ảnh</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Số Lượng Mua</th>
+                    <th>Đơn Giá</th>
+                </tr>
+                @{
+                    var getOrderDetails = ViewBag.CTDonHang as List<WatchShopWebsite.Models.EF.CTDonHang>;
+                    foreach (var od in getOrderDetails)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    var getUrlImg = od.SanPham.HinhAnh.ToString().Replace("~", "../../..");
+                                    <img src="@getUrlImg" class="img-fluid rounded-circle" style="width:50px" alt="@od.SanPham.TenSP" />
+                                }
+                            </td>
+                            <td>@od.SanPham.TenSP</td>
+                            <td style="text-align:right">@od.SoLuongMua</td>
+                            <td style="text-align:right;">@String.Format("{0:0,0}", od.Gia)</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+
+        <div class="form-group text-center mt-3">
+            @Html.ActionLink("Quay Lại", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-secondary" })
+        </div>
+    </div>
+</div>
