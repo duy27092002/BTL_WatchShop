@@ -15,7 +15,7 @@ namespace WatchShopWebsite.Controllers
         private DB_WatchShopEntities db = new DB_WatchShopEntities();
 
         // view danh sách đơn hàng của khách hàng (lấy dựa vào id khách hàng)
-        public async Task<ActionResult> Index(int? id)
+        public ActionResult Index(int? id)
         {
             KhachHang khachHang = db.KhachHangs.Find(id);
 
@@ -24,28 +24,27 @@ namespace WatchShopWebsite.Controllers
                 return RedirectToAction("PageNotFound", "Error");
             }
 
-            var getOrders =  from info in db.ThongTinVanChuyens
-                             join o in db.DonHangs on info.MaVC equals o.MaVC
-                             join d in db.CTDonHangs on o.MaDonHang equals d.MaDonHang
-                             where o.MaKH == id
-                             select new OrdersDAO
-                             {
-                                 // thông tin vận chuyển
-                                 Name = info.TenNguoiNhan,
-                                 Address = info.CTDiaChi,
-                                 PhoneNumber = info.SDT,
+            var getOrders = from info in db.ThongTinVanChuyens
+                            join o in db.DonHangs on info.MaVC equals o.MaVC
+                            where o.MaKH == id
+                            select new OrdersDAO
+                            {
+                                // thông tin vận chuyển
+                                Name = info.TenNguoiNhan,
+                                Address = info.CTDiaChi,
+                                PhoneNumber = info.SDT,
 
-                                 // thông tin đơn hàng
-                                 OrderID = o.MaDonHang,
-                                 OrderDate = o.ThoiGianMuaHang,
-                                 Total = o.TongGia,
-                                 OrderStatus = o.TrangThaiDH,
+                                // thông tin đơn hàng
+                                OrderID = o.MaDonHang,
+                                OrderDate = o.ThoiGianMuaHang,
+                                Total = o.TongGia,
+                                OrderStatus = o.TrangThaiDH
+                            };
 
-                                 // thông tin chi tiết đơn hàng
-                                 OrderDetails = d
-                             };
-
-            //ViewData["CTDonHang"] = await db.CTDonHangs.Where(t => t.MaDonHang == id).ToListAsync();
+            ViewData["OrderDetails"] = (from o in db.DonHangs
+                           join od in db.CTDonHangs on o.MaDonHang equals od.MaDonHang
+                           where o.MaKH == id
+                           select od).ToList();
 
             return View(getOrders);
         }

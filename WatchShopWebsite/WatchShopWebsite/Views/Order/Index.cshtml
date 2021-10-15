@@ -8,10 +8,14 @@
 }
 
 <main>
-    @if (Model == null)
+    @if (Model.Count() <= 0)
     {
-        <p class="text-center">Bạn chưa có đơn hàng nào!</p>
-        <a href="/Home" class="btn btn-light text-center"> Mua sắm </a>
+        <div class="card">
+            <div class="card-body text-center">
+                <h4>Bạn chưa có đơn hàng nào!</h4>
+                <a href="/Home" class="btn btn-light"> Mua sắm </a>
+            </div>
+        </div>
     }
     else
     {
@@ -53,39 +57,47 @@
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <tbody>
-                            @foreach (var od in item.OrderDetails.DonHang.CTDonHangs.Where(t => t.MaDonHang == item.OrderID))
-                            {
-                                <tr>
-                                    <td width="65">
-                                        @{
-                                            var getUrlImg = od.HinhAnh.ToString().Replace("~", "../../..");
-                                            <img src="@getUrlImg" class="img-xs border img-fluid" alt="@od.SanPham.TenSP" />
-                                        }
-                                    </td>
-                                    <td>
-                                        <p class="title mb-0">@od.SanPham.TenSP</p>
-                                        <var class="price text-muted">
-                                            @String.Format("{0:0,0}", od.Gia * od.SoLuongMua) VNĐ
-                                        </var>
-                                    </td>
-                                    <td width="250">
-                                        <h6>
+                            @{
+                                var orderDetails = ViewBag.OrderDetails as List<WatchShopWebsite.Models.EF.CTDonHang>;
+
+                                foreach (var od in orderDetails.Where(t => t.MaDonHang == item.OrderID))
+                                {
+                                    <tr>
+                                        <td width="65">
                                             @{
-                                                var getOStatus = item.OrderStatus == 0 ? "Đang chờ xử lý"
-                                                    : item.OrderStatus == 1 ? "Đang giao hàng"
-                                                    : "Đã giao hàng";
+                                                var getUrlImg = od.HinhAnh.ToString().Replace("~", "../../..");
+                                                <img src="@getUrlImg" class="img-xs border img-fluid" alt="@od.SanPham.TenSP" />
                                             }
-                                            @getOStatus
-                                        </h6>
-                                        <div class="dropdown d-inline-block">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-outline-secondary">Thao tác</a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">Hoàn trả</a>
-                                                <a href="#" class="dropdown-item">Hủy đơn hàng</a>
+                                        </td>
+                                        <td>
+                                            <p class="title mb-0">@od.SanPham.TenSP</p>
+                                            <var class="price text-muted">
+                                                @String.Format("{0:0,0}", od.Gia * od.SoLuongMua) VNĐ
+                                                <small class="text-muted">/ @od.SoLuongMua chiếc</small>
+                                            </var>
+                                        </td>
+                                        <td width="250">
+                                            <h6>
+                                                @{
+                                                    var getOStatus = item.OrderStatus == 0 ? "Đang chờ xử lý"
+                                                        : item.OrderStatus == 1 ? "Đang giao hàng"
+                                                        : "Giao hàng thành công";
+                                                }
+                                                @getOStatus
+                                            </h6>
+                                            <div class="dropdown d-inline-block">
+                                                @if (item.OrderStatus == 0)
+                                                {
+                                                    <a href="#" class="btn btn-outline-secondary">Hủy đơn hàng</a>
+                                                }
+                                                else if (item.OrderStatus == 2)
+                                                {
+                                                    <a href="#" class="btn btn-outline-secondary">Hoàn trả</a>
+                                                }
                                             </div>
-                                        </div> <!-- dropdown.// -->
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                }
                             }
                         </tbody>
                     </table>
