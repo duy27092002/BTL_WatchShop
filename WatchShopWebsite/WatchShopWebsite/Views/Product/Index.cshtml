@@ -1,0 +1,82 @@
+﻿@model PagedList.IPagedList<WatchShopWebsite.Models.EF.SanPham>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Sản Phẩm Tìm Kiếm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="section-content padding-y">
+    <div class="container">
+        @if (Model == null)
+        {
+            <h5 class="text-center my-3">Không tìm thấy sản phẩm nào</h5>
+        }
+        else
+        {
+            var getType = ViewBag.CurrentType == 0 ? "(Tất cả)"
+                : ViewBag.CurrentType == 1 ? "(Loại đặc biệt)"
+                : ViewBag.CurrentType == 2 ? "(Loại ưu đãi)"
+                : "(Mới nhất)";
+            <h5 class="text-center mb-3">Kết quả tìm kiếm cho: <span class="text-primary">@ViewBag.CurrentFilter @getType</span></h5>
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3">
+                        <figure class="card card-product-grid">
+                            <div class="img-wrap">
+                                <a href="/Product/Details/@item.MaSP">
+                                    @if (item.HinhAnh != null)
+                                    {
+                                        var getUrlImg = item.HinhAnh.ToString().Replace("~", "../../..");
+                                        <img src="@getUrlImg" class="img-fluid" alt="@item.TenSP" />
+                                    }
+                                </a>
+                            </div> <!-- img-wrap.// -->
+                            <figcaption class="info-wrap">
+                                <a href="/Product/Details/@item.MaSP" class="title mb-2">@item.TenSP</a>
+                                <div class="price-wrap">
+                                    <span class="price">@String.Format("{0:0,0}", item.Gia) VNĐ</span>
+                                    <small class="text-muted">/1 chiếc</small>
+                                </div> <!-- price-wrap.// -->
+
+                                <p class="text-muted ">@item.NhaSanXuat.TenNSX</p>
+
+                                <hr>
+
+                                <p class="mb-3">
+                                    <span class="tag"> <i class="fa fa-check"></i> Đã kiểm định</span>
+                                    <span class="tag"> Bảo hành 6 tháng </span>
+                                    <span class="tag"> @item.LuotXem lượt xem </span>
+                                    <span class="tag"> Việt Nam </span>
+                                </p>
+
+                                <label class="custom-control mb-3 custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input">
+                                    <div class="custom-control-label">
+                                        So sánh
+                                    </div>
+                                </label>
+
+                                <a href="#" class="btn btn-outline-primary"> <i class="fa fa-envelope"></i> Liên hệ nhà cung cấp </a>
+
+                            </figcaption>
+                        </figure>
+                    </div>
+                }
+            </div>
+
+            <div>
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { productType = ViewBag.CurrentType, currentFilter = ViewBag.CurrentFilter, page }))
+            </div>
+
+            <div class="box text-center">
+                <p>Bạn có tìm thấy sản phẩm mong muốn không？</p>
+                <a href="" class="btn btn-light">Có</a>
+                <a href="" class="btn btn-light">Không</a>
+            </div>
+        }
+    </div> <!-- container .//  -->
+</section>

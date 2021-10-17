@@ -15,7 +15,7 @@ namespace WatchShopWebsite.Controllers
             // lấy danh mục
             ViewBag.Categories = db.DanhMucs.Where(t => t.TrangThai == 1);
 
-            // lấy 3 sản phẩm phổ biến (có nhiều lượt xem)
+            // lấy 3 sản phẩm phổ biến nhất (có nhiều lượt xem nhất)
             ViewBag.Take3PopularPros = db.SanPhams.Where(t => t.TrangThai == 1)
                 .OrderByDescending(t => t.LuotXem).Take(3);
 
@@ -25,9 +25,9 @@ namespace WatchShopWebsite.Controllers
             // lấy 8 sản phẩm đặc biệt
             ViewBag.SpecialPros = db.SanPhams.Where(t => t.LoaiSP == 1 && t.TrangThai == 1).Take(8);
 
-            // lấy 8 sản phẩm phổ biến (có nhiều lượt xem)
+            // lấy 8 sản phẩm phổ biến (có nhiều lượt xem, loại trừ 3 sp có lượt xem nhiều nhất)
             ViewBag.Take8PopularPros = db.SanPhams.Where(t => t.TrangThai == 1)
-                .OrderByDescending(t => t.LuotXem).Take(8);
+                .OrderByDescending(t => t.LuotXem).Skip(3).Take(8);
 
             // lấy 12 sản phẩm loại thường (cho sp đề xuất)
             ViewBag.RegularPros = db.SanPhams.Where(t => t.TrangThai == 1 && t.LoaiSP == 0).Take(12);

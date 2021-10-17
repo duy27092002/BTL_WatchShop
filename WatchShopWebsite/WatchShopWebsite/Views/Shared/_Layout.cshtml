@@ -37,20 +37,23 @@
                         </a> <!-- brand-wrap.// -->
                     </div>
                     <div class="col-xl-6 col-lg-5 col-md-6">
-                        <form action="#" class="search-header">
+                        <form action="/Product/Index" method="get" class="search-header">
                             <div class="input-group w-100">
-                                <select class="custom-select border-right" name="category_name">
-                                    <option value="">Tất cả</option>
-                                    <option value="">Đặc biệt</option>
-                                    <option value="">Tốt nhất</option>
-                                    <option value="">Mới nhất</option>
-                                </select>
-                                <input type="text" class="form-control" placeholder="Nhập từ khóa...">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit">
-                                        <i class="fa fa-search"></i> Tìm kiếm
-                                    </button>
-                                </div>
+                                @using (Html.BeginForm("Index", "Product", FormMethod.Get))
+                                {
+                                    <select class="custom-select border-right" name="productType">
+                                        <option value="0">Tất cả</option>
+                                        <option value="1">Đặc biệt</option>
+                                        <option value="2">Ưu đãi</option>
+                                        <option value="3">Mới nhất</option>
+                                    </select>
+                                    <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Nhập từ khóa..." value="@ViewBag.CurrentFilter">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="fa fa-search"></i> Tìm kiếm
+                                        </button>
+                                    </div>
+                                }
                             </div>
                         </form> <!-- search-wrap .end// -->
                     </div> <!-- col.// -->

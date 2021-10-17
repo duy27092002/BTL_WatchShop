@@ -19,7 +19,7 @@
     }
     else
     {
-        foreach (var item in Model)
+        foreach (var item in Model.OrderByDescending(t => t.OrderDate))
         {
             <article class="card my-4">
                 <header class="card-header">

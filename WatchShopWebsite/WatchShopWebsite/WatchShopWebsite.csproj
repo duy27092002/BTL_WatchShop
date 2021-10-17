@@ -653,6 +653,7 @@
     <Content Include="Views\Order\Checkout.cshtml" />
     <Content Include="Views\Order\SuccessfulPurchase.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

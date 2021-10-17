@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -12,6 +14,55 @@ namespace WatchShopWebsite.Controllers
     {
         private DB_WatchShopEntities db = new DB_WatchShopEntities();
         // GET: Product
+        public ActionResult Index(string currentFilter, int? productType, string keyword, int? page)
+        {
+            if (keyword != null && productType != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                keyword = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = keyword;
+            ViewBag.CurrentType = productType;
+
+
+            // nếu có chuỗi tìm kiếm thì tiến hành tìm kiếm theo tên sản phẩm
+            if (!String.IsNullOrEmpty(keyword) && productType != null)
+            {
+                // truy vấn danh sách sp trong db
+                var sanPhams = db.SanPhams.Select(t => t);
+
+                if (productType == 0) // lấy tất cả sp
+                {
+                    sanPhams = sanPhams.Where(s => s.TenSP.Contains(keyword) && s.TrangThai == 1).OrderByDescending(s => s.MaSP);
+                }
+                else if (productType == 1) // lấy sp đặc biệt
+                {
+                    sanPhams = sanPhams.Where(s => s.TenSP.Contains(keyword) && s.LoaiSP == 1 && s.TrangThai == 1).OrderByDescending(s => s.MaSP);
+                }
+                else if (productType == 2) // lấy sp ưu đãi
+                {
+                    sanPhams = sanPhams.Where(s => s.TenSP.Contains(keyword) && s.LoaiSP == 2 && s.TrangThai == 1).OrderByDescending(s => s.MaSP);
+                }
+                else if (productType == 3) // lấy sản phẩm mới nhất
+                {
+                    sanPhams = sanPhams.Where(s => s.TenSP.Contains(keyword) && s.TrangThai == 1).OrderByDescending(s => s.MaSP);
+                } else
+                {
+                    return View();
+                }
+
+                int pageSize = 8; // số lượng trên 1 trang
+                int pageNumber = (page ?? 1); // nếu có giá trị của page thì lấy số đó, còn nếu null hoặc rỗng thì trả page = 1
+
+                return View(sanPhams.ToPagedList(pageNumber, pageSize));
+            }
+
+            return View();
+        }
         public ActionResult Details(int? id)
         {
             SanPham sanPham = db.SanPhams.Find(id);
