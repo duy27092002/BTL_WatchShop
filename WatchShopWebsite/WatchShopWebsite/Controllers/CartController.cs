@@ -18,6 +18,7 @@ namespace WatchShopWebsite.Controllers
             return View((List<CartDAO>)Session["cart"]);
         }
 
+        // thêm vào giỏ hàng
         public ActionResult AddToCart(int id, int quantity)
         {
             var getProductInfo = db.SanPhams.Find(id);
@@ -61,6 +62,29 @@ namespace WatchShopWebsite.Controllers
                 }
                 Session["cart"] = cart;
             }
+            return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
+        }
+
+        // thêm vào danh sách yêu thích
+        public ActionResult AddToWishlist(int id)
+        {
+            // tìm sản phẩm theo id
+            var getProductInfo = db.SanPhams.Find(id);
+
+            // nếu tồn tại sản phẩm thì thêm vào danh sách yêu thích, ngược lại thì báo lỗi
+            if (getProductInfo != null)
+            {
+                //db.SPYeuThichs.Add(new {
+                //  MaSP = getProductInfo.MaSP,
+                //  MaKH = Session["IdCustomer"]  
+                //});
+                //db.SaveChanges();
+            }
+            else
+            {
+                return Json(new { Message = "Thất bại", JsonRequestBehavior.AllowGet });
+            }
+
             return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
         }
 

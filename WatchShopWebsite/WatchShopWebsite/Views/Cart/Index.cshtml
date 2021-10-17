@@ -9,6 +9,7 @@
     $(function () {
         getTotal();
 
+        // xóa sản phẩm
         $("#removecart").click(function () {
             var model = {};
             //lấy id sản phẩm
@@ -26,6 +27,27 @@
                 },
                 error: function () {
                     alert("Lỗi trong khi xóa sản phẩm trong giỏ hàng!");
+                }
+            });
+            return false;
+        });
+
+        // thêm sản phẩm vào danh sách yêu thích
+        $("#addtowishlist").click(function () {
+            var model = {};
+            //lấy id sản phẩm
+            model.Id = $("#productid").val();
+            $.ajax({
+                type: "POST",
+                url: "/Cart/AddToWishlist/",
+                data:  JSON.stringify(model) ,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    alert("Đã thêm vào danh sách yêu thích!");
+                },
+                error: function () {
+                    alert("Lỗi trong khi thêm vào danh sách yêu thích!");
                 }
             });
             return false;
@@ -116,7 +138,18 @@
                                             </div> <!-- price-wrap .// -->
                                         </td>
                                         <td class="text-right">
-                                            <a data-original-title="Lưu vào danh sách yêu thích" title="" href="" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
+                                            @if (Session["IdCustomer"] != null)
+                                            {
+                                                <a id="addtowishlist" data-original-title="Lưu vào danh sách yêu thích" title="" href="" class="btn btn-light" data-toggle="tooltip">
+                                                    <i class="fa fa-heart"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a data-original-title="Lưu vào danh sách yêu thích" title="" href="/Customer/Login" class="btn btn-light" data-toggle="tooltip">
+                                                    <i class="fa fa-heart"></i>
+                                                </a>
+                                            }
                                             <a href="" class="btn btn-light" id="removecart"> Xóa</a>
                                         </td>
                                     </tr>
