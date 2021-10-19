@@ -161,6 +161,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SPYeuThiches">
+      <EntityTypeMapping TypeName="DB_WatchShopModel.SPYeuThich">
+        <MappingFragment StoreEntitySet="SPYeuThich">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MaKH" ColumnName="MaKH" />
+          <ScalarProperty Name="MaSP" ColumnName="MaSP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="sysdiagrams">
       <EntityTypeMapping TypeName="DB_WatchShopModel.sysdiagram">
         <MappingFragment StoreEntitySet="sysdiagrams">

@@ -20,13 +20,13 @@ namespace WatchShopWebsite.Models.EF
         {
             this.SanPhams = new HashSet<SanPham>();
         }
-
+    
         public int MaTH { get; set; }
 
         [Required(ErrorMessage = "Không được để trống tên thương hiệu")]
         public string TenTH { get; set; }
         public byte TrangThai { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SanPham> SanPhams { get; set; }
     }

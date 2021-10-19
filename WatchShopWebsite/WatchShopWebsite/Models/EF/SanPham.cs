@@ -23,6 +23,7 @@ namespace WatchShopWebsite.Models.EF
             this.CTDonHangs = new HashSet<CTDonHang>();
             this.CTHDNhaps = new HashSet<CTHDNhap>();
             this.CTHDXuats = new HashSet<CTHDXuat>();
+            this.SPYeuThiches = new HashSet<SPYeuThich>();
 
             HinhAnh = "~/Content/images/items/add-product.png";
             LuotXem = 0;
@@ -58,6 +59,8 @@ namespace WatchShopWebsite.Models.EF
         public virtual DanhMuc DanhMuc { get; set; }
         public virtual NhaSanXuat NhaSanXuat { get; set; }
         public virtual ThuongHieu ThuongHieu { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SPYeuThich> SPYeuThiches { get; set; }
 
         [NotMapped]
         public HttpPostedFileBase ImageUpload { get; set; }

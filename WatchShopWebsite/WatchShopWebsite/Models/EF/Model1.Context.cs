@@ -38,6 +38,7 @@ namespace WatchShopWebsite.Models.EF
         public virtual DbSet<NhanVien_VaiTro> NhanVien_VaiTro { get; set; }
         public virtual DbSet<NhaSanXuat> NhaSanXuats { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
+        public virtual DbSet<SPYeuThich> SPYeuThiches { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<ThongTinVanChuyen> ThongTinVanChuyens { get; set; }
         public virtual DbSet<ThuongHieu> ThuongHieux { get; set; }

@@ -1,33 +1,40 @@
 ﻿@{
     ViewBag.Title = "Liên Hệ";
 }
-<div class="container bg-white shadow">
-    <div class="row my-5">
-        <div class="col-12 col-sm-12 col-md-5 col-lg-5 p-3 bg-light">
-            <form>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="HoTen" name="HoTen" placeholder="Họ và tên" />
+
+<main class="my-4">
+    <article class="card">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-5 col-lg-5 p-3">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="HoTen" name="HoTen" placeholder="Họ và tên" />
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="Email" name="Email" placeholder="Email" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="SDT" name="SDT" placeholder="Số điện thoại" />
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="DiaChi" name="DiaChi" rows="2" placeholder="Địa chỉ"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="NoiDung" name="NoiDung" rows="2" placeholder="Nội dung"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" id="btnContact" name="btnContact" value="Gửi" class="form-control btn btn-sm btn-warning" />
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <input type="email" class="form-control" id="Email" name="Email" placeholder="Email" />
+                <div class="col-12 col-sm-12 col-md-7 col-lg-7 p-3">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8665207022887!2d105.7719123147846!3d21.038026192838156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313455f90fe8ad65%3A0xec38b94cb36de0ab!2zVmnhu4duIEPDtG5nIG5naOG7hyB0aMO0bmcgdGluIFQzSA!5e0!3m2!1svi!2s!4v1633267388777!5m2!1svi!2s"
+                            style="border:0;" allowfullscreen="" loading="lazy" class="w-100 h-100"></iframe>
                 </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="SDT" name="SDT" placeholder="Số điện thoại" />
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" id="DiaChi" name="DiaChi" rows="2" placeholder="Địa chỉ"></textarea>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" id="NoiDung" name="NoiDung" rows="2" placeholder="Nội dung"></textarea>
-                </div>
-                <div class="form-group">
-                    <input type="submit" id="btnContact" name="btnContact" value="Gửi" class="form-control btn btn-sm btn-warning" />
-                </div>
-            </form>
-        </div>
-        <div class="col-12 col-sm-12 col-md-7 col-lg-7 p-3 bg-light">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8665207022887!2d105.7719123147846!3d21.038026192838156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313455f90fe8ad65%3A0xec38b94cb36de0ab!2zVmnhu4duIEPDtG5nIG5naOG7hyB0aMO0bmcgdGluIFQzSA!5e0!3m2!1svi!2s!4v1633267388777!5m2!1svi!2s"
-                    style="border:0;" allowfullscreen="" loading="lazy" class="w-100 h-100"></iframe>
-        </div>
-    </div>
-</div>
+            </div> <!-- row .//  -->
+
+        </div> <!-- card-body.// -->
+    </article>
+</main>

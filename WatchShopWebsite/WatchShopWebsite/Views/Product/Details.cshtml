@@ -16,7 +16,7 @@
             debugger;
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("AddToCart", "Cart")',
+                url: "/Cart/AddToCart/",
                 data:  JSON.stringify(model) ,
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",

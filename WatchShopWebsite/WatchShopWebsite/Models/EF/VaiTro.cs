@@ -20,13 +20,13 @@ namespace WatchShopWebsite.Models.EF
         {
             this.NhanVien_VaiTro = new HashSet<NhanVien_VaiTro>();
         }
-
+    
         public int MaVaiTro { get; set; }
 
         [Required(ErrorMessage = "Không được để trống tên vai trò")]
         public string TenVaiTro { get; set; }
         public byte TrangThai { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NhanVien_VaiTro> NhanVien_VaiTro { get; set; }
     }

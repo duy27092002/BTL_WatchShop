@@ -150,6 +150,14 @@
     <Property Name="LuotXem" Type="int" />
     <Property Name="TrangThai" Type="tinyint" Nullable="false" />
   </EntityType>
+  <EntityType Name="SPYeuThich">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaKH" Type="int" Nullable="false" />
+    <Property Name="MaSP" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
       <PropertyRef Name="diagram_id" />
@@ -390,6 +398,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SPYeuThich_KhachHang">
+    <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="1" />
+    <End Role="SPYeuThich" Type="Self.SPYeuThich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhachHang">
+        <PropertyRef Name="MaKH" />
+      </Principal>
+      <Dependent Role="SPYeuThich">
+        <PropertyRef Name="MaKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SPYeuThich_SanPham">
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
+    <End Role="SPYeuThich" Type="Self.SPYeuThich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SanPham">
+        <PropertyRef Name="MaSP" />
+      </Principal>
+      <Dependent Role="SPYeuThich">
+        <PropertyRef Name="MaSP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="DB_WatchShopModelStoreContainer">
     <EntitySet Name="CTDonHang" EntityType="Self.CTDonHang" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CTHDNhap" EntityType="Self.CTHDNhap" Schema="dbo" store:Type="Tables" />
@@ -404,6 +436,7 @@
     <EntitySet Name="NhanVien_VaiTro" EntityType="Self.NhanVien_VaiTro" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="NhaSanXuat" EntityType="Self.NhaSanXuat" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SPYeuThich" EntityType="Self.SPYeuThich" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ThongTinVanChuyen" EntityType="Self.ThongTinVanChuyen" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ThuongHieu" EntityType="Self.ThuongHieu" Schema="dbo" store:Type="Tables" />
@@ -475,6 +508,14 @@
     <AssociationSet Name="FK_SanPham_ThuongHieu" Association="Self.FK_SanPham_ThuongHieu">
       <End Role="ThuongHieu" EntitySet="ThuongHieu" />
       <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SPYeuThich_KhachHang" Association="Self.FK_SPYeuThich_KhachHang">
+      <End Role="KhachHang" EntitySet="KhachHang" />
+      <End Role="SPYeuThich" EntitySet="SPYeuThich" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SPYeuThich_SanPham" Association="Self.FK_SPYeuThich_SanPham">
+      <End Role="SanPham" EntitySet="SanPham" />
+      <End Role="SPYeuThich" EntitySet="SPYeuThich" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -1,46 +1,43 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Sản Phẩm Yêu Thích";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<main>
+<main class="my-4">
     <article class="card">
         <div class="card-body">
 
             <div class="row">
-                <div class="col-md-6">
-                    <figure class="itemside mb-4">
-                        <div class="aside"><img src="images/items/1.jpg" class="border img-md"></div>
-                        <figcaption class="info">
-                            <a href="#" class="title">Tên SP</a>
-                            <p class="price mb-2">Đơn giá</p>
-                            <a href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Xóa"> <i class="fa fa-times"></i> </a>
-                        </figcaption>
-                    </figure>
-                </div> <!-- col.// -->
-
-                <div class="col-md-6">
-                    <figure class="itemside mb-4">
-                        <div class="aside"><img src="images/items/2.jpg" class="border img-md"></div>
-                        <figcaption class="info">
-                            <a href="#" class="title">Tên SP </a>
-                            <p class="price mb-2">Đơn giá</p>
-                            <a href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Xóa"> <i class="fa fa-times"></i> </a>
-                        </figcaption>
-                    </figure>
-                </div> <!-- col.// -->
-
-                <div class="col-md-6">
-                    <figure class="itemside mb-4">
-                        <div class="aside"><img src="images/items/3.jpg" class="border img-md"></div>
-                        <figcaption class="info">
-                            <a href="#" class="title">Tên SP </a>
-                            <p class="price mb-2">Đơn giá</p>
-                            <a href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Xóa"> <i class="fa fa-times"></i> </a>
-                        </figcaption>
-                    </figure>
-                </div> <!-- col.// -->
+                @if (ViewBag.GetCount <= 0)
+                {
+                    <h5 class="text-center">Bạn chưa có sản phẩm yêu thích nào!</h5>
+                }
+                else
+                {
+                    foreach (var item in ViewBag.GetWishlistByCustomer)
+                    {
+                        <div class="col-md-6" id="prod-@item.SanPham.MaSP">
+                            <figure class="itemside mb-4">
+                                <div class="aside">
+                                    <a href="/Product/Details/@item.SanPham.MaSP">
+                                        @{
+                                            var getUrlImg = item.SanPham.HinhAnh.ToString().Replace("~", "../../..");
+                                            <img src="@getUrlImg" class="border img-md img-fluid" alt="@item.SanPham.TenSP" />
+                                        }
+                                        <input type="hidden" value="@item.SanPham.MaSP" id="productId" />
+                                    </a>
+                                </div>
+                                <figcaption class="info">
+                                    <a href="/Product/Details/@item.SanPham.MaSP" class="title">@item.SanPham.TenSP</a>
+                                    <p class="price mb-2">@String.Format("{0:0,0}", item.SanPham.Gia) VNĐ</p>
+                                    <a id="removewishlist" href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Xóa">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    }
+                }
             </div> <!-- row .//  -->
 
         </div> <!-- card-body.// -->

@@ -22,8 +22,9 @@
     <!-- custom javascript -->
     <script src="~/Scripts/js/script.js" type="text/javascript"></script>
     <script src="~/Scripts/admin/js/uploadImg.js"></script>
-    <script src="~/Scripts/js/addtocart.js"></script>
-    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+    <script src="~/Scripts/js/change-quantity.js"></script>
+    <script src="~/Scripts/js/removecart.js"></script>
+    <script src="~/Scripts/js/wishlist.js"></script>
 </head>
 <body>
     <b class="screen-overlay"></b>
@@ -80,7 +81,7 @@
                                             {
                                                 <a class="dropdown-item" href="/Customer/CustomerProfile/@Session["IdCustomer"]">Hồ sơ</a>
                                                 <a class="dropdown-item" href="/Order/Index/@Session["IdCustomer"]">Đơn hàng</a>
-                                                <a class="dropdown-item" href="">Sản phẩm yêu thích</a>
+                                                <a class="dropdown-item" href="/Wishlist/Index/@Session["IdCustomer"]">Sản phẩm yêu thích</a>
                                                 <a class="dropdown-item" href="/Customer/Logout">Đăng xuất</a>
                                             }
                                             else
@@ -111,6 +112,7 @@
                                         else
                                         {
                                             <span class="notify" id="CartCount">@Session["count"]</span>
+                                            <input type="hidden" id="CartCountHidden" value="@Session["count"]" />
                                         }
                                     </div>
                                     <small class="text"> Giỏ hàng </small>

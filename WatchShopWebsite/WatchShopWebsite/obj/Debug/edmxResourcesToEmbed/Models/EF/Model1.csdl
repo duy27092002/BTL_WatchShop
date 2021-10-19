@@ -103,6 +103,7 @@
     <Property Name="TrangThai" Type="Byte" Nullable="false" />
     <NavigationProperty Name="DonHangs" Relationship="Self.FK_DonHang_KhachHang" FromRole="KhachHang" ToRole="DonHang" />
     <NavigationProperty Name="HoaDonXuats" Relationship="Self.FK_HoaDonXuat_KhachHang" FromRole="KhachHang" ToRole="HoaDonXuat" />
+    <NavigationProperty Name="SPYeuThiches" Relationship="Self.FK_SPYeuThich_KhachHang" FromRole="KhachHang" ToRole="SPYeuThich" />
   </EntityType>
   <EntityType Name="NhaCungCap">
     <Key>
@@ -180,6 +181,17 @@
     <NavigationProperty Name="DanhMuc" Relationship="Self.FK_SanPham_DanhMuc" FromRole="SanPham" ToRole="DanhMuc" />
     <NavigationProperty Name="NhaSanXuat" Relationship="Self.FK_SanPham_NhaSanXuat" FromRole="SanPham" ToRole="NhaSanXuat" />
     <NavigationProperty Name="ThuongHieu" Relationship="Self.FK_SanPham_ThuongHieu" FromRole="SanPham" ToRole="ThuongHieu" />
+    <NavigationProperty Name="SPYeuThiches" Relationship="Self.FK_SPYeuThich_SanPham" FromRole="SanPham" ToRole="SPYeuThich" />
+  </EntityType>
+  <EntityType Name="SPYeuThich">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaKH" Type="Int32" Nullable="false" />
+    <Property Name="MaSP" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="KhachHang" Relationship="Self.FK_SPYeuThich_KhachHang" FromRole="SPYeuThich" ToRole="KhachHang" />
+    <NavigationProperty Name="SanPham" Relationship="Self.FK_SPYeuThich_SanPham" FromRole="SPYeuThich" ToRole="SanPham" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -376,6 +388,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SPYeuThich_KhachHang">
+    <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="1" />
+    <End Role="SPYeuThich" Type="Self.SPYeuThich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhachHang">
+        <PropertyRef Name="MaKH" />
+      </Principal>
+      <Dependent Role="SPYeuThich">
+        <PropertyRef Name="MaKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_NhanVien_VaiTro_NhanVien">
     <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="1" />
     <End Role="NhanVien_VaiTro" Type="Self.NhanVien_VaiTro" Multiplicity="*" />
@@ -424,6 +448,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SPYeuThich_SanPham">
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
+    <End Role="SPYeuThich" Type="Self.SPYeuThich" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SanPham">
+        <PropertyRef Name="MaSP" />
+      </Principal>
+      <Dependent Role="SPYeuThich">
+        <PropertyRef Name="MaSP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="DB_WatchShopEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="CTDonHangs" EntityType="Self.CTDonHang" />
     <EntitySet Name="CTHDNhaps" EntityType="Self.CTHDNhap" />
@@ -438,6 +474,7 @@
     <EntitySet Name="NhanVien_VaiTro" EntityType="Self.NhanVien_VaiTro" />
     <EntitySet Name="NhaSanXuats" EntityType="Self.NhaSanXuat" />
     <EntitySet Name="SanPhams" EntityType="Self.SanPham" />
+    <EntitySet Name="SPYeuThiches" EntityType="Self.SPYeuThich" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="ThongTinVanChuyens" EntityType="Self.ThongTinVanChuyen" />
     <EntitySet Name="ThuongHieux" EntityType="Self.ThuongHieu" />
@@ -494,6 +531,10 @@
       <End Role="NhanVien" EntitySet="NhanViens" />
       <End Role="HoaDonXuat" EntitySet="HoaDonXuats" />
     </AssociationSet>
+    <AssociationSet Name="FK_SPYeuThich_KhachHang" Association="Self.FK_SPYeuThich_KhachHang">
+      <End Role="KhachHang" EntitySet="KhachHangs" />
+      <End Role="SPYeuThich" EntitySet="SPYeuThiches" />
+    </AssociationSet>
     <AssociationSet Name="FK_NhanVien_VaiTro_NhanVien" Association="Self.FK_NhanVien_VaiTro_NhanVien">
       <End Role="NhanVien" EntitySet="NhanViens" />
       <End Role="NhanVien_VaiTro" EntitySet="NhanVien_VaiTro" />
@@ -509,6 +550,10 @@
     <AssociationSet Name="FK_SanPham_ThuongHieu" Association="Self.FK_SanPham_ThuongHieu">
       <End Role="ThuongHieu" EntitySet="ThuongHieux" />
       <End Role="SanPham" EntitySet="SanPhams" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SPYeuThich_SanPham" Association="Self.FK_SPYeuThich_SanPham">
+      <End Role="SanPham" EntitySet="SanPhams" />
+      <End Role="SPYeuThich" EntitySet="SPYeuThiches" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

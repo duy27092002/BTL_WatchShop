@@ -65,29 +65,6 @@ namespace WatchShopWebsite.Controllers
             return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
         }
 
-        // thêm vào danh sách yêu thích
-        public ActionResult AddToWishlist(int id)
-        {
-            // tìm sản phẩm theo id
-            var getProductInfo = db.SanPhams.Find(id);
-
-            // nếu tồn tại sản phẩm thì thêm vào danh sách yêu thích, ngược lại thì báo lỗi
-            if (getProductInfo != null)
-            {
-                //db.SPYeuThichs.Add(new {
-                //  MaSP = getProductInfo.MaSP,
-                //  MaKH = Session["IdCustomer"]  
-                //});
-                //db.SaveChanges();
-            }
-            else
-            {
-                return Json(new { Message = "Thất bại", JsonRequestBehavior.AllowGet });
-            }
-
-            return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
-        }
-
         private int isExist(int id)
         {
             // thiết lập danh sách các sản phẩm đã có trong giỏ hàng
