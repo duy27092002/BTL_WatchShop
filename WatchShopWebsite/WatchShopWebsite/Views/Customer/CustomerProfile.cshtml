@@ -4,7 +4,7 @@
 }
 
 <main>
-    <article class="card mb-3">
+    <article class="card my-4">
         <div class="card-body">
             <figure class="icontext">
                 <div class="icon">
@@ -17,80 +17,40 @@
                 </div>
             </figure>
             <hr>
-            <p>
-                <i class="fa fa-map-marker text-muted"></i> &nbsp; Địa chỉ giao hàng của tôi:
-                <br>
-                Hà Nội
-                <a href="#" class="btn-link"> Chỉnh sửa</a>
-            </p>
 
             <article class="card-group card-stat">
                 <figure class="card bg">
                     <div class="p-3">
-                        <h4 class="title">38</h4>
+                        <h4 class="title">@ViewBag.GetOrdersCount</h4>
                         <span>Đơn hàng</span>
                     </div>
                 </figure>
                 <figure class="card bg">
                     <div class="p-3">
-                        <h4 class="title">5</h4>
+                        <h4 class="title">@ViewBag.GetWishlistsCount</h4>
                         <span>Sản phẩm yêu thích</span>
                     </div>
                 </figure>
                 <figure class="card bg">
                     <div class="p-3">
-                        <h4 class="title">12</h4>
-                        <span>Chờ giao hàng</span>
+                        <h4 class="title">@ViewBag.Processing</h4>
+                        <span>Đơn đang xử lý</span>
                     </div>
                 </figure>
                 <figure class="card bg">
                     <div class="p-3">
-                        <h4 class="title">50</h4>
-                        <span>Các sản phẩm đã giao</span>
+                        <h4 class="title">@ViewBag.PendingDelivery</h4>
+                        <span>Đơn chờ giao hàng</span>
+                    </div>
+                </figure>
+                <figure class="card bg">
+                    <div class="p-3">
+                        <h4 class="title">@ViewBag.Delivered</h4>
+                        <span>Đơn đã giao</span>
                     </div>
                 </figure>
             </article>
 
-        </div> <!-- card-body .// -->
-    </article> <!-- card.// -->
-    <article class="card  mb-3">
-        <div class="card-body">
-            <h5 class="card-title mb-4">Đơn hàng gần đây </h5>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <figure class="itemside  mb-3">
-                        <div class="aside"><img src="images/items/1.jpg" class="border img-sm"></div>
-                        <figcaption class="info">
-                            <time class="text-muted"><i class="fa fa-calendar-alt"></i> 12.09.2019</time>
-                            <p>Great book name goes here </p>
-                            <span class="text-success">Order confirmed </span>
-                        </figcaption>
-                    </figure>
-                </div> <!-- col.// -->
-                <div class="col-md-6">
-                    <figure class="itemside  mb-3">
-                        <div class="aside"><img src="images/items/2.jpg" class="border img-sm"></div>
-                        <figcaption class="info">
-                            <time class="text-muted"><i class="fa fa-calendar-alt"></i> 12.09.2019</time>
-                            <p>How to be rich</p>
-                            <span class="text-success">Departured</span>
-                        </figcaption>
-                    </figure>
-                </div> <!-- col.// -->
-                <div class="col-md-6">
-                    <figure class="itemside mb-3">
-                        <div class="aside"><img src="images/items/3.jpg" class="border img-sm"></div>
-                        <figcaption class="info">
-                            <time class="text-muted"><i class="fa fa-calendar-alt"></i> 12.09.2019</time>
-                            <p>Harry Potter book </p>
-                            <span class="text-success">Shipped  </span>
-                        </figcaption>
-                    </figure>
-                </div> <!-- col.// -->
-            </div> <!-- row.// -->
-
-            <a href="#" class="btn btn-outline-primary btn-block"> Tất cả đơn hàng <i class="fa fa-chevron-down"></i>  </a>
         </div> <!-- card-body .// -->
     </article> <!-- card.// -->
 </main>

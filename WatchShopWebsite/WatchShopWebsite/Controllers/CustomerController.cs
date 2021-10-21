@@ -82,6 +82,21 @@ namespace WatchShopWebsite.Controllers
             // lấy email khách hàng
             ViewBag.GetEmail = khachHang.Email;
 
+            // lấy tổng số đơn hàng
+            ViewBag.GetOrdersCount = db.DonHangs.Where(t => t.MaKH == id).Count();
+
+            // lấy tổng số sản phẩm yêu thích
+            ViewBag.GetWishlistsCount = db.SPYeuThiches.Where(t => t.MaKH == id).Count();
+
+            // lấy tổng số đơn hàng đang chờ xử lý
+            ViewBag.Processing = db.DonHangs.Where(t => t.MaKH == id && t.TrangThaiDH == 0).Count();
+
+            // lấy tổng số đơn hàng đang chờ giao
+            ViewBag.PendingDelivery = db.DonHangs.Where(t => t.MaKH == id && t.TrangThaiDH == 1).Count();
+
+            // lấy tổng số đơn hàng đã giao thành công
+            ViewBag.Delivered = db.DonHangs.Where(t => t.MaKH == id && t.TrangThaiDH == 2).Count();
+
             return View();
         }
 

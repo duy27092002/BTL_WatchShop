@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -53,7 +54,7 @@ namespace WatchShopWebsite.Controllers
         // GET: Order
         public ActionResult Checkout()
         {
-            if (Session["cart"] != null && Session["IdCustomer"] != null)
+            if (Session["cart"] != null && Session["IdCustomer"] != null && Convert.ToInt32(Session["count"]) > 0)
             {
                 // lấy danh sách sản phẩm trong giỏ hàng
                 var listCart = (List<CartDAO>)Session["cart"];
@@ -63,7 +64,7 @@ namespace WatchShopWebsite.Controllers
                 Session["TotalMoney"] = listCart.Sum(t => t.SanPham.Gia * t.Quantity);
             } else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Cart");
             }
 
             return View();
@@ -74,7 +75,19 @@ namespace WatchShopWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Checkout(ThongTinVanChuyen request)
         {
-            if (ModelState.IsValid)
+            if (request.TenNguoiNhan == null)
+            {
+                ViewBag.NameError = "Không được để trống";
+            } else if (request.CTDiaChi == null)
+            {
+                ViewBag.AddressError = "Không được để trống";
+            } else if (request.SDT == null)
+            {
+                ViewBag.PhoneNumberError = "Không được để trống";
+            } else if (!Regex.IsMatch(request.SDT, @"^0[9|3]\d{8}$"))
+            {
+                ViewBag.FormatError = "Số điện thoại không đúng định dạng";
+            } else
             {
                 // gán dữ liệu cho bảng ThongTinVanChuyen
                 ThongTinVanChuyen obj = new ThongTinVanChuyen();
@@ -127,6 +140,10 @@ namespace WatchShopWebsite.Controllers
 
                 return RedirectToAction("SuccessfulPurchase");
             }
+
+            // lấy danh sách sản phẩm trong giỏ hàng
+            var listCart1 = (List<CartDAO>)Session["cart"];
+            ViewBag.GetCart = listCart1;
 
             return View(request);
         }

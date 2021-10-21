@@ -14,21 +14,22 @@
                     @using (Html.BeginForm("Checkout", "Order", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
-
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group mb-3">
                             <label>Tên người nhận hàng</label>
                             @Html.EditorFor(model => model.TenNguoiNhan, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.TenNguoiNhan, "", new { @class = "text-danger" })
+                            <p class="text-danger">@ViewBag.NameError</p>
                         </div>
                         <div class="form-group mb-3">
                             <label>Số điện thoại</label>
                             @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                            <p class="text-danger">@ViewBag.PhoneNumberError</p>
+                            <p class="text-danger">@ViewBag.FormatError</p>
                         </div>
                         <div class="form-group mb-3">
                             <label>Địa chỉ chi tiết</label>
                             <textarea class="form-control" id="CTDiaChi" name="CTDiaChi" rows="2"></textarea>
-                            @Html.ValidationMessageFor(model => model.CTDiaChi, "", new { @class = "text-danger" })
+                            <p class="text-danger">@ViewBag.AddressError</p>
                         </div>
                         <div class="form-group mb-3">
                             <label>Ghi chú</label>
@@ -37,7 +38,7 @@
                         </div>
                         <div class="form-group mb-3 text-center">
                             <input type="submit" value="Đặt hàng" class="btn btn-warning" />
-                            <button class="btn btn-light" onclick="window.history.go(-1); return false;">Quay Lại</button>
+                            <a class="btn btn-light" href="/Cart">Quay Lại</a>
                         </div>
                     }
                 </div>
