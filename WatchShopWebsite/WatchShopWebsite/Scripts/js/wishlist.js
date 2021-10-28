@@ -11,13 +11,13 @@
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function () {
-                alert("Đã thêm vào danh sách yêu thích!");
+                swal("Đã lưu thành công!", "", "success");
             },
             error: function () {
-                alert("Đã có lỗi xảy ra trong khi thêm vào danh sách yêu thích!");
+                swal("Đã có lỗi xảy ra!", "", "error");
             }
         });
-        return false;
+        //return false;
     });
 
     // xóa sản phẩm khỏi danh sách yêu thích
@@ -33,12 +33,12 @@
             contentType: "application/json; charset=utf-8",
             success: function () {
                 $("#prod-" + info.Id).remove();
-                alert("Đã xóa thành công!");
+                swal("Đã xóa thành công!", "", "success");
             },
             error: function () {
-                alert("Đã có lỗi xảy ra trong quá trình xóa!");
+                swal("Đã có lỗi xảy ra!", "", "error");
             }
         });
-        return false;
+        //return false;
     });
 });

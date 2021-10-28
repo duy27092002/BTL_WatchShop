@@ -12,13 +12,13 @@ namespace WatchShopWebsite.Controllers
         private DB_WatchShopEntities db = new DB_WatchShopEntities();
 
         // thêm vào danh sách yêu thích
-        public ActionResult AddToWishlist(int id)
+        public ActionResult AddToWishlist(int? id)
         {
             // tìm sản phẩm theo id
-            var getProductInfo = db.SanPhams.Find(id);
+            SanPham getProductInfo = db.SanPhams.Find(id);
 
             // nếu tồn tại sản phẩm thì thêm vào danh sách yêu thích, ngược lại thì báo lỗi
-            if (getProductInfo != null)
+            if (getProductInfo != null && id != null && Session["IdCustomer"] != null)
             {
                 SPYeuThich wishlist = new SPYeuThich();
                 wishlist.MaKH = (int)Session["IdCustomer"];
@@ -32,11 +32,6 @@ namespace WatchShopWebsite.Controllers
                     db.SaveChanges();
                 }
             }
-            else
-            {
-                return Json(new { Message = "Thất bại", JsonRequestBehavior.AllowGet });
-            }
-
             return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
         }
 
@@ -73,15 +68,6 @@ namespace WatchShopWebsite.Controllers
             db.SaveChanges();
 
             return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

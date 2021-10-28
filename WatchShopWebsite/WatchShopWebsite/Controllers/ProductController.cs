@@ -1,4 +1,5 @@
-﻿using PagedList;
+﻿using Microsoft.AspNetCore.Http;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -80,6 +81,7 @@ namespace WatchShopWebsite.Controllers
             sanPham.LuotXem++;
             db.SaveChanges();
 
+            #region cách 1
             // lấy cookie cũ tên viewed
             var viewed = Request.Cookies["viewed"];
 
@@ -101,8 +103,42 @@ namespace WatchShopWebsite.Controllers
             // lấy List<int> chứa mã sản phẩm đã xem từ cookie
             var keys = viewed.Values.AllKeys.Select(t => int.Parse(t)).ToList();
 
-            // truy vẫn sản phẩm đã xem
+            // truy vấn sản phẩm đã xem
             ViewBag.ViewedProducts = db.SanPhams.Where(t => keys.Contains(t.MaSP));
+            #endregion
+
+            #region cách 2
+            /*// khởi tạo list danh sách sản phẩm đã xem
+            var prodsId = new List<string>();
+
+            // khởi tạo tên của cookie đại diện cho danh sách sp đã xem
+            string viewedByCusId = "viewed-" + (int)Session["IdCustomer"];
+
+            // thêm sp vào danh sách
+            prodsId.Add(id.ToString());
+
+            // lấy cookie cũ
+            var cookie = Request.Cookies[viewedByCusId];
+
+            // nếu chưa có cookie thì tạo mới
+            if (cookie == null)
+            {
+                cookie = new HttpCookie(viewedByCusId, prodsId.ToString());
+            }
+
+            // bổ sung sản phẩm đã xem vào cookie (maKH, maSP)
+            cookie.Values.Add(viewedByCusId, prodsId.ToString());
+
+            // đặt thời gian tồn tại của cookie là 1 ngày = 24h
+            cookie.Expires = DateTime.Now.AddHours(24);
+
+            // gửi cookie về client để lưu lại
+            Response.Cookies.Add(cookie);
+
+            // lấy danh sách chứa mã sản phẩm đã xem từ cookie với key = viewed-(mã khách hàng)
+            var test = new List<string>();
+            test.Add(cookie.Values.AllKeys.Select(t => t.Equals(viewedByCusId)).ToString());*/
+            #endregion
 
             return View(sanPham);
         }
