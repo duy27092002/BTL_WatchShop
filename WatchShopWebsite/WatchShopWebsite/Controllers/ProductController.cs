@@ -81,63 +81,63 @@ namespace WatchShopWebsite.Controllers
             sanPham.LuotXem++;
             db.SaveChanges();
 
-            #region cách 1
-            // lấy cookie cũ tên viewed
-            var viewed = Request.Cookies["viewed"];
-
-            // nếu chưa có cookie thì tạo mới
-            if (viewed == null)
+            #region Duy trì hàng hóa đã xem
+            if (Session["IdCustomer"] != null)
             {
-                viewed = new HttpCookie("viewed");
+                // khởi tạo list danh sách sản phẩm đã xem
+                var prodsId = new List<string>
+                {
+                    // thêm sp vào danh sách
+                    id.ToString()
+                };
+
+                // khởi tạo tên của cookie đại diện cho danh sách sp đã xem
+                string viewedByCusId = "viewed-" + (int)Session["IdCustomer"];
+
+                // lấy cookie cũ
+                var cookie = Request.Cookies[viewedByCusId];
+
+                // nếu chưa có cookie thì tạo mới
+                if (cookie == null)
+                {
+                    cookie = new HttpCookie(viewedByCusId);
+                }
+
+                // bổ sung sản phẩm đã xem vào cookie (maKH, maSP)
+                for (var i = 0; i < prodsId.Count; i++)
+                {
+                    cookie.Values.Add(viewedByCusId, prodsId[i]);
+                }
+
+                // đặt thời gian tồn tại của cookie là 1 ngày = 24h
+                cookie.Expires = DateTime.Now.AddHours(24);
+
+                // gửi cookie về client để lưu lại
+                Response.Cookies.Add(cookie);
+
+                // tạo danh sách chứa mã sản phẩm đã xem từ cookie với key = viewed-(mã khách hàng)
+                var productIdList = new List<int>();
+
+                // cắt chuỗi dạng "1,2" => mảng(string): "1", "2" --- với 1, 2 lần lượt là mã sản phẩm
+                var handleString = cookie[viewedByCusId].Split(',');
+
+                for (var i = 0; i < handleString.Count(); i++)
+                {
+                    int getProductId = Convert.ToInt32(handleString[i]);
+                    productIdList.Add(getProductId);
+                }
+
+                var getProductIdList = productIdList;
+
+                // truy vấn sản phẩm đã xem
+                List<SanPham> viewedPros = new List<SanPham>();
+                foreach (var item in getProductIdList)
+                {
+                    var getProInfo = db.SanPhams.Where(t => t.MaSP.Equals(item)).FirstOrDefault();
+                    viewedPros.Add(getProInfo);
+                }
+                ViewBag.ViewedProducts = viewedPros;
             }
-
-            // bổ sung sản phẩm đã xem vào cookie
-            viewed.Values[id.ToString()] = id.ToString();
-
-            // đặt thời gian tồn tại của cookie là 1 ngày = 24h
-            viewed.Expires = DateTime.Now.AddHours(24);
-
-            // gửi cookie về client để lưu lại
-            Response.Cookies.Add(viewed);
-
-            // lấy List<int> chứa mã sản phẩm đã xem từ cookie
-            var keys = viewed.Values.AllKeys.Select(t => int.Parse(t)).ToList();
-
-            // truy vấn sản phẩm đã xem
-            ViewBag.ViewedProducts = db.SanPhams.Where(t => keys.Contains(t.MaSP));
-            #endregion
-
-            #region cách 2
-            /*// khởi tạo list danh sách sản phẩm đã xem
-            var prodsId = new List<string>();
-
-            // khởi tạo tên của cookie đại diện cho danh sách sp đã xem
-            string viewedByCusId = "viewed-" + (int)Session["IdCustomer"];
-
-            // thêm sp vào danh sách
-            prodsId.Add(id.ToString());
-
-            // lấy cookie cũ
-            var cookie = Request.Cookies[viewedByCusId];
-
-            // nếu chưa có cookie thì tạo mới
-            if (cookie == null)
-            {
-                cookie = new HttpCookie(viewedByCusId, prodsId.ToString());
-            }
-
-            // bổ sung sản phẩm đã xem vào cookie (maKH, maSP)
-            cookie.Values.Add(viewedByCusId, prodsId.ToString());
-
-            // đặt thời gian tồn tại của cookie là 1 ngày = 24h
-            cookie.Expires = DateTime.Now.AddHours(24);
-
-            // gửi cookie về client để lưu lại
-            Response.Cookies.Add(cookie);
-
-            // lấy danh sách chứa mã sản phẩm đã xem từ cookie với key = viewed-(mã khách hàng)
-            var test = new List<string>();
-            test.Add(cookie.Values.AllKeys.Select(t => t.Equals(viewedByCusId)).ToString());*/
             #endregion
 
             return View(sanPham);
