@@ -70,7 +70,7 @@ namespace WatchShopWebsite.Controllers
         {
             KhachHang khachHang = db.KhachHangs.Find(id);
 
-            if (khachHang == null || id == null || Session["IdCustomer"] == null)
+            if (khachHang == null || id == null || Session["IdCustomer"] == null || khachHang.MaKH != (int)Session["IdCustomer"])
             {
                 return RedirectToAction("PageNotFound", "Error");
             }
@@ -104,7 +104,7 @@ namespace WatchShopWebsite.Controllers
         {
             KhachHang khachHang = db.KhachHangs.Find(id);
 
-            if (khachHang == null || id == null || Session["IdCustomer"] == null)
+            if (khachHang == null || id == null || Session["IdCustomer"] == null || khachHang.MaKH != (int)Session["IdCustomer"])
             {
                 return RedirectToAction("PageNotFound", "Error");
             }

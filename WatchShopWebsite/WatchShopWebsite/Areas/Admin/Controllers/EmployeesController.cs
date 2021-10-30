@@ -80,9 +80,9 @@ namespace WatchShopWebsite.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             NhanVien nhanVien = db.NhanViens.Find(id);
-            if (nhanVien == null)
+            if (nhanVien == null || Session["idEmployee"] == null || nhanVien.MaNV != (int)Session["idEmployee"])
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(nhanVien);
         }
@@ -139,9 +139,9 @@ namespace WatchShopWebsite.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             NhanVien nhanVien = db.NhanViens.Find(id);
-            if (nhanVien == null)
+            if (nhanVien == null || Session["idEmployee"] == null || nhanVien.MaNV != (int)Session["idEmployee"])
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(nhanVien);
         }
@@ -189,7 +189,7 @@ namespace WatchShopWebsite.Areas.Admin.Controllers
             NhanVien nhanVien = db.NhanViens.Find(id);
             if (nhanVien == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(nhanVien);
         }
