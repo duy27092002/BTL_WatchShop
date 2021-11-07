@@ -5,6 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .readLess{
+        height:500px;
+        overflow:hidden;
+    }
+</style>
+
 <script type="text/javascript">
     $(function () {
         $("#addtocart").click(function () {
@@ -124,34 +131,85 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <h5 class="title-description">Mô tả</h5>
-                <p>
-                    Lava stone grill, suitable for natural gas, with cast-iron cooking grid, piezo ignition, stainless steel burners, water tank, and thermocouple. Thermostatic adjustable per zone. Comes complete with lava rocks. Adjustable legs. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat.
-                </p>
-                <ul class="list-check">
-                    <li>Chất liệu: Thép không gỉ</li>
-                    <li>Cân nặng: 1kg</li>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">
+                            <h5 class="title-description">Chi tiết sản phẩm</h5>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="evaluate-tab" data-toggle="tab" href="#evaluate" role="tab" aria-controls="evaluate" aria-selected="false">
+                            <h5 class="title-description">Đánh giá</h5>
+                        </a>
+                    </li>
                 </ul>
-                <h5 class="title-description">Thông số kỹ thuật</h5>
-                <table class="table table-bordered">
-                    <tr> <th colspan="2">Cơ bản</th> </tr>
-                    <tr> <td>Type of energy</td><td>Lava stone</td> </tr>
-                    <tr> <td>Number of zones</td><td>2</td> </tr>
-                    <tr> <td>Automatic connection	</td> <td> <i class="fa fa-check text-success"></i> Yes </td></tr>
-                    <tr> <th colspan="2">Kích thước</th> </tr>
-                    <tr> <td>Width</td><td>500mm</td> </tr>
-                    <tr> <td>Depth</td><td>400mm</td> </tr>
-                    <tr> <td>Height	</td><td>700mm</td> </tr>
-                    <tr> <th colspan="2">Chất liệu</th> </tr>
-                    <tr> <td>Exterior</td><td>Stainless steel</td> </tr>
-                    <tr> <td>Interior</td><td>Iron</td> </tr>
-                    <tr> <th colspan="2">Kết nối</th> </tr>
-                    <tr> <td>Heating Type</td><td>Gas</td> </tr>
-                    <tr> <td>Connected load gas</td><td>15 Kw</td> </tr>
-                </table>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+                        <!-- Thu gọn thông tin chi tiết sp nếu nó quá dài -->
+                        <div class="box my-3">
+                            <div class="content-box readLess">
+                                <div class="content">
+                                    @Html.Raw(Model.ChiTietSP)
+                                </div>
+                            </div>
+                            <p class="text-center mt-3">
+                                <input type="hidden" class="btn btn-outline-warning" readonly id="btn-read-more" value="Xem thêm nội dung" />
+                            </p>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="evaluate" role="tabpanel" aria-labelledby="evaluate-tab">
+                        @using (Html.BeginForm("Evaluate", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.MaSP)
+
+                            <div class="form-group my-3">
+                                <input type="hidden" id="MaKH" name="MaKH" value="@Session["IdCustomer"]" />
+                                <input type="hidden" id="ThoiGian" name="ThoiGian" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
+                                <p class="text-danger">@ViewBag.NameError</p>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label>Lời bình</label>
+                                <textarea class="form-control" id="LoiDG" name="LoiDG" rows="5"></textarea>
+                                @*@Html.ValidationMessageFor(model => model.LoiDG, "", new { @class = "text-danger" })*@
+                            </div>
+                            <div class="form-group mb-3">
+                                <p class="mb-1">Hình ảnh minh họa (Nếu cần)</p>
+                                <input type="file" name="illustratingImages" id="illustratingImages" multiple />
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-3" id="previewIllustratingImgs"></div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <p class="mb-1">Đánh giá</p>
+                                <label class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="Diem" value="1">
+                                    <span class="custom-control-label"> 1 </span>
+                                </label>
+                                <label class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="Diem" value="2">
+                                    <span class="custom-control-label"> 2 </span>
+                                </label>
+                                <label class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="Diem" value="3">
+                                    <span class="custom-control-label"> 3 </span>
+                                </label>
+                                <label class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="Diem" value="4">
+                                    <span class="custom-control-label"> 4 </span>
+                                </label>
+                                <label class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" type="radio" name="Diem" value="5">
+                                    <span class="custom-control-label"> 5 </span>
+                                </label>
+                            </div>
+                            <div class="form-group mb-3 text-center">
+                                <input type="submit" value="Gửi" class="btn btn-warning" />
+                            </div>
+                        }
+                    </div>
+                </div>
             </div> <!-- col.// -->
             <aside class="col-md-4">
                 <div class="box">
@@ -172,10 +230,6 @@
                             </div>
                         </article>
                     }
-
-
-
-
                 </div> <!-- box.// -->
             </aside> <!-- col.// -->
         </div> <!-- row.// -->
@@ -183,6 +237,17 @@
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
 <!-- ========================= SECTION  ========================= -->
+<!-- Phần đánh giá, nhận xét sản phẩm của khách hàng -->
+<!-- Chức năng cần có: phân trang, bình luận, thu gọn bình luận hay bài đánh giá nếu nó quá dài or nhiều người bình luận -->
+<section class="padding-bottom-sm">
+    <header class="section-heading heading-line">
+        <h4 class="title-section text-uppercase">Đánh giá - Nhận xét từ khách hàng</h4>
+    </header>
+    <div class="row row-sm">
+        <p class="text-center">Chưa có đánh giá nào!</p>
+    </div> <!-- row.// -->
+</section>
+
 @if (Session["IdCustomer"] != null)
 {
     <section class="padding-bottom-sm">
@@ -212,3 +277,5 @@
     </section>
 }
 <!-- ========================= SECTION CONTENT END// ========================= -->
+
+<script src="~/Scripts/js/readmore-readless.js"></script>

@@ -14,6 +14,7 @@ namespace WatchShopWebsite.Models.EF
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Web;
+    using System.Web.Mvc;
 
     public partial class SanPham
     {
@@ -24,6 +25,7 @@ namespace WatchShopWebsite.Models.EF
             this.CTHDNhaps = new HashSet<CTHDNhap>();
             this.CTHDXuats = new HashSet<CTHDXuat>();
             this.SPYeuThiches = new HashSet<SPYeuThich>();
+            this.DanhGiaSPs = new HashSet<DanhGiaSP>();
 
             HinhAnh = "~/Content/images/items/add-product.png";
             LuotXem = 0;
@@ -50,6 +52,9 @@ namespace WatchShopWebsite.Models.EF
         public byte LoaiSP { get; set; }
         public Nullable<int> LuotXem { get; set; }
 
+        [AllowHtml]
+        public string ChiTietSP { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CTDonHang> CTDonHangs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -61,6 +66,8 @@ namespace WatchShopWebsite.Models.EF
         public virtual ThuongHieu ThuongHieu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SPYeuThich> SPYeuThiches { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DanhGiaSP> DanhGiaSPs { get; set; }
 
         [NotMapped]
         public HttpPostedFileBase ImageUpload { get; set; }

@@ -42,6 +42,12 @@
         <AssociationConnector Association="DB_WatchShopModel.FK_SanPham_NhaSanXuat" ManuallyRouted="false" />
         <AssociationConnector Association="DB_WatchShopModel.FK_SanPham_ThuongHieu" ManuallyRouted="false" />
         <AssociationConnector Association="DB_WatchShopModel.FK_SPYeuThich_SanPham" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.BinhLuan" Width="1.5" PointX="7.5" PointY="17.125" />
+        <EntityTypeShape EntityType="DB_WatchShopModel.DanhGiaSP" Width="1.5" PointX="5.25" PointY="12.875" />
+        <AssociationConnector Association="DB_WatchShopModel.FK_BinhLuan_DanhGiaSP" />
+        <AssociationConnector Association="DB_WatchShopModel.FK_BinhLuan_KhachHang" />
+        <AssociationConnector Association="DB_WatchShopModel.FK_DanhGiaSP_KhachHang" />
+        <AssociationConnector Association="DB_WatchShopModel.FK_DanhGiaSP_SanPham" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

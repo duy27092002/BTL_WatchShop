@@ -15,6 +15,9 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.MaSP)
 
+            @*Trường này nhằm giữ nguyên số lượt xem ban đầu trước khi sửa*@
+            <input type="hidden" id="LuotXem" name="LuotXem" value="@Model.LuotXem" />
+
             <div class="form-group">
                 <label class="form-label fw-bold">Tên</label>
                 <div class="col-md-12">
@@ -78,11 +81,19 @@
                 </div>
 
                 <div class="form-group mb-3 col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label class="form-label fw-bold">Mô Tả</label>
+                    <label class="form-label fw-bold">Mô Tả Ngắn</label>
                     <div class="col-md-12">
                         @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
                     </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label fw-bold">Chi Tiết</label>
+                <div class="col-md-12">
+                    <textarea id="ChinhSuaCTSP" name="ChiTietSP" class="form-control" rows="8">@Model.ChiTietSP</textarea>
+                    @Html.ValidationMessageFor(model => model.ChiTietSP, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -143,4 +154,7 @@
             </div>
         </div>
     </div>
+}
+@section scripts{
+    <script>CKEDITOR.replace("ChinhSuaCTSP");</script>
 }

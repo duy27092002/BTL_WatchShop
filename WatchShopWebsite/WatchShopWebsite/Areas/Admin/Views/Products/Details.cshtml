@@ -75,14 +75,21 @@
             </div>
 
             <div class="form-group mb-3">
-                <label class="form-label fw-bold">Mô Tả</label>
+                <label class="form-label fw-bold">Mô Tả Ngắn</label>
                 <div class="col-md-12">
                     <textarea rows="5" class="form-control bg-white" id="MoTa" name="MoTa" readonly>@Model.MoTa</textarea>
                 </div>
             </div>
 
+            <div class="form-group mb-3">
+                <label class="form-label fw-bold">Chi Tiết</label>
+                <div class="col-md-12">
+                    <textarea rows="5" class="form-control bg-white" id="ChiTietSP" name="ChiTietSP" readonly>@Html.Raw(Model.ChiTietSP)</textarea>
+                </div>
+            </div>
+
             <div class="row">
-                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4">
                     <label class="form-label fw-bold">Loại Đồng Hồ</label>
                     <div class="col-md-12">
                         @{
@@ -93,7 +100,13 @@
                         <input type="text" class="form-control bg-white" id="LoaiSP" name="LoaiSP" readonly value="@getType" />
                     </div>
                 </div>
-                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4">
+                    <label class="form-label fw-bold">Lượt Xem</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control bg-white" id="LuotXem" name="LuotXem" readonly value="@String.Format("{0:0,0}", Model.LuotXem)" />
+                    </div>
+                </div>
+                <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4">
                     <label class="form-label fw-bold">Trạng Thái</label>
                     <div class="col-md-12">
                         @{

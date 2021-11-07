@@ -23,6 +23,8 @@ namespace WatchShopWebsite.Models.EF
             this.DonHangs = new HashSet<DonHang>();
             this.HoaDonXuats = new HashSet<HoaDonXuat>();
             this.SPYeuThiches = new HashSet<SPYeuThich>();
+            this.BinhLuans = new HashSet<BinhLuan>();
+            this.DanhGiaSPs = new HashSet<DanhGiaSP>();
 
             Avatar = "~/Content/images/avatars/add.jpg";
             TrangThai = 1;
@@ -66,6 +68,10 @@ namespace WatchShopWebsite.Models.EF
         public virtual ICollection<HoaDonXuat> HoaDonXuats { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SPYeuThich> SPYeuThiches { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BinhLuan> BinhLuans { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DanhGiaSP> DanhGiaSPs { get; set; }
 
         [NotMapped]
         public HttpPostedFileBase ImageUpload { get; set; }

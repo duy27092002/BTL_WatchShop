@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="shadow container mt-3 py-3">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="form-group mb-3 col-12 col-sm-12 col-md-6 col-lg-6">
                     <label class="form-label fw-bold">Giá Tiền</label>
@@ -76,11 +76,19 @@
                 </div>
 
                 <div class="form-group mb-3 col-12 col-sm-12 col-md-6 col-lg-6">
-                    <label class="form-label fw-bold">Mô Tả</label>
+                    <label class="form-label fw-bold">Mô Tả Ngắn</label>
                     <div class="col-md-12">
                         <textarea id="MoTa" name="MoTa" class="form-control" rows="3"></textarea>
                         @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
                     </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label fw-bold">Chi Tiết</label>
+                <div class="col-md-12">
+                    <textarea id="ChiTietSP" name="ChiTietSP" class="form-control" rows="8"></textarea>
+                    @Html.ValidationMessageFor(model => model.ChiTietSP, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -114,4 +122,7 @@
             </div>
         </div>
     </div>
+}
+@section scripts{
+    <script>CKEDITOR.replace("ChiTietSP");</script>
 }

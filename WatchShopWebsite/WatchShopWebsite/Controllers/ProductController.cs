@@ -142,5 +142,11 @@ namespace WatchShopWebsite.Controllers
 
             return View(sanPham);
         }
+
+        // đánh giá sản phẩm của người dùng
+        public ActionResult Evaluate()
+        {
+            return View();
+        }
     }
 }

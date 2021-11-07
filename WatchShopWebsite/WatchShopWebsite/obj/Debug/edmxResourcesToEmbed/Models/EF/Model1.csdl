@@ -104,6 +104,8 @@
     <NavigationProperty Name="DonHangs" Relationship="Self.FK_DonHang_KhachHang" FromRole="KhachHang" ToRole="DonHang" />
     <NavigationProperty Name="HoaDonXuats" Relationship="Self.FK_HoaDonXuat_KhachHang" FromRole="KhachHang" ToRole="HoaDonXuat" />
     <NavigationProperty Name="SPYeuThiches" Relationship="Self.FK_SPYeuThich_KhachHang" FromRole="KhachHang" ToRole="SPYeuThich" />
+    <NavigationProperty Name="BinhLuans" Relationship="DB_WatchShopModel.FK_BinhLuan_KhachHang" FromRole="KhachHang" ToRole="BinhLuan" />
+    <NavigationProperty Name="DanhGiaSPs" Relationship="DB_WatchShopModel.FK_DanhGiaSP_KhachHang" FromRole="KhachHang" ToRole="DanhGiaSP" />
   </EntityType>
   <EntityType Name="NhaCungCap">
     <Key>
@@ -182,6 +184,8 @@
     <NavigationProperty Name="NhaSanXuat" Relationship="Self.FK_SanPham_NhaSanXuat" FromRole="SanPham" ToRole="NhaSanXuat" />
     <NavigationProperty Name="ThuongHieu" Relationship="Self.FK_SanPham_ThuongHieu" FromRole="SanPham" ToRole="ThuongHieu" />
     <NavigationProperty Name="SPYeuThiches" Relationship="Self.FK_SPYeuThich_SanPham" FromRole="SanPham" ToRole="SPYeuThich" />
+    <Property Name="ChiTietSP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DanhGiaSPs" Relationship="DB_WatchShopModel.FK_DanhGiaSP_SanPham" FromRole="SanPham" ToRole="DanhGiaSP" />
   </EntityType>
   <EntityType Name="SPYeuThich">
     <Key>
@@ -555,5 +559,98 @@
       <End Role="SanPham" EntitySet="SanPhams" />
       <End Role="SPYeuThich" EntitySet="SPYeuThiches" />
     </AssociationSet>
+    <EntitySet Name="BinhLuans" EntityType="DB_WatchShopModel.BinhLuan" />
+    <EntitySet Name="DanhGiaSPs" EntityType="DB_WatchShopModel.DanhGiaSP" />
+    <AssociationSet Name="FK_BinhLuan_DanhGiaSP" Association="DB_WatchShopModel.FK_BinhLuan_DanhGiaSP">
+      <End Role="DanhGiaSP" EntitySet="DanhGiaSPs" />
+      <End Role="BinhLuan" EntitySet="BinhLuans" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BinhLuan_KhachHang" Association="DB_WatchShopModel.FK_BinhLuan_KhachHang">
+      <End Role="KhachHang" EntitySet="KhachHangs" />
+      <End Role="BinhLuan" EntitySet="BinhLuans" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DanhGiaSP_KhachHang" Association="DB_WatchShopModel.FK_DanhGiaSP_KhachHang">
+      <End Role="KhachHang" EntitySet="KhachHangs" />
+      <End Role="DanhGiaSP" EntitySet="DanhGiaSPs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DanhGiaSP_SanPham" Association="DB_WatchShopModel.FK_DanhGiaSP_SanPham">
+      <End Role="SanPham" EntitySet="SanPhams" />
+      <End Role="DanhGiaSP" EntitySet="DanhGiaSPs" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="BinhLuan">
+    <Key>
+      <PropertyRef Name="MaBL" />
+    </Key>
+    <Property Name="MaBL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaKH" Type="Int32" Nullable="false" />
+    <Property Name="MaDG" Type="Int32" Nullable="false" />
+    <Property Name="LoiBL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ThoiGianBL" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="DanhGiaSP" Relationship="DB_WatchShopModel.FK_BinhLuan_DanhGiaSP" FromRole="BinhLuan" ToRole="DanhGiaSP" />
+    <NavigationProperty Name="KhachHang" Relationship="DB_WatchShopModel.FK_BinhLuan_KhachHang" FromRole="BinhLuan" ToRole="KhachHang" />
+  </EntityType>
+  <EntityType Name="DanhGiaSP">
+    <Key>
+      <PropertyRef Name="MaDG" />
+    </Key>
+    <Property Name="MaDG" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaKH" Type="Int32" Nullable="false" />
+    <Property Name="MaSP" Type="Int32" Nullable="false" />
+    <Property Name="LoiDG" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Diem" Type="Byte" Nullable="false" />
+    <Property Name="ThoiGianDG" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LuotThich" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BinhLuans" Relationship="DB_WatchShopModel.FK_BinhLuan_DanhGiaSP" FromRole="DanhGiaSP" ToRole="BinhLuan" />
+    <NavigationProperty Name="KhachHang" Relationship="DB_WatchShopModel.FK_DanhGiaSP_KhachHang" FromRole="DanhGiaSP" ToRole="KhachHang" />
+    <NavigationProperty Name="SanPham" Relationship="DB_WatchShopModel.FK_DanhGiaSP_SanPham" FromRole="DanhGiaSP" ToRole="SanPham" />
+  </EntityType>
+  <Association Name="FK_BinhLuan_DanhGiaSP">
+    <End Type="DB_WatchShopModel.DanhGiaSP" Role="DanhGiaSP" Multiplicity="1" />
+    <End Type="DB_WatchShopModel.BinhLuan" Role="BinhLuan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DanhGiaSP">
+        <PropertyRef Name="MaDG" />
+      </Principal>
+      <Dependent Role="BinhLuan">
+        <PropertyRef Name="MaDG" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BinhLuan_KhachHang">
+    <End Type="DB_WatchShopModel.KhachHang" Role="KhachHang" Multiplicity="1" />
+    <End Type="DB_WatchShopModel.BinhLuan" Role="BinhLuan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhachHang">
+        <PropertyRef Name="MaKH" />
+      </Principal>
+      <Dependent Role="BinhLuan">
+        <PropertyRef Name="MaKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DanhGiaSP_KhachHang">
+    <End Type="DB_WatchShopModel.KhachHang" Role="KhachHang" Multiplicity="1" />
+    <End Type="DB_WatchShopModel.DanhGiaSP" Role="DanhGiaSP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhachHang">
+        <PropertyRef Name="MaKH" />
+      </Principal>
+      <Dependent Role="DanhGiaSP">
+        <PropertyRef Name="MaKH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DanhGiaSP_SanPham">
+    <End Type="DB_WatchShopModel.SanPham" Role="SanPham" Multiplicity="1" />
+    <End Type="DB_WatchShopModel.DanhGiaSP" Role="DanhGiaSP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SanPham">
+        <PropertyRef Name="MaSP" />
+      </Principal>
+      <Dependent Role="DanhGiaSP">
+        <PropertyRef Name="MaSP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
