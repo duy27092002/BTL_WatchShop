@@ -14,6 +14,7 @@ namespace WatchShopWebsite.Controllers
     public class ProductController : Controller
     {
         private DB_WatchShopEntities db = new DB_WatchShopEntities();
+
         // GET: Product
         public ActionResult Index(string currentFilter, int? productType, string keyword, int? page)
         {
@@ -64,6 +65,7 @@ namespace WatchShopWebsite.Controllers
 
             return View();
         }
+
         public ActionResult Details(int? id)
         {
             SanPham sanPham = db.SanPhams.Find(id);
@@ -74,8 +76,11 @@ namespace WatchShopWebsite.Controllers
             }
 
             // lấy 6 sản phẩm cùng danh mục
-            ViewBag.SimilarPros = db.SanPhams.Where(t => t.TrangThai == 1 &&
-                t.MaDM == sanPham.MaDM && t.MaSP != id).Take(6);
+            ViewBag.SimilarPros = db.SanPhams.Where(
+                t => t.TrangThai == 1 &&
+                t.MaDM == sanPham.MaDM &&
+                t.MaSP != id
+                ).Take(6);
 
             // tăng số lượt xem cho mỗi sản phẩm khi người dùng nhấp vào xem chi tiết
             sanPham.LuotXem++;
@@ -84,13 +89,6 @@ namespace WatchShopWebsite.Controllers
             #region Duy trì hàng hóa đã xem
             if (Session["IdCustomer"] != null)
             {
-                // khởi tạo list danh sách sản phẩm đã xem
-                var prodsId = new List<string>
-                {
-                    // thêm sp vào danh sách
-                    id.ToString()
-                };
-
                 // khởi tạo tên của cookie đại diện cho danh sách sp đã xem
                 string viewedByCusId = "viewed-" + (int)Session["IdCustomer"];
 
@@ -103,23 +101,24 @@ namespace WatchShopWebsite.Controllers
                     cookie = new HttpCookie(viewedByCusId);
                 }
 
-                // bổ sung sản phẩm đã xem vào cookie (maKH, maSP)
-                for (var i = 0; i < prodsId.Count; i++)
+                // nếu k trùng lặp mã sp
+                if (CheckViewedProd(id) != -1) 
                 {
-                    cookie.Values.Add(viewedByCusId, prodsId[i]);
+                    // bổ sung sản phẩm đã xem vào cookie (viewedByCusId, maSP)
+                    cookie.Values.Add(viewedByCusId, id.ToString());
+
+                    // đặt thời gian tồn tại của cookie là 1 ngày = 24h
+                    cookie.Expires = DateTime.Now.AddHours(24);
+
+                    // gửi cookie về client để lưu lại
+                    Response.Cookies.Add(cookie);
                 }
-
-                // đặt thời gian tồn tại của cookie là 1 ngày = 24h
-                cookie.Expires = DateTime.Now.AddHours(24);
-
-                // gửi cookie về client để lưu lại
-                Response.Cookies.Add(cookie);
-
-                // tạo danh sách chứa mã sản phẩm đã xem từ cookie với key = viewed-(mã khách hàng)
-                var productIdList = new List<int>();
 
                 // cắt chuỗi dạng "1,2" => mảng(string): "1", "2" --- với 1, 2 lần lượt là mã sản phẩm
                 var handleString = cookie[viewedByCusId].Split(',');
+
+                // tạo danh sách chứa mã sản phẩm đã xem từ cookie với key = viewed-(mã khách hàng)
+                var productIdList = new List<int>();
 
                 for (var i = 0; i < handleString.Count(); i++)
                 {
@@ -127,20 +126,55 @@ namespace WatchShopWebsite.Controllers
                     productIdList.Add(getProductId);
                 }
 
-                var getProductIdList = productIdList;
-
                 // truy vấn sản phẩm đã xem
                 List<SanPham> viewedPros = new List<SanPham>();
-                foreach (var item in getProductIdList)
+                foreach (var item in productIdList)
                 {
                     var getProInfo = db.SanPhams.Where(t => t.MaSP.Equals(item)).FirstOrDefault();
                     viewedPros.Add(getProInfo);
                 }
+
                 ViewBag.ViewedProducts = viewedPros;
             }
             #endregion
 
             return View(sanPham);
+        }
+
+        // kiểm tra xem trong cookie của khách hàng có sp đã xem trùng lặp k?
+        private int CheckViewedProd(int? id)
+        {
+            string viewedByCusId = "viewed-" + (int)Session["IdCustomer"];
+
+            // lấy cookie cũ
+            var cookie = Request.Cookies[viewedByCusId];
+
+            // nếu chưa có cookie thì tạo mới
+            if (cookie == null)
+            {
+                cookie = new HttpCookie(viewedByCusId);
+            }
+
+            // lấy danh sách mã sp trong cookie khách hàng
+            var getViewedProdByCookie = cookie[viewedByCusId];
+
+            // nếu đã tồn tại cookie của khách hàng
+            if (getViewedProdByCookie != null)
+            {
+                var handleString = cookie[viewedByCusId].Split(',');
+                // kiểm tra sự trùng lặp
+                for (var x = 0; x < handleString.Count(); x++)
+                {
+                    if (Convert.ToInt32(handleString[x]) == id)
+                    {
+                        // nếu trùng lặp
+                        return -1;
+                    }
+                }
+            }
+
+            // nếu k trùng lặp
+            return 1;
         }
 
         // đánh giá sản phẩm của người dùng
