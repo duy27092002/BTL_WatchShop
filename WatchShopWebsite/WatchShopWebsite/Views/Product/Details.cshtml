@@ -145,7 +145,6 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
-                        <!-- Thu gọn thông tin chi tiết sp nếu nó quá dài -->
                         <div class="box my-3">
                             <div class="content-box readLess">
                                 <div class="content">
@@ -158,29 +157,21 @@
                         </div>
                     </div>
                     <div class="box my-3 tab-pane fade" id="evaluate" role="tabpanel" aria-labelledby="evaluate-tab">
-                        @using (Html.BeginForm("Evaluate", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
+                        <form method="post" id="form-evaluate">
                             @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             @Html.HiddenFor(model => model.MaSP)
 
                             <div class="form-group my-3">
                                 <input type="hidden" id="MaKH" name="MaKH" value="@Session["IdCustomer"]" />
-                                <input type="hidden" id="ThoiGian" name="ThoiGian" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
-                                <p class="text-danger">@ViewBag.NameError</p>
+                                <input type="hidden" id="ThoiGianDG" name="ThoiGianDG" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
+                                <input type="hidden" id="LuotThich" name="LuotThich" value="0" />
                             </div>
+
                             <div class="form-group mb-3">
                                 <label>Lời bình</label>
                                 <textarea class="form-control" id="LoiDG" name="LoiDG" rows="5"></textarea>
-                                @*@Html.ValidationMessageFor(model => model.LoiDG, "", new { @class = "text-danger" })*@
                             </div>
-                            <div class="form-group mb-3">
-                                <p class="mb-1">Hình ảnh minh họa (Nếu cần)</p>
-                                <input type="file" name="illustratingImages" id="illustratingImages" multiple />
-                                <div class="row">
-                                    <div class="col-12 col-sm-12 col-md-3 col-lg-3" id="previewIllustratingImgs"></div>
-                                </div>
-                            </div>
+
                             <div class="form-group mb-3">
                                 <p class="mb-1">Đánh giá</p>
                                 <label class="custom-control custom-radio custom-control-inline">
@@ -204,10 +195,18 @@
                                     <span class="custom-control-label"> 5 </span>
                                 </label>
                             </div>
+
                             <div class="form-group mb-3 text-center">
-                                <input type="submit" value="Gửi" class="btn btn-warning" />
+                                @if (Session["IdCustomer"] != null)
+                                {
+                                    <input type="button" id="send-evaluate" value="Gửi" class="btn btn-warning" />
+                                }
+                                else
+                                {
+                                    <a class="btn btn-warning" href="/Customer/Login">Gửi</a>
+                                }
                             </div>
-                        }
+                        </form>
                     </div>
                 </div>
             </div> <!-- col.// -->
@@ -279,3 +278,4 @@
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
 <script src="~/Scripts/js/readmore-readless.js"></script>
+<script src="~/Scripts/js/create-evaluate.js"></script>

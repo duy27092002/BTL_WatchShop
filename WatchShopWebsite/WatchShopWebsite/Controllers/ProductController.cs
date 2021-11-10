@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WatchShopWebsite.Models.EF;
@@ -178,9 +179,20 @@ namespace WatchShopWebsite.Controllers
         }
 
         // đánh giá sản phẩm của người dùng
-        public ActionResult Evaluate()
+        [HttpPost]
+        public ActionResult Evaluate(DanhGiaSP getEvaluate)
         {
-            return View();
+            db.DanhGiaSPs.Add(getEvaluate);
+
+            try
+            {
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
         }
     }
 }
