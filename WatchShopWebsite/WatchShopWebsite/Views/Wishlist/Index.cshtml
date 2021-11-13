@@ -24,13 +24,12 @@
                                             var getUrlImg = item.SanPham.HinhAnh.ToString().Replace("~", "../../..");
                                             <img src="@getUrlImg" class="border img-md img-fluid" alt="@item.SanPham.TenSP" />
                                         }
-                                        <input type="hidden" value="@item.SanPham.MaSP" id="productId" />
                                     </a>
                                 </div>
                                 <figcaption class="info">
                                     <a href="/Product/Details/@item.SanPham.MaSP" class="title">@item.SanPham.TenSP</a>
                                     <p class="price mb-2">@String.Format("{0:0,0}", item.SanPham.Gia) VNĐ</p>
-                                    <a id="removewishlist" href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Xóa">
+                                    <a href="" data-productid="@item.SanPham.MaSP" class="btn btn-danger btn-sm removewishlist" data-toggle="tooltip" title="" data-original-title="Xóa">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </figcaption>

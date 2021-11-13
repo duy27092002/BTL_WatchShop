@@ -33,7 +33,6 @@
                                                         var getUrlImg = item.SanPham.HinhAnh.ToString().Replace("~", "../../..");
                                                         <img src="@getUrlImg" class="img-fluid img-sm" alt="@item.SanPham.TenSP" />
                                                     }
-                                                    <input type="hidden" value="@item.SanPham.MaSP" id="productid" />
                                                 </div>
                                                 <figcaption class="info">
                                                     <a href="#" class="title text-dark">@item.SanPham.TenSP</a>
@@ -53,7 +52,7 @@
                                         <td class="text-right">
                                             @if (Session["IdCustomer"] != null)
                                             {
-                                                <a id="addtowishlist" data-original-title="Lưu vào danh sách yêu thích" title="" href="" class="btn btn-light" data-toggle="tooltip">
+                                                <a data-original-title="Lưu vào danh sách yêu thích" data-toggle="tooltip" title="" href="" data-productid="@item.SanPham.MaSP" class="btn btn-light addtowishlist">
                                                     <i class="fa fa-heart"></i>
                                                 </a>
                                             }
@@ -63,7 +62,7 @@
                                                     <i class="fa fa-heart"></i>
                                                 </a>
                                             }
-                                            <a href="" class="btn btn-light" id="removecart"> Xóa</a>
+                                            <a href="" class="btn btn-light removecart" data-productid="@item.SanPham.MaSP"> Xóa</a>
                                         </td>
                                     </tr>
                                 }

@@ -30,6 +30,7 @@ namespace WatchShopWebsite.Controllers
                 {
                     db.SPYeuThiches.Add(wishlist);
                     db.SaveChanges();
+                    return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
                 }
             }
             return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });

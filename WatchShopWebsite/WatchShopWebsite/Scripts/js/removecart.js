@@ -2,10 +2,10 @@
     getTotal();
 
     // xóa sản phẩm khỏi giỏ hàng
-    $("#removecart").click(function () {
+    $(".removecart").click(function () {
         var model = {};
         //lấy id sản phẩm
-        model.Id = $("#productid").val();
+        model.Id = $(this).data("productid");
         // lấy số sản phẩm hiện tại trong giỏ hàng
         var getCartCount = $("#CartCountHidden").val();
         $.ajax({
@@ -23,7 +23,6 @@
                 alert("Lỗi trong khi xóa sản phẩm trong giỏ hàng!");
             }
         });
-        return false;
     });
 
     // tính tổng tiền = giá tiền (/1sp) * số lượng sp

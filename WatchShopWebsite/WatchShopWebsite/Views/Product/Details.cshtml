@@ -20,7 +20,7 @@
             model.Id = @Model.MaSP;
             // lấy số lượng đặt hàng
             model.Quantity = $("#quantity").val();
-            debugger;
+            
             $.ajax({
                 type: "POST",
                 url: "/Cart/AddToCart/",
@@ -137,11 +137,6 @@
                             <h5 class="title-description">Chi tiết sản phẩm</h5>
                         </a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="evaluate-tab" data-toggle="tab" href="#evaluate" role="tab" aria-controls="evaluate" aria-selected="false">
-                            <h5 class="title-description">Đánh giá</h5>
-                        </a>
-                    </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
@@ -155,58 +150,6 @@
                                 <input type="hidden" class="btn btn-outline-warning" readonly id="btn-read-more" value="Xem thêm nội dung" />
                             </p>
                         </div>
-                    </div>
-                    <div class="box my-3 tab-pane fade" id="evaluate" role="tabpanel" aria-labelledby="evaluate-tab">
-                        <form method="post" id="form-evaluate">
-                            @Html.AntiForgeryToken()
-                            @Html.HiddenFor(model => model.MaSP)
-
-                            <div class="form-group my-3">
-                                <input type="hidden" id="MaKH" name="MaKH" value="@Session["IdCustomer"]" />
-                                <input type="hidden" id="ThoiGianDG" name="ThoiGianDG" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
-                                <input type="hidden" id="LuotThich" name="LuotThich" value="0" />
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label>Lời bình</label>
-                                <textarea class="form-control" id="LoiDG" name="LoiDG" rows="5"></textarea>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <p class="mb-1">Đánh giá</p>
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input class="custom-control-input" type="radio" name="Diem" value="1">
-                                    <span class="custom-control-label"> 1 </span>
-                                </label>
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input class="custom-control-input" type="radio" name="Diem" value="2">
-                                    <span class="custom-control-label"> 2 </span>
-                                </label>
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input class="custom-control-input" type="radio" name="Diem" value="3">
-                                    <span class="custom-control-label"> 3 </span>
-                                </label>
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input class="custom-control-input" type="radio" name="Diem" value="4">
-                                    <span class="custom-control-label"> 4 </span>
-                                </label>
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input class="custom-control-input" type="radio" name="Diem" value="5">
-                                    <span class="custom-control-label"> 5 </span>
-                                </label>
-                            </div>
-
-                            <div class="form-group mb-3 text-center">
-                                @if (Session["IdCustomer"] != null)
-                                {
-                                    <input type="button" id="send-evaluate" value="Gửi" class="btn btn-warning" />
-                                }
-                                else
-                                {
-                                    <a class="btn btn-warning" href="/Customer/Login">Gửi</a>
-                                }
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div> <!-- col.// -->
@@ -278,4 +221,3 @@
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
 <script src="~/Scripts/js/readmore-readless.js"></script>
-<script src="~/Scripts/js/create-evaluate.js"></script>
