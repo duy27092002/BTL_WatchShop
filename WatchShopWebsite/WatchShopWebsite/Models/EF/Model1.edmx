@@ -51,6 +51,7 @@
             <PropertyRef Name="MaDG" />
           </Key>
           <Property Name="MaDG" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaDH" Type="int" Nullable="false" />
           <Property Name="MaKH" Type="int" Nullable="false" />
           <Property Name="MaSP" Type="int" Nullable="false" />
           <Property Name="LoiDG" Type="ntext" Nullable="false" />
@@ -1220,6 +1221,7 @@
           <NavigationProperty Name="BinhLuans" Relationship="DB_WatchShopModel.FK_BinhLuan_DanhGiaSP" FromRole="DanhGiaSP" ToRole="BinhLuan" />
           <NavigationProperty Name="KhachHang" Relationship="DB_WatchShopModel.FK_DanhGiaSP_KhachHang" FromRole="DanhGiaSP" ToRole="KhachHang" />
           <NavigationProperty Name="SanPham" Relationship="DB_WatchShopModel.FK_DanhGiaSP_SanPham" FromRole="DanhGiaSP" ToRole="SanPham" />
+          <Property Name="MaDH" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_BinhLuan_DanhGiaSP">
           <End Type="DB_WatchShopModel.DanhGiaSP" Role="DanhGiaSP" Multiplicity="1" />
@@ -1499,6 +1501,7 @@
           <EntitySetMapping Name="DanhGiaSPs">
             <EntityTypeMapping TypeName="DB_WatchShopModel.DanhGiaSP">
               <MappingFragment StoreEntitySet="DanhGiaSP">
+                <ScalarProperty Name="MaDH" ColumnName="MaDH" />
                 <ScalarProperty Name="LuotThich" ColumnName="LuotThich" />
                 <ScalarProperty Name="ThoiGianDG" ColumnName="ThoiGianDG" />
                 <ScalarProperty Name="Diem" ColumnName="Diem" />

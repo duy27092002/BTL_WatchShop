@@ -2,9 +2,11 @@
 
     $(".open-evaluate-modal").click(function () {
         var productId = $(this).attr("data-evaluateProId");
+        var orderId = $(this).attr("data-evaluateOrderId");
 
         $("#send-evaluate").on("click", function () {
 
+            var OrderId = orderId;
             var ProdId = productId;
             var CusId = $("#MaKH").val();
             var EvaluateDate = $("#ThoiGianDG").val();
@@ -13,6 +15,7 @@
             var Point = $("input[name=Diem]").filter(":checked").val();
 
             var getEvaluate = {
+                MaDH: OrderId,
                 MaSP: ProdId,
                 MaKH: CusId,
                 ThoiGianDG: EvaluateDate,
@@ -37,11 +40,12 @@
                     // có dòng lệnh này sẽ lỗi
                     //contentType: "application/json; charset=utf-8",
                     success: function (result) {
-                        if (result.success) {
+                        if (result.error) {
+                            swal("Thông báo!", "Bạn đã đánh giá sản phẩm này rồi", "warning");
+                        } else if (result.success) {
                             swal("Đánh giá thành công!", "Cám ơn bạn đã đánh giá sản phẩm của chúng tôi", "success");
-                            $("#form-evaluate")[0].reset();
-                            $("#send-evaluate").remove();
                         }
+                        $("#form-evaluate")[0].reset();
                     },
                     error: function (result) {
                         if (!result.success) {

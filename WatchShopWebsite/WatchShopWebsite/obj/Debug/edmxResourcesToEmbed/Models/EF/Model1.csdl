@@ -604,6 +604,7 @@
     <NavigationProperty Name="BinhLuans" Relationship="DB_WatchShopModel.FK_BinhLuan_DanhGiaSP" FromRole="DanhGiaSP" ToRole="BinhLuan" />
     <NavigationProperty Name="KhachHang" Relationship="DB_WatchShopModel.FK_DanhGiaSP_KhachHang" FromRole="DanhGiaSP" ToRole="KhachHang" />
     <NavigationProperty Name="SanPham" Relationship="DB_WatchShopModel.FK_DanhGiaSP_SanPham" FromRole="DanhGiaSP" ToRole="SanPham" />
+    <Property Name="MaDH" Type="Int32" Nullable="false" />
   </EntityType>
   <Association Name="FK_BinhLuan_DanhGiaSP">
     <End Type="DB_WatchShopModel.DanhGiaSP" Role="DanhGiaSP" Multiplicity="1" />

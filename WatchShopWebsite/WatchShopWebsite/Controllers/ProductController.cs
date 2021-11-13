@@ -182,16 +182,30 @@ namespace WatchShopWebsite.Controllers
         [HttpPost]
         public ActionResult Evaluate(DanhGiaSP getEvaluate)
         {
-            db.DanhGiaSPs.Add(getEvaluate);
+            // kiểm tra đánh giá trùng lặp
+            var temp = db.DanhGiaSPs.Where(
+                t => t.MaDH == getEvaluate.MaDH &&
+                t.MaKH == getEvaluate.MaKH &&
+                t.MaSP == getEvaluate.MaSP
+                );
 
-            try
+            // nếu không có thì thêm vào bảng DanhGiaSP
+            if (temp.Count() <= 0)
             {
-                db.SaveChanges();
-                return Json(new { success = true });
-            }
-            catch (Exception ex)
+                db.DanhGiaSPs.Add(getEvaluate);
+
+                try
+                {
+                    db.SaveChanges();
+                    return Json(new { success = true });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false });
+                }
+            } else // nếu có thì trả ra thông báo: đã có đánh giá rồi
             {
-                return Json(new { success = false });
+                return Json(new { error = true });
             }
         }
     }

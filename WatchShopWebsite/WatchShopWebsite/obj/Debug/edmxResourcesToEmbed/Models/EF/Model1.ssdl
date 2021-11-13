@@ -46,6 +46,7 @@
       <PropertyRef Name="MaDG" />
     </Key>
     <Property Name="MaDG" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MaDH" Type="int" Nullable="false" />
     <Property Name="MaKH" Type="int" Nullable="false" />
     <Property Name="MaSP" Type="int" Nullable="false" />
     <Property Name="LoiDG" Type="ntext" Nullable="false" />

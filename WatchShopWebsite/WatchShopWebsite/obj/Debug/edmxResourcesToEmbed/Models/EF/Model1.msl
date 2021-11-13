@@ -225,6 +225,7 @@
     <EntitySetMapping Name="DanhGiaSPs">
       <EntityTypeMapping TypeName="DB_WatchShopModel.DanhGiaSP">
         <MappingFragment StoreEntitySet="DanhGiaSP">
+          <ScalarProperty Name="MaDH" ColumnName="MaDH" />
           <ScalarProperty Name="LuotThich" ColumnName="LuotThich" />
           <ScalarProperty Name="ThoiGianDG" ColumnName="ThoiGianDG" />
           <ScalarProperty Name="Diem" ColumnName="Diem" />
