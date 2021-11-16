@@ -6,9 +6,17 @@
 }
 
 <style>
-    .readLess{
-        height:500px;
-        overflow:hidden;
+    .readLess {
+        height: 500px;
+        overflow: hidden;
+    }
+
+    .checked {
+        color: orange;
+    }
+
+    .not-checked {
+        color: darkgray;
     }
 </style>
 
@@ -20,7 +28,7 @@
             model.Id = @Model.MaSP;
             // lấy số lượng đặt hàng
             model.Quantity = $("#quantity").val();
-            
+
             $.ajax({
                 type: "POST",
                 url: "/Cart/AddToCart/",
@@ -41,7 +49,7 @@
 </script>
 
 <!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-content bg-white padding-y">
+<section class="section-content bg-white padding-y mt-3">
     <div class="container">
         <!-- ============================ ITEM DETAIL ======================== -->
         <div class="row">
@@ -68,20 +76,24 @@
                 <article class="product-info-aside">
                     <h2 class="title mt-3">@Model.TenSP </h2>
                     <div class="rating-wrap my-3">
-                        <ul class="rating-stars">
-                            <li style="width:80%" class="stars-active">
-                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </li>
-                            <li>
-                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </li>
-                        </ul>
-                        <small class="label-rating text-muted">132 đánh giá</small>
-                        <small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> 154 đơn đặt hàng </small>
+                        @if (ViewBag.GetAverage != 0)
+                        {
+                            for (var i = 0; i < ViewBag.GetAverage; i++)
+                            {
+                                <span class="fa fa-star checked"></span>
+                            }
+
+                            for (var j = 0; j < 5 - ViewBag.GetAverage; j++)
+                            {
+                                <span class="fa fa-star not-checked"></span>
+                            }
+                        }
+                        else
+                        {
+                            <small class="label-rating text-muted">Sản phẩm chưa xếp hạng</small>
+                        }
+                        <small class="label-rating text-muted">@String.Format("{0:0,0}", ViewBag.GetEvaluate) bài đánh giá</small>
+                        <small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> @String.Format("{0:0,0}", ViewBag.GetOrdered) đơn đặt hàng </small>
                     </div> <!-- rating-wrap.// -->
                     <div class="mb-3">
                         <var class="price h4">@String.Format("{0:0,0}", Model.Gia) VNĐ</var>
@@ -90,8 +102,6 @@
                     <dl class="row">
                         <dt class="col-sm-3">Nhà sản xuất</dt>
                         <dd class="col-sm-9"><a href="#">@Model.NhaSanXuat.TenNSX.</a></dd>
-                        <dt class="col-sm-3">Số bài viết</dt>
-                        <dd class="col-sm-9">596 065</dd>
                         <dt class="col-sm-3">Bảo hành</dt>
                         <dd class="col-sm-9">2 năm</dd>
                         <dt class="col-sm-3">Thời gian giao hàng</dt>
@@ -126,30 +136,23 @@
     </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
+
 <!-- ========================= SECTION  ========================= -->
 <section class="section-name padding-y bg">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">
-                            <h5 class="title-description">Chi tiết sản phẩm</h5>
-                        </a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
-                        <div class="box my-3">
-                            <div class="content-box readLess">
-                                <div class="content">
-                                    @Html.Raw(Model.ChiTietSP)
-                                </div>
+                <div class="box">
+                    <h5 class="title-description mb-3">Chi tiết sản phẩm</h5>
+                    <div class="my-3">
+                        <div class="content-box readLess">
+                            <div class="content">
+                                @Html.Raw(Model.ChiTietSP)
                             </div>
-                            <p class="text-center mt-3">
-                                <input type="hidden" class="btn btn-outline-warning" readonly id="btn-read-more" value="Xem thêm nội dung" />
-                            </p>
                         </div>
+                        <p class="text-center mt-3">
+                            <input type="hidden" class="btn btn-outline-warning" readonly id="btn-read-more" value="Xem thêm nội dung" />
+                        </p>
                     </div>
                 </div>
             </div> <!-- col.// -->
@@ -178,16 +181,98 @@
     </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
+
 <!-- ========================= SECTION  ========================= -->
 <!-- Phần đánh giá, nhận xét sản phẩm của khách hàng -->
 <!-- Chức năng cần có: phân trang, bình luận, thu gọn bình luận hay bài đánh giá nếu nó quá dài or nhiều người bình luận -->
-<section class="padding-bottom-sm">
+<section class="padding-bottom-sm mb-3">
     <header class="section-heading heading-line">
         <h4 class="title-section text-uppercase">Đánh giá - Nhận xét từ khách hàng</h4>
     </header>
-    <div class="row row-sm">
-        <p class="text-center">Chưa có đánh giá nào!</p>
-    </div> <!-- row.// -->
+    @if (ViewBag.EvaluateCount == 0)
+    {
+        <div class="d-flex justify-content-center box"><b>Chưa có đánh giá nào!</b></div>
+    }
+    else
+    {
+        foreach (var item in ViewBag.EvaluateRecord)
+        {
+            <div class="row box p-3">
+                <div class="col-12 col-sm-12 col-md-5 col-lg-5 mb-3">
+                    @{
+                        var getUrlImg = item.KhachHang.Avatar.ToString().Replace("~", "../../..");
+                    }
+                    <p>
+                        <img src="@getUrlImg" class=" rounded-circle" style="width:50px" />
+                        <span class="ml-3"><b>@item.KhachHang.TenDangNhap</b></span>
+                    </p>
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-7 col-lg-7 mb-3">
+                    <p class="mb-0">
+                        @{
+                            for (var i = 0; i < item.Diem; i++)
+                            {
+                                <span class="fa fa-star checked"></span>
+                            }
+
+                            for (var j = 0; j < 5 - item.Diem; j++)
+                            {
+                                <span class="fa fa-star not-checked"></span>
+                            }
+                        }
+                        <span class="ml-3">
+                            @{
+                                var status = item.Diem == 5 ? "Cực kỳ hài lòng" :
+                                    item.Diem == 4 ? "Hài lòng" :
+                                    item.Diem == 3 ? "Bình thường" :
+                                    item.Diem == 2 ? "Không hài lòng" : "Rất không hài lòng";
+                            }
+                            <b>@status</b>
+                        </span>
+                    </p>
+
+                    <p class="text-success mb-3"><i class="fas fa-check-circle"></i> Đã mua hàng</p>
+
+                    @item.LoiDG
+
+                    <p class="text-muted mb-0">
+                        <small>Đã đánh giá vào ngày: @item.ThoiGianDG.ToString("dd/MM/yyyy")</small>
+                    </p>
+
+                    @if (Session["IdCustomer"] != null)
+                    {
+
+                        if (Convert.ToInt32(Session["IdCustomer"]) == item.MaKH)
+                        {
+                            <p class="mb-0">
+                                <small>
+                                    <a class="text-info edit-evaluate" href="" data-evaluateId="@item.MaDG" data-toggle="modal" data-target="#editEvaluateModal">Chỉnh sửa</a>
+                                </small> |
+                                <small>
+                                    <a class="text-info delete-evaluate" href="" data-evaluateId="@item.MaDG">Xóa</a>
+                                </small>
+                            </p>
+                        }
+
+                        <button type="button" id="like-btn-@item.MaDH" class="btn btn-outline-warning mt-3 like-btn" data-likeBtn="like-btn-@item.MaDH" data-prodId="@item.MaSP" data-orderId="@item.MaDH" data-cusId="@item.MaKH">
+                            <span class="icon-@item.MaDH">
+                                <i class="far fa-thumbs-up"></i>
+                            </span>
+                            Hữu ích
+                            (<span class="count-@item.MaDH">@item.LuotThich</span>)
+                        </button>
+                        <button type="button" class="btn btn-outline-info mt-3 comment-btn">Bình luận</button>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-warning mt-3" href="/Customer/Login">Hữu ích</a>
+                        <a class="btn btn-outline-info mt-3" href="/Customer/Login">Bình luận</a>
+                    }
+                </div>
+            </div>
+        }
+    }
 </section>
 
 @if (Session["IdCustomer"] != null)
@@ -220,4 +305,161 @@
 }
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
+<!--Modal chỉnh sửa lại bài đánh giá-->
+<div class="modal fade" id="editEvaluateModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Chỉnh sửa đánh giá sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="form-edit-evaluate">
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" id="ThoiGianDG" name="ThoiGianDG" value="@DateTime.Now" />
+                    @if (ViewBag.DataOfEvaluate != null)
+                    {
+                        foreach (var evl in ViewBag.DataOfEvaluate)
+                        {
+                            <div class="form-group mb-3">
+                                <label>Lời bình</label>
+                                <textarea class="form-control test-test" id="LoiDG" name="LoiDG" rows="5"></textarea>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <p class="mb-1">Đánh giá</p>
+                                @if (evl.Diem == 1)
+                                {
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" checked name="Diem" value="1">
+                                        <span class="custom-control-label"> 1 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="2">
+                                        <span class="custom-control-label"> 2 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="3">
+                                        <span class="custom-control-label"> 3 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="4">
+                                        <span class="custom-control-label"> 4 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="5">
+                                        <span class="custom-control-label"> 5 </span>
+                                    </label>
+                                }
+                                else if (evl.Diem == 2)
+                                {
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="1">
+                                        <span class="custom-control-label"> 1 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" checked name="Diem" value="2">
+                                        <span class="custom-control-label"> 2 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="3">
+                                        <span class="custom-control-label"> 3 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="4">
+                                        <span class="custom-control-label"> 4 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="5">
+                                        <span class="custom-control-label"> 5 </span>
+                                    </label>
+                                }
+                                else if (evl.Diem == 3)
+                                {
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="1">
+                                        <span class="custom-control-label"> 1 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="2">
+                                        <span class="custom-control-label"> 2 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" checked name="Diem" value="3">
+                                        <span class="custom-control-label"> 3 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="4">
+                                        <span class="custom-control-label"> 4 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="5">
+                                        <span class="custom-control-label"> 5 </span>
+                                    </label>
+                                }
+                                else if (evl.Diem == 4)
+                                {
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="1">
+                                        <span class="custom-control-label"> 1 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="2">
+                                        <span class="custom-control-label"> 2 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="3">
+                                        <span class="custom-control-label"> 3 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" checked name="Diem" value="4">
+                                        <span class="custom-control-label"> 4 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="5">
+                                        <span class="custom-control-label"> 5 </span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="1">
+                                        <span class="custom-control-label"> 1 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="2">
+                                        <span class="custom-control-label"> 2 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="3">
+                                        <span class="custom-control-label"> 3 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="Diem" value="4">
+                                        <span class="custom-control-label"> 4 </span>
+                                    </label>
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" checked name="Diem" value="5">
+                                        <span class="custom-control-label"> 5 </span>
+                                    </label>
+                                }
+                            </div>
+                        }
+                    }
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-warning" id="update-evaluate">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="~/Scripts/js/readmore-readless.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script src="~/Scripts/js/update-like.js"></script>
+<script src="~/Scripts/js/edit-delete-evaluate.js"></script>

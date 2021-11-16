@@ -41,7 +41,7 @@
                     //contentType: "application/json; charset=utf-8",
                     success: function (result) {
                         if (result.error) {
-                            swal("Thông báo!", "Bạn đã đánh giá sản phẩm này rồi", "warning");
+                            swal("Thông báo!", "Bạn đã đánh giá sản phẩm này rồi", "info");
                         } else if (result.success) {
                             swal("Đánh giá thành công!", "Cám ơn bạn đã đánh giá sản phẩm của chúng tôi", "success");
                         }

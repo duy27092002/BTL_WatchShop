@@ -83,6 +83,28 @@ namespace WatchShopWebsite.Controllers
                 t.MaSP != id
                 ).Take(6);
 
+            // lấy điểm đánh giá trung bình của sp (tính theo sao: 1 sao, 2 sao...)
+            var starGr = db.DanhGiaSPs.Where(t => t.MaSP == id).Select(t => t.Diem).ToList();
+            var sum = 0;
+            var getCount = starGr.Count;
+            if (getCount == 0)
+            {
+                ViewBag.GetAverage = 0;
+            } else
+            {
+                for (var i = 0; i < getCount; i++)
+                {
+                    sum += starGr[i];
+                }
+                ViewBag.GetAverage = sum / getCount;
+            }
+
+            // lấy tổng số bài đánh giá của sp này
+            ViewBag.GetEvaluate = db.DanhGiaSPs.Where(t => t.MaSP == id).Count();
+
+            // lấy tổng số đơn hàng đã mua sản phẩm này
+            ViewBag.GetOrdered = db.CTDonHangs.Where(t => t.MaSP == id).Count();
+
             // tăng số lượt xem cho mỗi sản phẩm khi người dùng nhấp vào xem chi tiết
             sanPham.LuotXem++;
             db.SaveChanges();
@@ -139,6 +161,14 @@ namespace WatchShopWebsite.Controllers
             }
             #endregion
 
+            // lấy các bài đánh giá sản phẩm
+            var getEvaluateRecord = db.DanhGiaSPs.Where(t => t.MaSP == id).ToList();
+            ViewBag.EvaluateRecord = getEvaluateRecord;
+            ViewBag.EvaluateCount = getEvaluateRecord.Count();
+
+            // mặc định null cho dữ liệu bài đánh giá khi chưa click chỉnh sửa
+            ViewBag.DataOfEvaluate = null;
+
             return View(sanPham);
         }
 
@@ -180,6 +210,7 @@ namespace WatchShopWebsite.Controllers
 
         // đánh giá sản phẩm của người dùng
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Evaluate(DanhGiaSP getEvaluate)
         {
             // kiểm tra đánh giá trùng lặp
@@ -207,6 +238,63 @@ namespace WatchShopWebsite.Controllers
             {
                 return Json(new { error = true });
             }
+        }
+
+        // tăng lượt hữu ích cho bài viết đánh giá của khách hàng
+        //[HttpPost]
+        public ActionResult UpdateLike(int OrderId, int CusId, int ProdId, bool Clicked)
+        {
+            var getEvaluate = db.DanhGiaSPs.Where(
+                t => t.MaDH == OrderId &&
+                t.MaKH == CusId &&
+                t.MaSP == ProdId
+                ).FirstOrDefault();
+
+            if (getEvaluate != null && Clicked)
+            {
+                getEvaluate.LuotThich++;
+
+                try
+                {
+                    db.SaveChanges();
+                    return Json(new { success = true });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false });
+                }
+            } else if (!Clicked && getEvaluate != null)
+            {
+                getEvaluate.LuotThich--;
+
+                try
+                {
+                    db.SaveChanges();
+                    return Json(new { success = true });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false });
+                }
+            }
+
+            return Json(new { success = false });
+        }
+
+        // mở modal sửa bài đánh giá sản phẩm với dữ liệu từ db
+        [HttpPost]
+        public ActionResult EditEvaluate(int evaluateId)
+        {
+            // lấy bài đánh giá
+            var getEvaluate = db.DanhGiaSPs.Where(t => t.MaDG == evaluateId);
+
+            if (getEvaluate != null)
+            {
+                ViewBag.DataOfEvaluate = getEvaluate;
+                return Json(new { success = true });
+            } 
+
+            return Json(new { success = false });
         }
     }
 }

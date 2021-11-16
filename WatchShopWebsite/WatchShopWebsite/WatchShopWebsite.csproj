@@ -1065,12 +1065,15 @@
     <Content Include="Scripts\js\change-quantity.js" />
     <Content Include="Scripts\js\bootstrap.bundle.min.js" />
     <Content Include="Scripts\js\create-evaluate.js" />
+    <Content Include="Scripts\js\edit-delete-evaluate.js" />
+    <Content Include="Scripts\js\update-like.js" />
     <Content Include="Scripts\js\jquery-2.0.0.min.js" />
     <Content Include="Scripts\js\readmore-readless.js" />
     <Content Include="Scripts\js\removecart.js" />
     <Content Include="Scripts\js\script.js" />
     <Content Include="Scripts\js\wishlist.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\sweetalert.js" />
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
