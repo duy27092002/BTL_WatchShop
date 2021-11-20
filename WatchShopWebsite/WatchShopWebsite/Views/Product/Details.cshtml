@@ -136,7 +136,6 @@
     </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
-
 <!-- ========================= SECTION  ========================= -->
 <section class="section-name padding-y bg">
     <div class="container">
@@ -181,100 +180,21 @@
     </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
-
 <!-- ========================= SECTION  ========================= -->
-<!-- Phần đánh giá, nhận xét sản phẩm của khách hàng -->
-<!-- Chức năng cần có: phân trang, bình luận, thu gọn bình luận hay bài đánh giá nếu nó quá dài or nhiều người bình luận -->
 <section class="padding-bottom-sm mb-3">
     <header class="section-heading heading-line">
         <h4 class="title-section text-uppercase">Đánh giá - Nhận xét từ khách hàng</h4>
     </header>
-    @if (ViewBag.EvaluateCount == 0)
-    {
-        <div class="d-flex justify-content-center box"><b>Chưa có đánh giá nào!</b></div>
-    }
-    else
-    {
-        foreach (var item in ViewBag.EvaluateRecord)
-        {
-            <div class="row box p-3">
-                <div class="col-12 col-sm-12 col-md-5 col-lg-5 mb-3">
-                    @{
-                        var getUrlImg = item.KhachHang.Avatar.ToString().Replace("~", "../../..");
-                    }
-                    <p>
-                        <img src="@getUrlImg" class=" rounded-circle" style="width:50px" />
-                        <span class="ml-3"><b>@item.KhachHang.TenDangNhap</b></span>
-                    </p>
-                </div>
 
-                <div class="col-12 col-sm-12 col-md-7 col-lg-7 mb-3">
-                    <p class="mb-0">
-                        @{
-                            for (var i = 0; i < item.Diem; i++)
-                            {
-                                <span class="fa fa-star checked"></span>
-                            }
-
-                            for (var j = 0; j < 5 - item.Diem; j++)
-                            {
-                                <span class="fa fa-star not-checked"></span>
-                            }
-                        }
-                        <span class="ml-3">
-                            @{
-                                var status = item.Diem == 5 ? "Cực kỳ hài lòng" :
-                                    item.Diem == 4 ? "Hài lòng" :
-                                    item.Diem == 3 ? "Bình thường" :
-                                    item.Diem == 2 ? "Không hài lòng" : "Rất không hài lòng";
-                            }
-                            <b>@status</b>
-                        </span>
-                    </p>
-
-                    <p class="text-success mb-3"><i class="fas fa-check-circle"></i> Đã mua hàng</p>
-
-                    @item.LoiDG
-
-                    <p class="text-muted mb-0">
-                        <small>Đã đánh giá vào ngày: @item.ThoiGianDG.ToString("dd/MM/yyyy")</small>
-                    </p>
-
-                    @if (Session["IdCustomer"] != null)
-                    {
-
-                        if (Convert.ToInt32(Session["IdCustomer"]) == item.MaKH)
-                        {
-                            <p class="mb-0">
-                                <small>
-                                    <a class="text-info edit-evaluate" href="" data-evaluateId="@item.MaDG" data-toggle="modal" data-target="#editEvaluateModal">Chỉnh sửa</a>
-                                </small> |
-                                <small>
-                                    <a class="text-info delete-evaluate" href="" data-evaluateId="@item.MaDG">Xóa</a>
-                                </small>
-                            </p>
-                        }
-
-                        <button type="button" id="like-btn-@item.MaDH" class="btn btn-outline-warning mt-3 like-btn" data-likeBtn="like-btn-@item.MaDH" data-prodId="@item.MaSP" data-orderId="@item.MaDH" data-cusId="@item.MaKH">
-                            <span class="icon-@item.MaDH">
-                                <i class="far fa-thumbs-up"></i>
-                            </span>
-                            Hữu ích
-                            (<span class="count-@item.MaDH">@item.LuotThich</span>)
-                        </button>
-                        <button type="button" class="btn btn-outline-info mt-3 comment-btn">Bình luận</button>
-                    }
-                    else
-                    {
-                        <a class="btn btn-outline-warning mt-3" href="/Customer/Login">Hữu ích</a>
-                        <a class="btn btn-outline-info mt-3" href="/Customer/Login">Bình luận</a>
-                    }
-                </div>
-            </div>
-        }
-    }
+    <div class="box">
+        <div id="evaluate-box"></div>
+        <nav class="mb-4" aria-label="Page navigation sample">
+            <ul class="pagination" id="pagination-evaluate"></ul>
+        </nav>
+    </div>
 </section>
-
+<!-- ========================= SECTION CONTENT END// ========================= -->
+<!-- ========================= SECTION  ========================= -->
 @if (Session["IdCustomer"] != null)
 {
     <section class="padding-bottom-sm">
@@ -304,7 +224,6 @@
     </section>
 }
 <!-- ========================= SECTION CONTENT END// ========================= -->
-
 <!--Modal chỉnh sửa lại bài đánh giá-->
 <div class="modal fade" id="editEvaluateModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -463,3 +382,4 @@
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="~/Scripts/js/update-like.js"></script>
 <script src="~/Scripts/js/edit-delete-evaluate.js"></script>
+<script src="~/Scripts/js/evaluate.js"></script>

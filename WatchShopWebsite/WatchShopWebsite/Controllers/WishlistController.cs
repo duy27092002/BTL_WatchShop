@@ -37,7 +37,7 @@ namespace WatchShopWebsite.Controllers
         }
 
         // lấy danh sách sản phẩm yêu thích theo mã khách hàng
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? id, int pageSize = 4, int page = 1)
         {
             KhachHang khachHang = db.KhachHangs.Find(id);
 
@@ -48,7 +48,16 @@ namespace WatchShopWebsite.Controllers
 
             var getWishlistByCustomer = db.SPYeuThiches.Where(t => t.MaKH == id).OrderByDescending(t => t.ID).Select(t => t);
             ViewBag.GetCount = getWishlistByCustomer.Count();
+
+            // phân trang
+            int pageCount = (int)(((getWishlistByCustomer.Count() * 1.0) / pageSize) + 0.999999);
+            pageCount = pageCount > 0 ? pageCount : 1;
+            page = page < pageCount ? page : pageCount;
+            getWishlistByCustomer = getWishlistByCustomer.Skip((page - 1) * pageSize).Take(pageSize);
+
             ViewBag.GetWishlistByCustomer = getWishlistByCustomer;
+            ViewBag.CurrentPage = page;
+            ViewBag.PageCount = pageCount;
 
             return View();
         }

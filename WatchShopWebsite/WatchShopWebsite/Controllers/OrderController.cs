@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace WatchShopWebsite.Controllers
         private DB_WatchShopEntities db = new DB_WatchShopEntities();
 
         // view danh sách đơn hàng của khách hàng (lấy dựa vào id khách hàng)
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? id, int pageSize = 2, int page = 1)
         {
             KhachHang khachHang = db.KhachHangs.Find(id);
 
@@ -46,6 +47,15 @@ namespace WatchShopWebsite.Controllers
                            join od in db.CTDonHangs on o.MaDonHang equals od.MaDonHang
                            where o.MaKH == id
                            select od).ToList();
+
+            // phân trang
+            int pageCount = (int)(((getOrders.Count() * 1.0) / pageSize) + 0.999999);
+            pageCount = pageCount > 0 ? pageCount : 1;
+            page = page < pageCount ? page : pageCount;
+            getOrders = getOrders.OrderByDescending(t => t.OrderDate).Skip((page - 1) * pageSize).Take(pageSize);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.PageCount = pageCount;
 
             return View(getOrders);
         }

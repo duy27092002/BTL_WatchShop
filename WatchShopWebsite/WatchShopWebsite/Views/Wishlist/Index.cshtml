@@ -39,6 +39,59 @@
                 }
             </div> <!-- row .//  -->
 
+            <nav class="mb-4" aria-label="Page navigation sample">
+                <ul class="pagination">
+                    @{
+                        if (ViewBag.CurrentPage > 3)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="/Wishlist/Index/@Session["IdCustomer"]?page=1">Trang đầu</a>
+                            </li>
+                        }
+                        else if (ViewBag.CurrentPage > 1)
+                        {
+                            int prevPage = ViewBag.CurrentPage - 1;
+                            <li class="page-item">
+                                <a class="page-link" href="/Wishlist/Index/@Session["IdCustomer"]?page=@prevPage">«</a>
+                            </li>
+                        }
+
+                        for (var i = 1; i <= ViewBag.PageCount; i++)
+                        {
+                            if (i != ViewBag.CurrentPage)
+                            {
+                                if (i > ViewBag.CurrentPage - 3 && i < ViewBag.CurrentPage + 3)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="/Wishlist/Index/@Session["IdCustomer"]?page=@i">@i</a>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <li class="active page-item">
+                                    <a class="page-link" href="/Wishlist/Index/@Session["IdCustomer"]?page=@i">@i</a>
+                                </li>
+                            }
+                        }
+
+                        if (ViewBag.CurrentPage <= ViewBag.PageCount - 1)
+                        {
+                            int nextPage = ViewBag.CurrentPage + 1;
+                            <li class="page-item">
+                                <a class="page-link" href="/Wishlist/Index/@Session["IdCustomer"]?page=@nextPage">»</a>
+                            </li>
+                        }
+                        else if (ViewBag.CurrentPage < ViewBag.PageCount - 3)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="/Wishlist/Index/@Session["IdCustomer"]?page=@ViewBag.PageCount">Trang cuối</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </nav>
+
         </div> <!-- card-body.// -->
     </article>
 </main>

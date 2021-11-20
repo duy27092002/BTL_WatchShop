@@ -96,7 +96,7 @@ namespace WatchShopWebsite.Controllers
                 {
                     sum += starGr[i];
                 }
-                ViewBag.GetAverage = sum / getCount;
+                ViewBag.GetAverage = Math.Round((double)(sum / getCount));
             }
 
             // lấy tổng số bài đánh giá của sp này
@@ -160,11 +160,6 @@ namespace WatchShopWebsite.Controllers
                 ViewBag.ViewedProducts = viewedPros;
             }
             #endregion
-
-            // lấy các bài đánh giá sản phẩm
-            var getEvaluateRecord = db.DanhGiaSPs.Where(t => t.MaSP == id).ToList();
-            ViewBag.EvaluateRecord = getEvaluateRecord;
-            ViewBag.EvaluateCount = getEvaluateRecord.Count();
 
             // mặc định null cho dữ liệu bài đánh giá khi chưa click chỉnh sửa
             ViewBag.DataOfEvaluate = null;
@@ -234,7 +229,8 @@ namespace WatchShopWebsite.Controllers
                 {
                     return Json(new { success = false });
                 }
-            } else // nếu có thì trả ra thông báo: đã có đánh giá rồi
+            }
+            else // nếu có thì trả ra thông báo: đã có đánh giá rồi
             {
                 return Json(new { error = true });
             }
@@ -295,6 +291,62 @@ namespace WatchShopWebsite.Controllers
             } 
 
             return Json(new { success = false });
+        }
+
+        /// <summary>
+        /// Phân trang cho các bài viết đánh giá bằng ajax
+        /// Nhiệm vụ 1: tính tổng số trang (để lặp ra các trang)
+        /// Nhiệm vụ 2: lấy danh sách các bài viết đánh giá theo pageSize và page
+        /// ---> tất cả gửi ra view
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult PaginationEvaluate(int id, int page)
+        {
+            try
+            {
+                // lấy các bài đánh giá sản phẩm
+                var getEvaluateRecord = (from evl in db.DanhGiaSPs.Where(t => t.MaSP == id)
+                                         select new
+                                         {
+                                             MaDG = evl.MaDG,
+                                             MaDH = evl.MaDH,
+                                             MaKH = evl.MaKH,
+                                             MaSP = evl.MaSP,
+                                             LoiDG = evl.LoiDG,
+                                             ThoiGianDG = evl.ThoiGianDG,
+                                             Diem = evl.Diem,
+                                             LuotThich = evl.LuotThich,
+                                             Avatar = evl.KhachHang.Avatar,
+                                             TenKH = evl.KhachHang.TenDangNhap
+                                         }).ToList();
+
+                int pageSize = 3; // 3 bài đánh giá trên 1 trang
+                int getEvaluateCount = getEvaluateRecord.Count();
+
+                int pageCount = (getEvaluateCount % pageSize == 0) ?
+                                (getEvaluateCount / pageSize) :
+                                (getEvaluateCount / pageSize) + 1;
+
+                page = page < pageCount ? page : pageCount;
+
+                getEvaluateRecord = getEvaluateRecord.OrderByDescending(t => t.ThoiGianDG).Skip((int)((page - 1) * pageSize)).Take(pageSize).ToList();
+
+                return Json(new { 
+                    success = true, 
+                    pageCount = pageCount,
+                    evaluateRecord = getEvaluateRecord,
+                    evaluateCount = getEvaluateCount,
+                    sessionCusId = Convert.ToInt32(Session["IdCustomer"]),
+                    currentPage = page
+                }, JsonRequestBehavior.AllowGet);
+
+            } catch (Exception ex)
+            {
+                return Json(new { success = false, msg = "Lỗi: " + ex.Message}, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
