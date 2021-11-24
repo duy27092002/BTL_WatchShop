@@ -177,12 +177,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" id="form-evaluate">
-
+                <form method="post" id="form-evaluate" enctype="multipart/form-data">
                     <div class="form-group my-3">
-                        @Html.AntiForgeryToken()
                         <input type="hidden" id="MaKH" name="MaKH" value="@Session["IdCustomer"]" />
-                        <input type="hidden" id="ThoiGianDG" name="ThoiGianDG" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
+                        <input type="hidden" id="ThoiGianDG" name="ThoiGianDG" value="@DateTime.Now" />
                         <input type="hidden" id="LuotThich" name="LuotThich" value="0" />
                     </div>
 
@@ -224,4 +222,4 @@
     </div>
 </div>
 
-<script src="~/Scripts/js/create-evaluate.js"></script>
+<script src="~/Scripts/js/evaluate.js"></script>

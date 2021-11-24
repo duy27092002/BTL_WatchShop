@@ -20,7 +20,7 @@ namespace WatchShopWebsite.Models.EF
         {
             this.BinhLuans = new HashSet<BinhLuan>();
         }
-    
+
         public int MaDG { get; set; }
         public int MaKH { get; set; }
         public int MaSP { get; set; }
@@ -33,7 +33,7 @@ namespace WatchShopWebsite.Models.EF
         public System.DateTime ThoiGianDG { get; set; }
         public int LuotThich { get; set; }
         public int MaDH { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BinhLuan> BinhLuans { get; set; }
         public virtual KhachHang KhachHang { get; set; }

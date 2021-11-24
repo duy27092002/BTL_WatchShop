@@ -18,6 +18,10 @@
     .not-checked {
         color: darkgray;
     }
+
+    .hide {
+        display: none;
+    }
 </style>
 
 <script type="text/javascript">
@@ -235,139 +239,41 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" id="form-edit-evaluate">
-                    @Html.AntiForgeryToken()
+                <form id="form-edit-evaluate">
+                    <div class="form-group my-3">
+                        <input type="hidden" id="e-ThoiGianDG" name="e-ThoiGianDG" value="@DateTime.Now" />
+                        <input type="text" hidden id="e-MaDG" name="e-MaDG" value="" />
+                        <input type="text" hidden id="e-MaSP" name="e-MaSP" value="" />
+                    </div>
 
-                    <input type="hidden" id="ThoiGianDG" name="ThoiGianDG" value="@DateTime.Now" />
-                    @if (ViewBag.DataOfEvaluate != null)
-                    {
-                        foreach (var evl in ViewBag.DataOfEvaluate)
-                        {
-                            <div class="form-group mb-3">
-                                <label>Lời bình</label>
-                                <textarea class="form-control test-test" id="LoiDG" name="LoiDG" rows="5"></textarea>
-                            </div>
+                    <div class="form-group mb-3">
+                        <label>Lời bình</label>
+                        <textarea class="form-control" id="e-LoiDG" name="e-LoiDG" rows="5"></textarea>
+                    </div>
 
-                            <div class="form-group mb-3">
-                                <p class="mb-1">Đánh giá</p>
-                                @if (evl.Diem == 1)
-                                {
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" checked name="Diem" value="1">
-                                        <span class="custom-control-label"> 1 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="2">
-                                        <span class="custom-control-label"> 2 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="3">
-                                        <span class="custom-control-label"> 3 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="4">
-                                        <span class="custom-control-label"> 4 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="5">
-                                        <span class="custom-control-label"> 5 </span>
-                                    </label>
-                                }
-                                else if (evl.Diem == 2)
-                                {
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="1">
-                                        <span class="custom-control-label"> 1 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" checked name="Diem" value="2">
-                                        <span class="custom-control-label"> 2 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="3">
-                                        <span class="custom-control-label"> 3 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="4">
-                                        <span class="custom-control-label"> 4 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="5">
-                                        <span class="custom-control-label"> 5 </span>
-                                    </label>
-                                }
-                                else if (evl.Diem == 3)
-                                {
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="1">
-                                        <span class="custom-control-label"> 1 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="2">
-                                        <span class="custom-control-label"> 2 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" checked name="Diem" value="3">
-                                        <span class="custom-control-label"> 3 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="4">
-                                        <span class="custom-control-label"> 4 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="5">
-                                        <span class="custom-control-label"> 5 </span>
-                                    </label>
-                                }
-                                else if (evl.Diem == 4)
-                                {
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="1">
-                                        <span class="custom-control-label"> 1 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="2">
-                                        <span class="custom-control-label"> 2 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="3">
-                                        <span class="custom-control-label"> 3 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" checked name="Diem" value="4">
-                                        <span class="custom-control-label"> 4 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="5">
-                                        <span class="custom-control-label"> 5 </span>
-                                    </label>
-                                }
-                                else
-                                {
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="1">
-                                        <span class="custom-control-label"> 1 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="2">
-                                        <span class="custom-control-label"> 2 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="3">
-                                        <span class="custom-control-label"> 3 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" name="Diem" value="4">
-                                        <span class="custom-control-label"> 4 </span>
-                                    </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input class="custom-control-input" type="radio" checked name="Diem" value="5">
-                                        <span class="custom-control-label"> 5 </span>
-                                    </label>
-                                }
-                            </div>
-                        }
-                    }
+                    <div class="form-group mb-3">
+                        <p class="mb-1">Đánh giá</p>
+                        <label class="custom-control custom-radio custom-control-inline">
+                            <input class="custom-control-input" id="diem-1" type="radio" name="e-Diem" value="1">
+                            <span class="custom-control-label"> 1 </span>
+                        </label>
+                        <label class="custom-control custom-radio custom-control-inline">
+                            <input class="custom-control-input" id="diem-2" type="radio" name="e-Diem" value="2">
+                            <span class="custom-control-label"> 2 </span>
+                        </label>
+                        <label class="custom-control custom-radio custom-control-inline">
+                            <input class="custom-control-input" id="diem-3" type="radio" name="e-Diem" value="3">
+                            <span class="custom-control-label"> 3 </span>
+                        </label>
+                        <label class="custom-control custom-radio custom-control-inline">
+                            <input class="custom-control-input" id="diem-4" type="radio" name="e-Diem" value="4">
+                            <span class="custom-control-label"> 4 </span>
+                        </label>
+                        <label class="custom-control custom-radio custom-control-inline">
+                            <input class="custom-control-input" id="diem-5" type="radio" name="e-Diem" value="5">
+                            <span class="custom-control-label"> 5 </span>
+                        </label>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -381,5 +287,4 @@
 <script src="~/Scripts/js/readmore-readless.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="~/Scripts/js/update-like.js"></script>
-<script src="~/Scripts/js/edit-delete-evaluate.js"></script>
 <script src="~/Scripts/js/evaluate.js"></script>

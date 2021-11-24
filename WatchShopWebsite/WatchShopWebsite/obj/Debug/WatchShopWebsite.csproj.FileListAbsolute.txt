@@ -76,7 +76,6 @@ D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\bin\System.Web.WebPage
 D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\bin\Newtonsoft.Json.xml
 D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\bin\Antlr3.Runtime.pdb
 D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\obj\Debug\WatchShopWebsite.csprojAssemblyReference.cache
 D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\obj\Debug\WatchShopWebsite.csproj.CoreCompileInputs.cache
 D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\obj\Debug\WatchShopWebsite.csproj.CopyComplete
 D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\obj\Debug\WatchShopWebsite.dll
@@ -101,3 +100,4 @@ D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\bin\System.Memory.xml
 D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\bin\System.Numerics.Vectors.xml
 D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\bin\System.Runtime.CompilerServices.Unsafe.xml
 D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\bin\System.Threading.Tasks.Extensions.xml
+D:\csharp\BTL_WatchShop\WatchShopWebsite\WatchShopWebsite\obj\Debug\WatchShopWebsite.csprojAssemblyReference.cache

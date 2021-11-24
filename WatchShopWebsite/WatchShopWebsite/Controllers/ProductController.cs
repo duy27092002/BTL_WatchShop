@@ -203,10 +203,9 @@ namespace WatchShopWebsite.Controllers
             return 1;
         }
 
-        // đánh giá sản phẩm của người dùng
+        // tạo đánh giá sản phẩm của khách hàng
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Evaluate(DanhGiaSP getEvaluate)
+        public JsonResult Evaluate(DanhGiaSP getEvaluate)
         {
             // kiểm tra đánh giá trùng lặp
             var temp = db.DanhGiaSPs.Where(
@@ -219,16 +218,16 @@ namespace WatchShopWebsite.Controllers
             if (temp.Count() <= 0)
             {
                 db.DanhGiaSPs.Add(getEvaluate);
-
+                
                 try
                 {
                     db.SaveChanges();
                     return Json(new { success = true });
-                }
-                catch (Exception ex)
+                } catch (Exception ex)
                 {
                     return Json(new { success = false });
                 }
+                
             }
             else // nếu có thì trả ra thông báo: đã có đánh giá rồi
             {
@@ -279,18 +278,42 @@ namespace WatchShopWebsite.Controllers
 
         // mở modal sửa bài đánh giá sản phẩm với dữ liệu từ db
         [HttpPost]
-        public ActionResult EditEvaluate(int evaluateId)
+        public JsonResult EditEvaluate(int evaluateId)
         {
-            // lấy bài đánh giá
-            var getEvaluate = db.DanhGiaSPs.Where(t => t.MaDG == evaluateId);
-
-            if (getEvaluate != null)
+            try
             {
-                ViewBag.DataOfEvaluate = getEvaluate;
-                return Json(new { success = true });
-            } 
+                // lấy bài đánh giá
+                DanhGiaSP getEvaluate = db.DanhGiaSPs.Where(t => t.MaDG == evaluateId).FirstOrDefault();
+                return Json(new { 
+                    success = true,
+                    content = getEvaluate.LoiDG,
+                    point = getEvaluate.Diem,
+                    evlId = getEvaluate.MaDG,
+                    productId = getEvaluate.MaSP},
+                    JsonRequestBehavior.AllowGet);
+            } catch (Exception ex)
+            {
+                return Json(new { success = false, msg = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
-            return Json(new { success = false });
+        // lưu cập nhật bài đánh giá
+        [HttpPost]
+        public JsonResult UpdateEvaluate(int evaluateId, DateTime evaluateDate, string evaluateContent, int point)
+        {
+            try
+            {
+                DanhGiaSP model = db.DanhGiaSPs.Where(t => t.MaDG == evaluateId).FirstOrDefault();
+                model.ThoiGianDG = evaluateDate;
+                model.LoiDG = evaluateContent;
+                model.Diem = (byte)point;
+                db.SaveChanges();
+
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            } catch (Exception ex)
+            {
+                return Json(new { success = false, msg = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         /// <summary>
@@ -334,18 +357,47 @@ namespace WatchShopWebsite.Controllers
 
                 getEvaluateRecord = getEvaluateRecord.OrderByDescending(t => t.ThoiGianDG).Skip((int)((page - 1) * pageSize)).Take(pageSize).ToList();
 
-                return Json(new { 
-                    success = true, 
-                    pageCount = pageCount,
-                    evaluateRecord = getEvaluateRecord,
-                    evaluateCount = getEvaluateCount,
-                    sessionCusId = Convert.ToInt32(Session["IdCustomer"]),
-                    currentPage = page
-                }, JsonRequestBehavior.AllowGet);
+                if (getEvaluateCount > 0)
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        pageCount = pageCount,
+                        evaluateRecord = getEvaluateRecord,
+                        evaluateCount = getEvaluateCount,
+                        sessionCusId = Convert.ToInt32(Session["IdCustomer"]),
+                        currentPage = page,
+                        evaluateDate = getEvaluateRecord.FirstOrDefault().ThoiGianDG.ToString("dd/MM/yyyy")
+                    }, JsonRequestBehavior.AllowGet);
+                } else
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        evaluateCount = getEvaluateCount
+                    }, JsonRequestBehavior.AllowGet);
+                }
 
             } catch (Exception ex)
             {
                 return Json(new { success = false, msg = "Lỗi: " + ex.Message}, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        // xóa bài đánh giá
+        [HttpPost]
+        public JsonResult DeleteEvaluate(int evaluateId)
+        {
+            try
+            {
+                // lấy bài đánh giá
+                DanhGiaSP getEvaluate = db.DanhGiaSPs.Where(t => t.MaDG == evaluateId).FirstOrDefault();
+                db.DanhGiaSPs.Remove(getEvaluate);
+                db.SaveChanges();
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            } catch (Exception ex)
+            {
+                return Json(new { success = false, msg = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
     }
