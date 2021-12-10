@@ -1065,7 +1065,6 @@
     <Content Include="Scripts\js\change-quantity.js" />
     <Content Include="Scripts\js\bootstrap.bundle.min.js" />
     <Content Include="Scripts\js\evaluate.js" />
-    <Content Include="Scripts\js\update-like.js" />
     <Content Include="Scripts\js\jquery-2.0.0.min.js" />
     <Content Include="Scripts\js\readmore-readless.js" />
     <Content Include="Scripts\js\removecart.js" />

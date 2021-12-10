@@ -31,7 +31,6 @@ namespace WatchShopWebsite.Controllers
             ViewBag.CurrentFilter = keyword;
             ViewBag.CurrentType = productType;
 
-
             // nếu có chuỗi tìm kiếm thì tiến hành tìm kiếm theo tên sản phẩm
             if (!String.IsNullOrEmpty(keyword) && productType != null)
             {
@@ -235,46 +234,32 @@ namespace WatchShopWebsite.Controllers
             }
         }
 
-        // tăng lượt hữu ích cho bài viết đánh giá của khách hàng
+        #region tăng lượt hữu ích cho bài viết đánh giá của khách hàng (chưa hoàn thiện)
         //[HttpPost]
-        public ActionResult UpdateLike(int OrderId, int CusId, int ProdId, bool Clicked)
-        {
-            var getEvaluate = db.DanhGiaSPs.Where(
-                t => t.MaDH == OrderId &&
-                t.MaKH == CusId &&
-                t.MaSP == ProdId
-                ).FirstOrDefault();
+        //public JsonResult UpdateLike(int EvlId, bool Clicked)
+        //{
+        //    try
+        //    {
+        //        var getEvaluate = db.DanhGiaSPs.Where(t => t.MaDG == EvlId).FirstOrDefault();
 
-            if (getEvaluate != null && Clicked)
-            {
-                getEvaluate.LuotThich++;
+        //        if (getEvaluate != null && Clicked)
+        //        {
+        //            getEvaluate.LuotThich++;
+        //            db.SaveChanges();
+        //        }
+        //        else if (!Clicked && getEvaluate != null)
+        //        {
+        //            getEvaluate.LuotThich--;
+        //            db.SaveChanges();
+        //        }
 
-                try
-                {
-                    db.SaveChanges();
-                    return Json(new { success = true });
-                }
-                catch (Exception ex)
-                {
-                    return Json(new { success = false });
-                }
-            } else if (!Clicked && getEvaluate != null)
-            {
-                getEvaluate.LuotThich--;
-
-                try
-                {
-                    db.SaveChanges();
-                    return Json(new { success = true });
-                }
-                catch (Exception ex)
-                {
-                    return Json(new { success = false });
-                }
-            }
-
-            return Json(new { success = false });
-        }
+        //        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        //    } catch(Exception ex)
+        //    {
+        //        return Json(new { success = false, msg = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+        #endregion
 
         // mở modal sửa bài đánh giá sản phẩm với dữ liệu từ db
         [HttpPost]

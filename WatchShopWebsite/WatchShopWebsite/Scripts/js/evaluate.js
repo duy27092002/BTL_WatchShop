@@ -69,8 +69,8 @@ function LoadEvaluate(prodId, page) {
                                 html += '<small><a class="text-info edit-evaluate" href="" data-evaluateId="' + val.MaDG + '" data-prodId="' + val.MaSP + '" data-toggle="modal" data-target="#editEvaluateModal">Chỉnh sửa</a></small> |';
                                 html += '<small><a class="text-info delete-evaluate" href="javascript:void(0);" data-evaluateId="' + val.MaDG + '" data-prodId="' + val.MaSP + '"> Xóa</a></small></p>';
                             }
-                            html += '<button type="button" id="like-btn-' + val.MaDH + '" class="btn btn-outline-warning mt-3 like-btn" data-likeBtn="like-btn-' + val.MaDH + '" data-prodId="' + val.MaSP + '" data-orderId="' + val.MaDH + '" data-cusId="' + val.MaKH + '">';
-                            html += '<span class="icon-' + val.MaDH + '"><i class="far fa-thumbs-up"></i></span> Hữu ích(<span class="count-' + val.MaDH + '">' + val.LuotThich + '</span>)';
+                            html += '<button type="button" id="like-btn-' + val.MaDG + '" class="btn btn-outline-warning mt-3 like-btn" data-evlId="' + val.MaDG + '" data-clicked="false">';
+                            html += '<span class="icon-' + val.MaDG + '"><i class="far fa-thumbs-up"></i></span> Hữu ích(<span class="count-' + val.MaDG + '">' + val.LuotThich + '</span>)';
                             html += '</button> <button type="button" class="btn btn-outline-info mt-3 comment-btn">Bình luận</button>';
                         } else {
                             html += '<a class="btn btn-outline-warning mt-3" href="/Customer/Login"><i class="far fa-thumbs-up"></i> Hữu ích (' + val.LuotThich + ')</a> ';
@@ -98,6 +98,63 @@ function LoadEvaluate(prodId, page) {
                                 content.innerHTML = displayText + '<span class="dots">...</span><span class="hide more">' + moreText + '</span>';
                             }
                         });
+
+                        // sự kiện tăng giảm hữu ích cho bài đánh giá
+                        //$("#like-btn-" + val.MaDG).on("click", function () {
+                        //    let clicked = $(this).attr("data-clicked");
+                        //    let isTrueSet = (clicked === 'true'); // trả ra false
+                        //    let likes = document.querySelector(".count-" + val.MaDG);
+                        //    let likeIcon = document.querySelector(".icon-" + val.MaDG);
+
+                        //    // nếu ấn thích (clicked = true)
+                        //    if (!isTrueSet) {
+                        //        clicked = true;
+                        //        likeIcon.innerHTML = '<i class="fas fa-thumbs-up"></i>';
+                        //        $.ajax({
+                        //            type: "POST",
+                        //            url: "/Product/UpdateLike",
+                        //            data: {
+                        //                EvlId: val.MaDG,
+                        //                Clicked: clicked
+                        //            },
+                        //            dataType: "json",
+                        //            success: function (result) {
+                        //                if (result.success) {
+                        //                    likes.textContent++;
+                        //                    $("#like-btn-" + val.MaDG).data("clicked", true); // chưa thành công
+                        //                }
+                        //            },
+                        //            error: function (result) {
+                        //                if (!result.success) {
+                        //                    swal("Lỗi!", "Vui lòng thử lại", "error");
+                        //                }
+                        //            }
+                        //        });
+                        //    } else { // nếu bỏ thích (clicked = false)
+                        //        clicked = false;
+                        //        likeIcon.innerHTML = '<i class="far fa-thumbs-up"></i>';
+                        //        $.ajax({
+                        //            type: "POST",
+                        //            url: "/Product/UpdateLike",
+                        //            data: {
+                        //                EvlId: val.MaDG,
+                        //                Clicked: clicked
+                        //            },
+                        //            dataType: "json",
+                        //            success: function (result) {
+                        //                if (result.success) {
+                        //                    likes.textContent--;
+                        //                    $("#like-btn-" + val.MaDG).data("clicked", false);
+                        //                }
+                        //            },
+                        //            error: function (result) {
+                        //                if (!result.success) {
+                        //                    swal("Lỗi!", "Vui lòng thử lại", "error");
+                        //                }
+                        //            }
+                        //        });
+                        //    }
+                        //});
                     });
 
                     // phân trang
