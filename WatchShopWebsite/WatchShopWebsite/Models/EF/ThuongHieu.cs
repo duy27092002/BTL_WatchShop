@@ -22,8 +22,6 @@ namespace WatchShopWebsite.Models.EF
         }
 
         public int MaTH { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống tên thương hiệu")]
         public string TenTH { get; set; }
         public byte TrangThai { get; set; }
 

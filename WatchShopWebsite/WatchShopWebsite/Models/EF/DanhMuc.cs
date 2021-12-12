@@ -22,8 +22,6 @@ namespace WatchShopWebsite.Models.EF
         }
     
         public int MaDM { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống tên danh mục")]
         public string TenDM { get; set; }
         public byte TrangThai { get; set; }
     

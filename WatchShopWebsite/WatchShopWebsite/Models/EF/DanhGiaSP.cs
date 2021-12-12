@@ -24,11 +24,7 @@ namespace WatchShopWebsite.Models.EF
         public int MaDG { get; set; }
         public int MaKH { get; set; }
         public int MaSP { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống đánh giá")]
         public string LoiDG { get; set; }
-
-        [Required(ErrorMessage = "Vui lòng đánh giá điểm cho sản phẩm này!")]
         public byte Diem { get; set; }
         public System.DateTime ThoiGianDG { get; set; }
         public int LuotThich { get; set; }

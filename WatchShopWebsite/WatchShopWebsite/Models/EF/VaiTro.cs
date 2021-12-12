@@ -22,8 +22,6 @@ namespace WatchShopWebsite.Models.EF
         }
     
         public int MaVaiTro { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống tên vai trò")]
         public string TenVaiTro { get; set; }
         public byte TrangThai { get; set; }
     

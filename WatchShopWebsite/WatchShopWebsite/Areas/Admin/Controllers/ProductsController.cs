@@ -157,17 +157,14 @@ namespace WatchShopWebsite.Areas.Admin.Controllers
                     fileName += extention;
                     sanPham.HinhAnh = "~/Content/images/items/" + fileName;
                     sanPham.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/items/"), fileName));
-
-                    db.Entry(sanPham).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
                 } else
                 {
                     sanPham.HinhAnh = db.SanPhams.Where(t => t.MaSP == sanPham.MaSP).Select(t => t.HinhAnh).FirstOrDefault();
-                    db.Entry(sanPham).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
                 }
+
+                db.Entry(sanPham).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
             ViewBag.MaDM = new SelectList(db.DanhMucs, "MaDM", "TenDM", sanPham.MaDM);
             ViewBag.MaNSX = new SelectList(db.NhaSanXuats, "MaNSX", "TenNSX", sanPham.MaNSX);

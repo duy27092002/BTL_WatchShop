@@ -18,8 +18,6 @@ namespace WatchShopWebsite.Models.EF
         public int MaBL { get; set; }
         public int MaKH { get; set; }
         public int MaDG { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống bình luận")]
         public string LoiBL { get; set; }
         public System.DateTime ThoiGianBL { get; set; }
     

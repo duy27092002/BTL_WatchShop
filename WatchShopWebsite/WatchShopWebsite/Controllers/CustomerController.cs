@@ -53,6 +53,10 @@ namespace WatchShopWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
+                // tạo sẵn 2 trường mặc định
+                model.Avatar = "~/Content/images/avatars/add.jpg";
+                model.TrangThai = 1;
+
                 db.KhachHangs.Add(model);
                 db.SaveChanges();
                 return RedirectToAction("Login");
@@ -125,19 +129,16 @@ namespace WatchShopWebsite.Controllers
                     fileName += extention;
                     khachHang.Avatar = "~/Content/images/avatars/" + fileName;
                     khachHang.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/avatars/"), fileName));
-
-                    db.Entry(khachHang).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
                     khachHang.Avatar = db.KhachHangs.Where(t => t.MaKH == khachHang.MaKH).Select(t => t.Avatar).FirstOrDefault();
-
-                    db.Entry(khachHang).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index", "Home");
                 }
+
+                khachHang.TrangThai = 1;
+                db.Entry(khachHang).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
             }
             return View(khachHang);
         }

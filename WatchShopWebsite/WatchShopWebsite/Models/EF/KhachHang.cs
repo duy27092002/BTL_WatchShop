@@ -25,40 +25,17 @@ namespace WatchShopWebsite.Models.EF
             this.SPYeuThiches = new HashSet<SPYeuThich>();
             this.BinhLuans = new HashSet<BinhLuan>();
             this.DanhGiaSPs = new HashSet<DanhGiaSP>();
-
-            Avatar = "~/Content/images/avatars/add.jpg";
-            TrangThai = 1;
         }
 
         public int MaKH { get; set; }
         public string Avatar { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống họ tên")]
         public string HoTen { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống tên đăng nhập")]
         public string TenDangNhap { get; set; }
-
-
-        [Required(ErrorMessage = "Không được để trống mật khẩu")]
-        [MinLength(8, ErrorMessage = "Mật khẩu ít nhất phải 8 ký tự")]
-        [MaxLength(50, ErrorMessage = "Mật khẩu tối đa là 50 ký tự")]
         public string MatKhau { get; set; }
         public byte GioiTinh { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống ngày sinh")]
         public System.DateTime NgaySinh { get; set; }
         public string DiaChi { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống email")]
-        [DataType(DataType.EmailAddress)]
-        [MaxLength(50)]
-        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Sai định dạng email")]
         public string Email { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống số điện thoại")]
-        [MaxLength(15, ErrorMessage = "Số điện thoại không được quá 15 ký tự")]
-        [RegularExpression(@"^0[9|3]\d{8}$", ErrorMessage = "Sai định dạng số điện thoại")]
         public string SDT { get; set; }
         public byte TrangThai { get; set; }
 
@@ -72,8 +49,5 @@ namespace WatchShopWebsite.Models.EF
         public virtual ICollection<BinhLuan> BinhLuans { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DanhGiaSP> DanhGiaSPs { get; set; }
-
-        [NotMapped]
-        public HttpPostedFileBase ImageUpload { get; set; }
     }
 }

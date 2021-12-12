@@ -101,7 +101,7 @@ namespace WatchShopWebsite.Areas.Admin.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(/*[Bind(Include = "MaNV,Avatar,HoTen,TenDangNhap,MatKhau,GioiTinh,NgaySinh,DiaChi,Email,SDT,TrangThai")]*/ NhanVien nhanVien)
+        public ActionResult Create(NhanVien nhanVien)
         {
             if (ModelState.IsValid)
             {
@@ -113,18 +113,15 @@ namespace WatchShopWebsite.Areas.Admin.Controllers
                     fileName += extention;
                     nhanVien.Avatar = "~/Content/images/avatars/" + fileName;
                     nhanVien.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/avatars/"), fileName));
-
-                    db.NhanViens.Add(nhanVien);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
                 } else
                 {
-                    // tạo khi k có ảnh đại diện
-                    db.NhanViens.Add(nhanVien);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    // tạo khi k có ảnh đại diện (ảnh mặc định)
+                    nhanVien.Avatar = "~/Content/images/avatars/add.jpg";
                 }
 
+                db.NhanViens.Add(nhanVien);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
 
             return View(nhanVien);
@@ -152,7 +149,7 @@ namespace WatchShopWebsite.Areas.Admin.Controllers
         [Authorize(Roles = "Admin,Nhân viên")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(/*[Bind(Include = "MaNV,Avatar,HoTen,TenDangNhap,MatKhau,GioiTinh,NgaySinh,DiaChi,Email,SDT,TrangThai")]*/ NhanVien nhanVien)
+        public ActionResult Edit(NhanVien nhanVien)
         {
             if (ModelState.IsValid)
             {
@@ -163,17 +160,14 @@ namespace WatchShopWebsite.Areas.Admin.Controllers
                     fileName += extention;
                     nhanVien.Avatar = "~/Content/images/avatars/" + fileName;
                     nhanVien.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/avatars/"), fileName));
-
-                    db.Entry(nhanVien).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
                 } else
                 {
                     nhanVien.Avatar = db.NhanViens.Where(t => t.MaNV == nhanVien.MaNV).Select(t => t.Avatar).FirstOrDefault();
-                    db.Entry(nhanVien).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
                 }
+
+                db.Entry(nhanVien).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
             return View(nhanVien);
         }

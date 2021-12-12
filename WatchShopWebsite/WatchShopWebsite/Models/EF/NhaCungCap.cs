@@ -22,22 +22,9 @@ namespace WatchShopWebsite.Models.EF
         }
 
         public int MaNCC { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống tên")]
         public string TenNCC { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống địa chỉ")]
         public string DiaChi { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống email")]
-        [DataType(DataType.EmailAddress)]
-        [MaxLength(50)]
-        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Sai định dạng email")]
         public string Email { get; set; }
-
-        [Required(ErrorMessage = "Không được để trống số điện thoại")]
-        [MaxLength(15, ErrorMessage = "Số điện thoại không được quá 15 ký tự")]
-        [RegularExpression(@"^0[9|3]\d{8}$", ErrorMessage = "Sai định dạng số điện thoại")]
         public string SDT { get; set; }
         public byte TrangThai { get; set; }
 

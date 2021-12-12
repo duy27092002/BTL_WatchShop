@@ -263,6 +263,17 @@
     <Compile Include="Models\EF\VaiTro.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\Validation\Authentication.cs" />
+    <Compile Include="Models\EF\Validation\Brand.cs" />
+    <Compile Include="Models\EF\Validation\Category.cs" />
+    <Compile Include="Models\EF\Validation\Comment.cs" />
+    <Compile Include="Models\EF\Validation\Customer.cs" />
+    <Compile Include="Models\EF\Validation\Employee.cs" />
+    <Compile Include="Models\EF\Validation\Producer.cs" />
+    <Compile Include="Models\EF\Validation\Product.cs" />
+    <Compile Include="Models\EF\Validation\ProductReviews.cs" />
+    <Compile Include="Models\EF\Validation\ShippingInformation.cs" />
+    <Compile Include="Models\EF\Validation\Supplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
